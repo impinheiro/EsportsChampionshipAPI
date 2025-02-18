@@ -1,0 +1,12 @@
+package fan.esports.championship.Esports.Championship.core.usecases;
+
+import fan.esports.championship.Esports.Championship.core.domain.User;
+
+import java.util.List;
+
+public class getUsersCaseImpl implements getUsersCase {
+    @Override
+    public List<User> getUsers() {
+        return List.of();
+    }
+}

@@ -1,3 +1,7 @@
 spring:
   application:
     name: Esports-Championship
+  data:
+    mongodb:
+      uri: mongodb://localhost:27017/esports_championship
+      database: esports_championship

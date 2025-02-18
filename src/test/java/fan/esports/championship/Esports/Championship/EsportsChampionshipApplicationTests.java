@@ -1,4 +1,4 @@
-package fan.esports.championshop.Esports.Championship;
+package fan.esports.championship.Esports.Championship;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -1,4 +1,4 @@
-package fan.esports.championshop.Esports.Championship;
+package fan.esports.championship.Esports.Championship;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
