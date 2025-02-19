@@ -3,7 +3,6 @@ package fan.esports.championship.Esports.Championship.infrastructure.persistence
 import fan.esports.championship.Esports.Championship.core.enums.UserRole;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.util.Date;
 
@@ -12,7 +11,7 @@ public class UserEntity {
 
     @Id
     private String id;
-    private String nome;
+    private String name;
     private String email;
     private String nickname;
     private String password;
@@ -23,9 +22,9 @@ public class UserEntity {
     public UserEntity() {
     }
 
-    public UserEntity(String id, String nome, String email, String nickname, String password, Date birthday, String profilePhoto, UserRole role) {
+    public UserEntity(String id, String name, String email, String nickname, String password, Date birthday, String profilePhoto, UserRole role) {
         this.id = id;
-        this.nome = nome;
+        this.name = name;
         this.email = email;
         this.nickname = nickname;
         this.password = password;
@@ -42,12 +41,12 @@ public class UserEntity {
         this.id = id;
     }
 
-    public String getNome() {
-        return nome;
+    public String getName() {
+        return name;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -102,7 +101,7 @@ public class UserEntity {
     public String toString() {
         return "UserEntity{" +
                 "id='" + id + '\'' +
-                ", nome='" + nome + '\'' +
+                ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", password='" + password + '\'' +
