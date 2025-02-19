@@ -5,3 +5,11 @@ spring:
     mongodb:
       uri: mongodb://localhost:27017/esports_championship
       database: esports_championship
+    redis:
+      host: localhost
+      port: 6379
+      password: sa
+
+  cache:
+    redis:
+      time-to-live: 60000
