@@ -1,4 +1,4 @@
-package fan.esports.championship.Esports.Championship.core.usecases;
+package fan.esports.championship.Esports.Championship.core.usecases.user;
 
 public class deleteUserCaseImpl implements deleteUserCase{
     @Override
