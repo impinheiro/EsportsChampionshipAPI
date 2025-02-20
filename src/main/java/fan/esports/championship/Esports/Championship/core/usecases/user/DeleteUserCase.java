@@ -1,5 +1,5 @@
 package fan.esports.championship.Esports.Championship.core.usecases.user;
 
-public interface deleteUserCase {
+public interface DeleteUserCase {
     public void execute(String id);
 }

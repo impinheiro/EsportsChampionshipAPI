@@ -1,5 +1,5 @@
 package fan.esports.championship.Esports.Championship.core.usecases.championship;
 
-public interface deleteChampionshipCase {
+public interface DeleteChampionshipCase {
     public void execute(String id);
 }

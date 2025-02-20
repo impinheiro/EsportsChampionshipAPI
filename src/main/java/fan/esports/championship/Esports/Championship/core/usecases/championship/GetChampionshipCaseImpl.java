@@ -4,7 +4,7 @@ import fan.esports.championship.Esports.Championship.core.domain.Championship;
 
 import java.util.List;
 
-public class getChampionshipCaseImpl implements  getChampionshipCase {
+public class GetChampionshipCaseImpl implements GetChampionshipCase {
     @Override
     public List<Championship> execute() {
         return List.of();
