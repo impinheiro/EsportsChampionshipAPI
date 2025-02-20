@@ -1,18 +1,24 @@
 package fan.esports.championship.Esports.Championship.infrastructure.mappers;
 
+import fan.esports.championship.Esports.Championship.core.domain.User;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.UserDTO;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.UserEntity;
 import org.springframework.stereotype.Component;
 
 @Component
-public class UserMapper {
+public class UserDtoMapper {
 
-    public static UserDTO toDto(UserEntity user) {
-        return new UserDTO(user.getId(), user.getName(), user.getEmail(), user.getNickname(),
-                user.getPassword(), user.getBirthday(), user.getProfilePhoto(), user.getRole());
+    public static UserDTO toDto(User user) {
+        return new UserDTO(user.id(),
+                user.name(),
+                user.email(),
+                user.nickname(),
+                user.password(),
+                user.birthday(),
+                user.profilePhoto(),
+                user.role());
     }
-    public static UserEntity toEntity(UserDTO userDto) {
-        return new UserEntity(
+    public static User toDomain(UserDTO userDto) {
+        return new User(
                 userDto.id(),
                 userDto.name(),
                 userDto.email(),
