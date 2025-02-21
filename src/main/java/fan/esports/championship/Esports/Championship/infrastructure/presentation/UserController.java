@@ -5,7 +5,7 @@ import fan.esports.championship.Esports.Championship.core.usecases.user.CreateUs
 import fan.esports.championship.Esports.Championship.core.usecases.user.GetUsersCase;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.UserDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.UserDtoMapper;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.UserRepository;
+import fan.esports.championship.Esports.Championship.infrastructure.persistence.user.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;

@@ -1,8 +1,7 @@
 package fan.esports.championship.Esports.Championship.infrastructure.mappers;
 
-import fan.esports.championship.Esports.Championship.core.domain.Championship;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.ChampionshipDTO;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.ChampionshipEntity;
+import fan.esports.championship.Esports.Championship.infrastructure.persistence.championship.ChampionshipEntity;
 import org.springframework.stereotype.Component;
 
 @Component

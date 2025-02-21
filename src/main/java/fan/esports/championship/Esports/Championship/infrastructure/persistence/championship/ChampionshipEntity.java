@@ -1,4 +1,4 @@
-package fan.esports.championship.Esports.Championship.infrastructure.persistence;
+package fan.esports.championship.Esports.Championship.infrastructure.persistence.championship;
 
 import fan.esports.championship.Esports.Championship.core.enums.ChampionshipFormat;
 import fan.esports.championship.Esports.Championship.core.enums.ChampionshipType;

@@ -1,8 +1,7 @@
 package fan.esports.championship.Esports.Championship.infrastructure.mappers;
 
 import fan.esports.championship.Esports.Championship.core.domain.User;
-import fan.esports.championship.Esports.Championship.infrastructure.dtos.UserDTO;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.UserEntity;
+import fan.esports.championship.Esports.Championship.infrastructure.persistence.user.UserEntity;
 import org.springframework.stereotype.Component;
 
 @Component

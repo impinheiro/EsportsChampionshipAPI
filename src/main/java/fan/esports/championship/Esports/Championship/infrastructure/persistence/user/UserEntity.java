@@ -1,4 +1,4 @@
-package fan.esports.championship.Esports.Championship.infrastructure.persistence;
+package fan.esports.championship.Esports.Championship.infrastructure.persistence.user;
 
 import fan.esports.championship.Esports.Championship.core.enums.UserRole;
 import org.springframework.data.annotation.Id;
