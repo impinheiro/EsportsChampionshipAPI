@@ -1,11 +1,15 @@
 package fan.esports.championship.Esports.Championship.infrastructure.persistence.championship;
 
+import fan.esports.championship.Esports.Championship.core.domain.Registrations;
 import fan.esports.championship.Esports.Championship.core.enums.ChampionshipFormat;
 import fan.esports.championship.Esports.Championship.core.enums.ChampionshipType;
+import fan.esports.championship.Esports.Championship.infrastructure.persistence.match.MatchEntity;
+import fan.esports.championship.Esports.Championship.infrastructure.persistence.team.TeamEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Document(collection = "championships")
 public class ChampionshipEntity {
@@ -25,6 +29,8 @@ public class ChampionshipEntity {
     private String coverImage;
     private String logoImage;
     private String awardDescription;
+    private List<MatchEntity> matches;
+    private List<Registrations> registrations;
 
     public ChampionshipEntity() {
     }
