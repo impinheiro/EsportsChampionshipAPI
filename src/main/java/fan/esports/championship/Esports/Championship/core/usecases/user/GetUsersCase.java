@@ -5,5 +5,5 @@ import fan.esports.championship.Esports.Championship.core.domain.User;
 import java.util.List;
 
 public interface GetUsersCase {
-    public List<User> getUsers();
+    public List<User> execute();
 }
