@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserDtoMapper {
 
-    public static UserDTO toDto(User user) {
+    public UserDTO toDto(User user) {
         return new UserDTO(user.id(),
                 user.name(),
                 user.email(),
@@ -17,7 +17,7 @@ public class UserDtoMapper {
                 user.profilePhoto(),
                 user.role());
     }
-    public static User toDomain(UserDTO userDto) {
+    public User toDomain(UserDTO userDto) {
         return new User(
                 userDto.id(),
                 userDto.name(),

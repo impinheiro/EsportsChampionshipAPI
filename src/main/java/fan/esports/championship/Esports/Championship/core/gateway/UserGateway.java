@@ -7,6 +7,6 @@ import java.util.List;
 public interface UserGateway {
     User create(User user);
     User update(User user, String id);
-    List<User> findAll();
+    List<User> findAllUsers();
     User delete(String id);
 }
