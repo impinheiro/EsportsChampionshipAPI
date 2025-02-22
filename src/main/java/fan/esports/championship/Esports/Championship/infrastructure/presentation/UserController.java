@@ -5,7 +5,6 @@ import fan.esports.championship.Esports.Championship.core.usecases.user.CreateUs
 import fan.esports.championship.Esports.Championship.core.usecases.user.GetUsersCase;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.UserDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.UserDtoMapper;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.user.UserRepository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -19,13 +18,11 @@ public class UserController {
     private final CreateUserCase createUserCase;
     private final GetUsersCase getUsersCase;
     private final UserDtoMapper  userDtoMapper;
-    private final UserRepository userRepository;
 
-    public UserController(CreateUserCase createUserCase, GetUsersCase getUsersCase, UserDtoMapper userDtoMapper, UserRepository userRepository) {
+    public UserController(CreateUserCase createUserCase, GetUsersCase getUsersCase, UserDtoMapper userDtoMapper) {
         this.createUserCase = createUserCase;
         this.getUsersCase = getUsersCase;
         this.userDtoMapper = userDtoMapper;
-        this.userRepository = userRepository;
     }
 
     @PostMapping("create")
