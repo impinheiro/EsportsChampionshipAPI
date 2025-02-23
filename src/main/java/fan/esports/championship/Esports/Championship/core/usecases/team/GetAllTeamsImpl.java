@@ -14,7 +14,7 @@ public class GetAllTeamsImpl implements GetAllTeamsCase {
     }
 
     @Override
-    public List<Team> findAllTeams() {
+    public List<Team> execute() {
         return teamGateway.findAllTeams();
     }
 }
