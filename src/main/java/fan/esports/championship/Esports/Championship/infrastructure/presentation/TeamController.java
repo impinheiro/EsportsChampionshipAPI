@@ -35,7 +35,7 @@ public class TeamController {
 
     @GetMapping("findAll")
     public List<TeamDTO> findAllTeams(List<?> teamDTO){
-        List<Team> teams = getAllTeamsCase.findAllTeams();
+        List<Team> teams = getAllTeamsCase.execute();
         return teams.stream()
                 .map(mapper::toDTO)
                 .collect(Collectors.toList());
