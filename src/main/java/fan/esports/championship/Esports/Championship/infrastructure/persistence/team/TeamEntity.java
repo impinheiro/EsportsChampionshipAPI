@@ -4,6 +4,7 @@ import fan.esports.championship.Esports.Championship.infrastructure.persistence.
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Document(collection = "teams")
@@ -14,11 +15,17 @@ public class TeamEntity {
     private String name;
     private List<UserEntity> members;
 
+    public TeamEntity() {
+
+    }
+
     public TeamEntity(String id, String name, List<UserEntity> members) {
         this.id = id;
         this.name = name;
-        this.members = members;
+        this.members = members == null ? new ArrayList<>() : members;
     }
+
+
 
     public String getId() {
         return id;
