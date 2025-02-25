@@ -5,8 +5,12 @@ import fan.esports.championship.Esports.Championship.core.domain.Team;
 
 import fan.esports.championship.Esports.Championship.core.usecases.team.CreateTeamCase;
 import fan.esports.championship.Esports.Championship.core.usecases.team.GetAllTeamsCase;
+import fan.esports.championship.Esports.Championship.core.usecases.team.GetTeamById;
+import fan.esports.championship.Esports.Championship.core.usecases.team.UpdateTeamCase;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.TeamDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.TeamDtoMapper;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,25 +23,53 @@ public class TeamController {
     private final TeamDtoMapper mapper;
     private final CreateTeamCase createTeamCase;
     private final GetAllTeamsCase  getAllTeamsCase;
+    private final UpdateTeamCase updateTeamCase;
+    private final GetTeamById getTeamById;
 
-    public TeamController(TeamDtoMapper mapper, CreateTeamCase createTeamCase, GetAllTeamsCase getAllTeamsCase) {
+    public TeamController(TeamDtoMapper mapper, CreateTeamCase createTeamCase, GetAllTeamsCase getAllTeamsCase, UpdateTeamCase updateTeamCase, GetTeamById getTeamById) {
         this.mapper = mapper;
         this.createTeamCase = createTeamCase;
         this.getAllTeamsCase = getAllTeamsCase;
+        this.updateTeamCase = updateTeamCase;
+        this.getTeamById = getTeamById;
     }
 
     @PostMapping("create")
-    public TeamDTO createTeam(@RequestBody TeamDTO teamDto){
+    public ResponseEntity<?> createTeam(@RequestBody TeamDTO teamDto){
         Team team = mapper.toDomain(teamDto);
         Team newTeam = createTeamCase.execute(team);
-        return mapper.toDTO(newTeam);
+        if(team != null){
+            return ResponseEntity.ok(newTeam);
+        }else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @GetMapping("findAll")
-    public List<TeamDTO> findAllTeams(List<?> teamDTO){
+    public ResponseEntity<?> findAllTeams(){
         List<Team> teams = getAllTeamsCase.execute();
-        return teams.stream()
+        List<TeamDTO>  teamDTOs = teams.stream().map(mapper::toDTO).collect(Collectors.toList());
+        if(teams != null){
+            return ResponseEntity.ok(teamDTOs);
+        }else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no teams registered yet");
+        }
+       /* return teams.stream()
                 .map(mapper::toDTO)
                 .collect(Collectors.toList());
+                */
+    }
+    @GetMapping("findById/{id}")
+    public ResponseEntity<?> findTeamById(@PathVariable String id){
+        Team teamFound = getTeamById.execute(id);
+        if(teamFound == null){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Team not found");
+        } else{
+            return ResponseEntity.ok(teamFound);
+        }
+    }
+    @PutMapping("update/{id}")
+    public ResponseEntity<?> updateTeam(@PathVariable String id, @RequestBody TeamDTO teamDTO){
+        return ResponseEntity.ok(null);
     }
 }

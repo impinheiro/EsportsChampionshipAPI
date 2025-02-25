@@ -8,26 +8,24 @@ import fan.esports.championship.Esports.Championship.infrastructure.persistence.
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.user.UserEntity;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 @Component
 public class TeamDtoMapper {
 
+    private UserDtoMapper userDtoMapper;
+
     public Team toDomain (TeamDTO teamDTO){
-        return new Team(teamDTO.id(), teamDTO.name(), teamDTO.members().stream()
-                .map(userDTO -> new User(userDTO.id(), userDTO.name(),
-                        userDTO.email(), userDTO.nickname(),
-                        userDTO.password(), userDTO.birthday(),
-                        userDTO.profilePhoto(), userDTO.role()))
+        return new Team(teamDTO.id(), teamDTO.name(), teamDTO.members()==null ? new ArrayList<>() : teamDTO.members()
+                .stream()
+                .map(userDtoMapper::toDomain)
                 .collect(Collectors.toList()));
     }
     public TeamDTO toDTO(Team team){
-        return new TeamDTO(team.id(), team.name(), team.members().stream()
-                .map(user -> new UserDTO(user.id(), user.name(),
-                        user.email(), user.nickname(),
-                        user.password(), user.birthday(),
-                        user.profilePhoto(), user.role()))
+        return new TeamDTO(team.id(), team.name(), team.members() == null ? new ArrayList<>() : team.members()
+                .stream()
+                .map(userDtoMapper::toDto)
                 .collect(Collectors.toList()));
-
     }
 }
