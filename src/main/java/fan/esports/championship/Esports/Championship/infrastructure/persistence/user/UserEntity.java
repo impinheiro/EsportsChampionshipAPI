@@ -2,6 +2,7 @@ package fan.esports.championship.Esports.Championship.infrastructure.persistence
 
 import fan.esports.championship.Esports.Championship.core.enums.UserRole;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
@@ -12,7 +13,9 @@ public class UserEntity {
     @Id
     private String id;
     private String name;
+    @Indexed(unique = true)
     private String email;
+    @Indexed(unique = true)
     private String nickname;
     private String password;
     private Date birthday;
