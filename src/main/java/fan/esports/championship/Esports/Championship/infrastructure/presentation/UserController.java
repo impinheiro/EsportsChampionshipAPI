@@ -3,6 +3,7 @@ package fan.esports.championship.Esports.Championship.infrastructure.presentatio
 import fan.esports.championship.Esports.Championship.core.domain.User;
 import fan.esports.championship.Esports.Championship.core.usecases.user.CreateUserCase;
 import fan.esports.championship.Esports.Championship.core.usecases.user.DeleteUserCase;
+import fan.esports.championship.Esports.Championship.core.usecases.user.FindUserByIdCase;
 import fan.esports.championship.Esports.Championship.core.usecases.user.GetUsersCase;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.UserDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.UserDtoMapper;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController
@@ -22,6 +24,7 @@ public class UserController {
     private final GetUsersCase getUsersCase;
     private final UserDtoMapper  userDtoMapper;
     private final DeleteUserCase deleteUserCase;
+    private final FindUserByIdCase findUserByIdCase;
 
     @PostMapping("create")
     public UserDTO createUser(@RequestBody UserDTO userDto){
@@ -36,8 +39,13 @@ public class UserController {
         users = getUsersCase.execute();
         return users.stream().map(userDtoMapper::toDto).collect(Collectors.toList());
     }
-    @DeleteMapping
+    @DeleteMapping("/delete/{id}")
     public void deleteUser(@PathVariable String id){
         deleteUserCase.execute(id);
     }
+    @GetMapping("/getById/{id}")
+    public UserDTO getUserById(@PathVariable String id){
+        Optional<User> user = findUserByIdCase.execute(id);
+    }
+
 }

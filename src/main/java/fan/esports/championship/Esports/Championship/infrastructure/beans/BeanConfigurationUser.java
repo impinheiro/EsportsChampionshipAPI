@@ -21,4 +21,8 @@ public class BeanConfigurationUser {
     public DeleteUserCase deleteUser(UserGateway userGateway){
         return new DeleteUserCaseImpl(userGateway);
     }
+    @Bean
+    public FindUserByIdCase findUserById(UserGateway userGateway){
+        return new FindUserByIdCaseImpl(userGateway);
+    }
 }

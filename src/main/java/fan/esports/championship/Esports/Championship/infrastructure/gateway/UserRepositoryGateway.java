@@ -8,6 +8,7 @@ import fan.esports.championship.Esports.Championship.infrastructure.persistence.
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Component
@@ -44,6 +45,16 @@ public class UserRepositoryGateway implements UserGateway {
 
     @Override
     public User delete(String id) {
+        UserEntity userToDelete = userRepository.findById(id).orElse(null);
+        userRepository.delete(userToDelete);
+    }
+
+    @Override
+    public User findById(String id) {
+        UserEntity userEntity = userRepository.findById(id).orElse(null);
+        if(userEntity != null){
+            return mapper.toDomain(userEntity);
+        }
         return null;
     }
 }
