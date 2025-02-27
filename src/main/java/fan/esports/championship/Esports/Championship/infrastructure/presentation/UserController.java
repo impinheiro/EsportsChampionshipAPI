@@ -45,7 +45,8 @@ public class UserController {
     }
     @GetMapping("/getById/{id}")
     public UserDTO getUserById(@PathVariable String id){
-        Optional<User> user = findUserByIdCase.execute(id);
+        User user = findUserByIdCase.execute(id);
+        return userDtoMapper.toDto(user);
     }
 
 }

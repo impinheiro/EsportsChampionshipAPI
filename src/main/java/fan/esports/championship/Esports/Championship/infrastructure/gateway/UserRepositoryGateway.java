@@ -44,7 +44,7 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
-    public User delete(String id) {
+    public void delete(String id) {
         UserEntity userToDelete = userRepository.findById(id).orElse(null);
         userRepository.delete(userToDelete);
     }
