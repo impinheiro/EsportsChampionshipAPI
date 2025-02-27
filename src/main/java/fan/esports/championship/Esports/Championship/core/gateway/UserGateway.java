@@ -8,5 +8,6 @@ public interface UserGateway {
     User create(User user);
     User update(User user, String id);
     List<User> findAllUsers();
-    User delete(String id);
+    void delete(String id);
+    User findById(String id);
 }
