@@ -2,9 +2,11 @@ package fan.esports.championship.Esports.Championship.infrastructure.presentatio
 
 import fan.esports.championship.Esports.Championship.core.domain.User;
 import fan.esports.championship.Esports.Championship.core.usecases.user.CreateUserCase;
+import fan.esports.championship.Esports.Championship.core.usecases.user.DeleteUserCase;
 import fan.esports.championship.Esports.Championship.core.usecases.user.GetUsersCase;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.UserDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.UserDtoMapper;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -13,17 +15,13 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/v1/users")
+@AllArgsConstructor
 public class UserController {
 
     private final CreateUserCase createUserCase;
     private final GetUsersCase getUsersCase;
     private final UserDtoMapper  userDtoMapper;
-
-    public UserController(CreateUserCase createUserCase, GetUsersCase getUsersCase, UserDtoMapper userDtoMapper) {
-        this.createUserCase = createUserCase;
-        this.getUsersCase = getUsersCase;
-        this.userDtoMapper = userDtoMapper;
-    }
+    private final DeleteUserCase deleteUserCase;
 
     @PostMapping("create")
     public UserDTO createUser(@RequestBody UserDTO userDto){
@@ -37,6 +35,9 @@ public class UserController {
         List<User> users = new ArrayList<User>();
         users = getUsersCase.execute();
         return users.stream().map(userDtoMapper::toDto).collect(Collectors.toList());
-
+    }
+    @DeleteMapping
+    public void deleteUser(@PathVariable String id){
+        deleteUserCase.execute(id);
     }
 }
