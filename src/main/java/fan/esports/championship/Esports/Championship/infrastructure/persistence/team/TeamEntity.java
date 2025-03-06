@@ -13,19 +13,17 @@ public class TeamEntity {
     @Id
     private String id;
     private String name;
-    private List<UserEntity> members;
+    private List<String> membersNickname;
 
     public TeamEntity() {
 
     }
 
-    public TeamEntity(String id, String name, List<UserEntity> members) {
+    public TeamEntity(String id, String name, List<String> membersNickname) {
         this.id = id;
         this.name = name;
-        this.members = members == null ? new ArrayList<>() : members;
+        this.membersNickname = membersNickname;
     }
-
-
 
     public String getId() {
         return id;
@@ -43,12 +41,12 @@ public class TeamEntity {
         this.name = name;
     }
 
-    public List<UserEntity> getMembers() {
-        return members;
+    public List<String> getMembersNickname() {
+        return membersNickname;
     }
 
-    public void setMembers(List<UserEntity> members) {
-        this.members = members;
+    public void setMembersNickname(List<String> membersNickname) {
+        this.membersNickname = membersNickname;
     }
 
     @Override
@@ -56,7 +54,7 @@ public class TeamEntity {
         return "TeamEntity{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", members=" + members +
+                ", membersNickname=" + membersNickname +
                 '}';
     }
 }

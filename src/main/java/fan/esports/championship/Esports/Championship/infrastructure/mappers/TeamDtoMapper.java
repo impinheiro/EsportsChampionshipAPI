@@ -17,15 +17,19 @@ public class TeamDtoMapper {
     private UserDtoMapper userDtoMapper;
 
     public Team toDomain (TeamDTO teamDTO){
-        return new Team(teamDTO.id(), teamDTO.name(), teamDTO.members()==null ? new ArrayList<>() : teamDTO.members()
-                .stream()
-                .map(userDtoMapper::toDomain)
-                .collect(Collectors.toList()));
+        if(teamDTO.membersId() == null) {
+            return new Team(teamDTO.id(), teamDTO.name(), new ArrayList<>());
+        }else{
+            return new Team(teamDTO.id(), teamDTO.name(), teamDTO.membersId());
+        }
+
     }
     public TeamDTO toDTO(Team team){
-        return new TeamDTO(team.id(), team.name(), team.members() == null ? new ArrayList<>() : team.members()
-                .stream()
-                .map(userDtoMapper::toDto)
-                .collect(Collectors.toList()));
+        if(team.membersId() == null) {
+            return new TeamDTO(team.id(), team.name(), new ArrayList<>());
+        }else {
+            return new TeamDTO(team.id(), team.name(),team.membersId());
+        }
+
     }
 }
