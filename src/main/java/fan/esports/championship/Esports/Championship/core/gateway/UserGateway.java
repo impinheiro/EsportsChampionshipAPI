@@ -10,4 +10,5 @@ public interface UserGateway {
     List<User> findAllUsers();
     void delete(String id);
     User findById(String id);
+    boolean exists(String id);
 }

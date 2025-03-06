@@ -57,4 +57,9 @@ public class UserRepositoryGateway implements UserGateway {
         }
         return null;
     }
+
+    @Override
+    public boolean exists(String id) {
+        return userRepository.findAll().stream().anyMatch(user -> user.getId().equals(id));
+    }
 }
