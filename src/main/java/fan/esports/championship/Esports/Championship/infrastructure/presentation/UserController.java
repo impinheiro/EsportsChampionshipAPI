@@ -6,13 +6,14 @@ import fan.esports.championship.Esports.Championship.core.usecases.user.DeleteUs
 import fan.esports.championship.Esports.Championship.core.usecases.user.FindUserByIdCase;
 import fan.esports.championship.Esports.Championship.core.usecases.user.GetUsersCase;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.UserDTO;
+import fan.esports.championship.Esports.Championship.infrastructure.exceptions.UserNotFoundException;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.UserDtoMapper;
 import lombok.AllArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @RestController
@@ -27,26 +28,38 @@ public class UserController {
     private final FindUserByIdCase findUserByIdCase;
 
     @PostMapping("create")
-    public UserDTO createUser(@RequestBody UserDTO userDto){
+    public ResponseEntity<?> createUser(@RequestBody UserDTO userDto){
         User user  = userDtoMapper.toDomain(userDto);
+        Map<String, Object> response = new HashMap<>();
         createUserCase.execute(user);
-        return userDtoMapper.toDto(user);
-
+        response.put("Created User", userDtoMapper.toDto(user));
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     @GetMapping("findAll")
-    public List<UserDTO> findAllUsers(){
+    public ResponseEntity<?> findAllUsers(){
+        Map<String,Object> response = new HashMap<>();
         List<User> users = new ArrayList<User>();
         users = getUsersCase.execute();
-        return users.stream().map(userDtoMapper::toDto).collect(Collectors.toList());
+        if(users.isEmpty()){
+            response.put("Users list: ", "Users list is empty");
+            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
+        }
+        response.put("Users list: ", users.stream().map(userDtoMapper::toDto).collect(Collectors.toList()));
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @DeleteMapping("/delete/{id}")
-    public void deleteUser(@PathVariable String id){
+    public ResponseEntity<?> deleteUser(@PathVariable String id){
+        Map<String,Object> response = new HashMap<>();
         deleteUserCase.execute(id);
+        response.put("User ID", id+" was deleted");
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
     @GetMapping("/getById/{id}")
-    public UserDTO getUserById(@PathVariable String id){
+    public ResponseEntity<Map<String, Object>> getUserById(@PathVariable String id){
         User user = findUserByIdCase.execute(id);
-        return userDtoMapper.toDto(user);
+        Map<String, Object> response = new HashMap<>();
+        response.put("User: ", userDtoMapper.toDto(user));
+        return ResponseEntity.ok(response);
     }
 
 }
