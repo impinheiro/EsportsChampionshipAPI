@@ -1,4 +1,20 @@
 package fan.esports.championship.Esports.Championship.infrastructure.exceptions;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestControllerAdvice
 public class ControllerExceptionHandler {
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<?> handleException(UserNotFoundException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("Message", "Insert a valid ID");
+        response.put("Error", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
 }
