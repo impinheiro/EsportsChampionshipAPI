@@ -16,24 +16,19 @@ public class TeamEntityMapper {
     private UserEntityMapper userEntityMapper;
 
     public Team toDomain (TeamEntity teamEntity){
-        if(teamEntity.getMembers() == null) {
+        if(teamEntity.getMembersNickname() == null) {
             return new Team(teamEntity.getId(), teamEntity.getName(), new ArrayList<>());
         }else{
-            return new Team(teamEntity.getId(), teamEntity.getName(), teamEntity.getMembers()
-                    .stream()
-                    .map(userEntityMapper::toDomain)
-                    .collect(Collectors.toList()));
+            return new Team(teamEntity.getId(), teamEntity.getName(), teamEntity.getMembersNickname());
+
         }
     }
 
     public TeamEntity toEntity(Team team){
-        if(team.members() == null) {
+        if(team.membersId() == null) {
             return new TeamEntity(team.id(), team.name(), new ArrayList<>());
         }else {
-            return new TeamEntity(team.id(), team.name(), team.members()
-                    .stream()
-                    .map(userEntityMapper::toEntity)
-                    .collect(Collectors.toList()));
+            return new TeamEntity(team.id(), team.name(), team.membersId());
         }
     }
 
