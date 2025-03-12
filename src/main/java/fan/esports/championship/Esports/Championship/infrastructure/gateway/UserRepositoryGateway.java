@@ -50,12 +50,12 @@ public class UserRepositoryGateway implements UserGateway {
     }
 
     @Override
-    public User findById(String id) {
+        public Optional<User> findById(String id) {
         UserEntity userEntity = userRepository.findById(id).orElse(null);
         if(userEntity != null){
-            return mapper.toDomain(userEntity);
+            return Optional.of(mapper.toDomain(userEntity));
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override

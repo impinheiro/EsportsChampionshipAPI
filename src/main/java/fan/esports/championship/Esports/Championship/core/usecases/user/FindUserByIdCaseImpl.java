@@ -16,6 +16,6 @@ public class FindUserByIdCaseImpl implements FindUserByIdCase {
         if(!userGateway.exists(id)){
             throw new UserNotFoundException("User with id " + id + " not found");
         }
-        return userGateway.findById(id);
+        return userGateway.findById(id).orElse(null);
     }
 }
