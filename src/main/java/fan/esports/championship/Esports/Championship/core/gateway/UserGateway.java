@@ -11,5 +11,7 @@ public interface UserGateway {
     List<User> findAllUsers();
     void delete(String id);
     Optional<User> findById(String id);
+    Optional<User> findByNickname(String nickname);
     boolean exists(String id);
+    boolean existsByNickname(String nickname);
 }

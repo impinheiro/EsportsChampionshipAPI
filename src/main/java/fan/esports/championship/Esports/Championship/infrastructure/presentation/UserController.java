@@ -1,12 +1,8 @@
 package fan.esports.championship.Esports.Championship.infrastructure.presentation;
 
 import fan.esports.championship.Esports.Championship.core.domain.User;
-import fan.esports.championship.Esports.Championship.core.usecases.user.CreateUserCase;
-import fan.esports.championship.Esports.Championship.core.usecases.user.DeleteUserCase;
-import fan.esports.championship.Esports.Championship.core.usecases.user.FindUserByIdCase;
-import fan.esports.championship.Esports.Championship.core.usecases.user.GetUsersCase;
+import fan.esports.championship.Esports.Championship.core.usecases.user.*;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.UserDTO;
-import fan.esports.championship.Esports.Championship.infrastructure.exceptions.UserNotFoundException;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.UserDtoMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -26,6 +22,7 @@ public class UserController {
     private final UserDtoMapper  userDtoMapper;
     private final DeleteUserCase deleteUserCase;
     private final FindUserByIdCase findUserByIdCase;
+    private final FindUserByNicknameCase findUserByNicknameCase;
 
     @PostMapping("create")
     public ResponseEntity<?> createUser(@RequestBody UserDTO userDto){
@@ -58,6 +55,13 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> getUserById(@PathVariable String id){
         User user = findUserByIdCase.execute(id);
         Map<String, Object> response = new HashMap<>();
+        response.put("User: ", userDtoMapper.toDto(user));
+        return ResponseEntity.ok(response);
+    }
+    @GetMapping("/getByNickname/{nickname}")
+    public ResponseEntity<Map<String, Object>> getUserByNickname(@PathVariable String nickname){
+        Map<String,Object> response = new HashMap<>();
+        User user = findUserByNicknameCase.execute(nickname);
         response.put("User: ", userDtoMapper.toDto(user));
         return ResponseEntity.ok(response);
     }

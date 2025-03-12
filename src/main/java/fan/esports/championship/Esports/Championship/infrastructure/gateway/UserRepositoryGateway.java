@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
@@ -51,9 +52,18 @@ public class UserRepositoryGateway implements UserGateway {
 
     @Override
         public Optional<User> findById(String id) {
-        UserEntity userEntity = userRepository.findById(id).orElse(null);
-        if(userEntity != null){
-            return Optional.of(mapper.toDomain(userEntity));
+        UserEntity userFound = userRepository.findById(id).orElse(null);
+        if(userFound != null){
+            return Optional.of(mapper.toDomain(userFound));
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<User> findByNickname(String nickname) {
+        UserEntity userFound = userRepository.findByNickname(nickname).orElse(null);
+        if(userFound != null){
+            return Optional.of(mapper.toDomain(userFound));
         }
         return Optional.empty();
     }
@@ -61,5 +71,10 @@ public class UserRepositoryGateway implements UserGateway {
     @Override
     public boolean exists(String id) {
         return userRepository.findAll().stream().anyMatch(user -> user.getId().equals(id));
+    }
+
+    @Override
+    public boolean existsByNickname(String nickname) {
+        return userRepository.findAll().stream().anyMatch(user -> user.getNickname().equals(nickname));
     }
 }
