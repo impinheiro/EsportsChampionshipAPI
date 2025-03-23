@@ -39,7 +39,7 @@ public class UserController {
         Map<String, Object> response = new HashMap<>();
         String token = loginUserCase.execute(userData.email(), userData.password());
         response.put("Login", "User logged in successfully");
-        response.put("User:", userData.toString());
+        response.put("User:", userData.email());
         response.put("Token", token);
         return ResponseEntity.ok(response);
     }

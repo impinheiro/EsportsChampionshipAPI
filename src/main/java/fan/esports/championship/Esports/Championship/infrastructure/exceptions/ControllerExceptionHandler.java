@@ -17,4 +17,11 @@ public class ControllerExceptionHandler {
         response.put("Error", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(InvalidLoginParameterException.class)
+    public ResponseEntity<?> handleException(InvalidLoginParameterException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("Message", "Please enter valid email or password");
+        response.put("Error", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }
