@@ -1,4 +1,4 @@
 package fan.esports.championship.Esports.Championship.infrastructure.dtos.requests;
 
-public class UserRequestDTO {
+public record UserRequestDTO(String nickname, String email, String password) {
 }
