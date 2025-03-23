@@ -13,6 +13,7 @@ public interface UserGateway {
     Optional<User> findById(String id);
     Optional<User> findByNickname(String nickname);
     String login(String email, String password);
+    boolean isValid(String email,String password);
     boolean exists(String id);
     boolean existsByNickname(String nickname);
 }
