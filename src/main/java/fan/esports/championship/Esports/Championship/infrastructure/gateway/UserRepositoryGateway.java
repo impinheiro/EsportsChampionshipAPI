@@ -5,6 +5,15 @@ import fan.esports.championship.Esports.Championship.core.gateway.UserGateway;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.UserEntityMapper;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.user.UserEntity;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.user.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,20 +22,25 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Component
+public class UserRepositoryGateway implements UserGateway, UserDetailsService {
 
-public class UserRepositoryGateway implements UserGateway {
+    private final UserRepository userRepository;
+    private final UserEntityMapper mapper;
+    private final PasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
-    private UserRepository userRepository;
-    private UserEntityMapper mapper;
-
-    public UserRepositoryGateway(UserRepository userRepository, UserEntityMapper mapper) {
+    public UserRepositoryGateway(UserRepository userRepository, UserEntityMapper mapper, PasswordEncoder passwordEncoder, AuthenticationManager authenticationManager) {
         this.userRepository = userRepository;
         this.mapper = mapper;
+        this.passwordEncoder = passwordEncoder;
+        this.authenticationManager = authenticationManager;
     }
 
     @Override
     public User create(User user) {
         UserEntity userEntity = mapper.toEntity(user);
+        String password = userEntity.getPassword();
+        userEntity.setPassword(passwordEncoder.encode(password));
         UserEntity newUser = userRepository.save(userEntity);
         return mapper.toDomain(newUser);
     }
@@ -67,7 +81,6 @@ public class UserRepositoryGateway implements UserGateway {
         }
         return Optional.empty();
     }
-
     @Override
     public boolean exists(String id) {
         return userRepository.findAll().stream().anyMatch(user -> user.getId().equals(id));
@@ -76,5 +89,15 @@ public class UserRepositoryGateway implements UserGateway {
     @Override
     public boolean existsByNickname(String nickname) {
         return userRepository.findAll().stream().anyMatch(user -> user.getNickname().equals(nickname));
+    }
+    public String login(String username, String password) {
+        UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(username, password);
+        Authentication authentication = authenticationManager.authenticate(userAndPass);
+        UserEntity user = (UserEntity) authentication.getPrincipal();
+        return null;
+    }
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        return userRepository.findByEmail(username).orElseThrow(() -> new UsernameNotFoundException("Usuario ou senha invalido"));
     }
 }

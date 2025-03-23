@@ -29,4 +29,8 @@ public class BeanConfigurationUser {
     public FindUserByNicknameCase findUserByNickname(UserGateway userGateway){
         return new FindUserByNicknameCaseImpl(userGateway);
     }
+    @Bean
+    public LoginUserCase loginUser(UserGateway userGateway){
+        return new LoginUserCaseImpl(userGateway);
+    }
 }

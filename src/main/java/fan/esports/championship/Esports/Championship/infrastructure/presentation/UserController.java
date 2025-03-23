@@ -3,6 +3,7 @@ package fan.esports.championship.Esports.Championship.infrastructure.presentatio
 import fan.esports.championship.Esports.Championship.core.domain.User;
 import fan.esports.championship.Esports.Championship.core.usecases.user.*;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.UserDTO;
+import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.UserRequestDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.UserDtoMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ public class UserController {
     private final DeleteUserCase deleteUserCase;
     private final FindUserByIdCase findUserByIdCase;
     private final FindUserByNicknameCase findUserByNicknameCase;
+    private final LoginUserCase loginUserCase;
 
     @PostMapping("create")
     public ResponseEntity<?> createUser(@RequestBody UserDTO userDto){
@@ -31,6 +33,15 @@ public class UserController {
         createUserCase.execute(user);
         response.put("Created User", userDtoMapper.toDto(user));
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+    @PostMapping("/login")
+    public ResponseEntity<Map<String, Object>> login(@RequestBody UserRequestDTO userData){
+        Map<String, Object> response = new HashMap<>();
+        String token = loginUserCase.execute(userData.email(), userData.password());
+        response.put("Login", "User logged in successfully");
+        response.put("User:", userData.toString());
+        response.put("Token", token);
+        return ResponseEntity.ok(response);
     }
     @GetMapping("findAll")
     public ResponseEntity<?> findAllUsers(){
