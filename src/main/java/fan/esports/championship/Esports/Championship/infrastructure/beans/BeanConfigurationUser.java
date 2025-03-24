@@ -18,8 +18,8 @@ public class BeanConfigurationUser {
         return new GetUsersCaseImpl(userGateway);
     }
     @Bean
-    public DeleteUserCase deleteUser(UserGateway userGateway){
-        return new DeleteUserCaseImpl(userGateway);
+    public DeleteUserCase deleteUser(UserGateway userGateway, AuthenticatedUserCase authenticatedUserCase){
+        return new DeleteUserCaseImpl(userGateway, authenticatedUserCase);
     }
     @Bean
     public FindUserByIdCase findUserById(UserGateway userGateway){
@@ -32,5 +32,9 @@ public class BeanConfigurationUser {
     @Bean
     public LoginUserCase loginUser(UserGateway userGateway){
         return new LoginUserCaseImpl(userGateway);
+    }
+    @Bean
+    public AuthenticatedUserCase authenticatedUserCase(UserGateway userGateway){
+        return new AuthenticatedUserCaseImpl(userGateway);
     }
 }
