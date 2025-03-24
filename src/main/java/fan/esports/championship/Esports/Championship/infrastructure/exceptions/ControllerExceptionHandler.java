@@ -24,4 +24,11 @@ public class ControllerExceptionHandler {
         response.put("Error", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(MissingPermissionException.class)
+    public ResponseEntity<?> handleException(MissingPermissionException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("Message", "You need to have permission to perform this action");
+        response.put("Error", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }
