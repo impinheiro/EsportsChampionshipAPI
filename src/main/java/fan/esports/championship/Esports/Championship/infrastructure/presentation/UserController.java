@@ -31,7 +31,7 @@ public class UserController {
         User user  = userDtoMapper.toDomain(userDto);
         Map<String, Object> response = new HashMap<>();
         createUserCase.execute(user);
-        response.put("Created User", userDtoMapper.toDto(user));
+        response.put("Created User", userDtoMapper.toResponseDto(userDto));
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
     @PostMapping("/login")
@@ -40,7 +40,7 @@ public class UserController {
         String token = loginUserCase.execute(userData.email(), userData.password());
         response.put("Login", "User logged in successfully");
         response.put("User:", userData.email());
-        response.put("Token", token);
+        response.put("token", token);
         return ResponseEntity.ok(response);
     }
     @GetMapping("findAll")
