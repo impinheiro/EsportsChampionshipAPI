@@ -119,6 +119,11 @@ public class UserRepositoryGateway implements UserGateway, UserDetailsService {
     }
 
     @Override
+    public boolean existsByEmail(String email) {
+        return userRepository.findAll().stream().anyMatch(user -> user.getEmail().equals(email));
+    }
+
+    @Override
     public String login(String username, String password) {
         UsernamePasswordAuthenticationToken userAndPass = new UsernamePasswordAuthenticationToken(username, password);
         Authentication authentication = authenticationManager.authenticate(userAndPass);

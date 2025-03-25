@@ -18,4 +18,5 @@ public interface UserGateway {
     boolean isValid(String email,String password);
     boolean exists(String id);
     boolean existsByNickname(String nickname);
+    boolean existsByEmail(String email);
 }
