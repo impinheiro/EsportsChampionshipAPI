@@ -21,18 +21,18 @@ public class TeamRepositoryGateway implements TeamGateway {
 
 
     private final TeamRepository teamRepository;
-    private final UserRepository userRepository;
     private final TeamEntityMapper mapper;
 
-    public TeamRepositoryGateway(TeamRepository teamRepository, UserRepository userRepository, TeamEntityMapper mapper) {
+    public TeamRepositoryGateway(TeamRepository teamRepository, TeamEntityMapper mapper) {
         this.teamRepository = teamRepository;
-        this.userRepository = userRepository;
         this.mapper = mapper;
     }
 
+
     @Override
     public Team findTeamById(String id) {
-        return null;
+        TeamEntity team = teamRepository.findById(id).orElse(null);
+         return mapper.toDomain(team);
     }
 
     @Override
