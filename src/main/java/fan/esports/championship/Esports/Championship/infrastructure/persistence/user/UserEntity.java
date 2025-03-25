@@ -7,6 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -25,6 +26,8 @@ public class UserEntity implements UserDetails {
     private Date birthday;
     private String profilePhoto;
     private UserRole role;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public UserEntity() {
     }
@@ -38,6 +41,19 @@ public class UserEntity implements UserDetails {
         this.birthday = birthday;
         this.profilePhoto = profilePhoto;
         this.role = role;
+    }
+
+    public UserEntity(String id, String name, String email, String nickname, String password, Date birthday, String profilePhoto, UserRole role, LocalDateTime createdAt, LocalDateTime updatedAt) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.nickname = nickname;
+        this.password = password;
+        this.birthday = birthday;
+        this.profilePhoto = profilePhoto;
+        this.role = role;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public String getId() {
@@ -104,6 +120,22 @@ public class UserEntity implements UserDetails {
         this.role = role;
     }
 
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     @Override
     public String toString() {
         return "UserEntity{" +
@@ -115,6 +147,8 @@ public class UserEntity implements UserDetails {
                 ", birthday=" + birthday +
                 ", profilePhoto='" + profilePhoto + '\'' +
                 ", role=" + role +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
                 '}';
     }
 

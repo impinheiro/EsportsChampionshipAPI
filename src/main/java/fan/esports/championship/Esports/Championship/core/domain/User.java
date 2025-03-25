@@ -2,6 +2,7 @@ package fan.esports.championship.Esports.Championship.core.domain;
 
 import fan.esports.championship.Esports.Championship.core.enums.UserRole;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public record User(String id,
@@ -11,5 +12,7 @@ public record User(String id,
                    String password,
                    Date birthday,
                    String profilePhoto,
-                   UserRole role) {
+                   UserRole role,
+                   LocalDateTime createdAt,
+                   LocalDateTime updatedAt) {
 }

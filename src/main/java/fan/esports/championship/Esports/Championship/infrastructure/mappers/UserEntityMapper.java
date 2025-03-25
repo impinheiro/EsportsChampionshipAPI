@@ -14,7 +14,9 @@ public class UserEntityMapper {
                 user.password(),
                 user.birthday(),
                 user.profilePhoto(),
-                user.role());
+                user.role(),
+                user.createdAt(),
+                user.updatedAt());
     }
     public User toDomain(UserEntity userEntity){
         return new User(userEntity.getId(),
@@ -24,6 +26,8 @@ public class UserEntityMapper {
                 userEntity.getPassword(),
                 userEntity.getBirthday(),
                 userEntity.getProfilePhoto(),
-                userEntity.getRole());
+                userEntity.getRole(),
+                userEntity.getCreatedAt(),
+                userEntity.getUpdatedAt());
     }
 }

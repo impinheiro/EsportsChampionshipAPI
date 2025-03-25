@@ -17,7 +17,9 @@ public class UserDtoMapper {
                 user.password(),
                 user.birthday(),
                 user.profilePhoto(),
-                user.role());
+                user.role(),
+                user.createdAt(),
+                user.updatedAt());
     }
     public User toDomain(UserDTO userDto) {
         return new User(
@@ -28,7 +30,9 @@ public class UserDtoMapper {
                 userDto.password(),
                 userDto.birthday(),
                 userDto.profilePhoto(),
-                userDto.role()
+                userDto.role(),
+                userDto.createdAt(),
+                userDto.updatedAt()
         );
     }
     public UserResponseDTO toResponseDto(UserDTO user) {
