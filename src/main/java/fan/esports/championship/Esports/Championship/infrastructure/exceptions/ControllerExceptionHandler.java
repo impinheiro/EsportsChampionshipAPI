@@ -31,4 +31,11 @@ public class ControllerExceptionHandler {
         response.put("Error", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+    @ExceptionHandler(UserAlreadyExistsException.class)
+    public ResponseEntity<?> handleException(UserAlreadyExistsException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("Message", "Something went wrong");
+        response.put("Error", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
 }
