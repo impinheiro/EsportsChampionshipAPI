@@ -60,6 +60,7 @@ public class TeamRepositoryGateway implements TeamGateway {
 
     @Override
     public void deleteTeam(String id) {
-
+        TeamEntity teamEntity = teamRepository.findById(id).orElse(null);
+        teamRepository.delete(teamEntity);
     }
 }
