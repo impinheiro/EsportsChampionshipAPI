@@ -56,7 +56,12 @@ public class UserRepositoryGateway implements UserGateway, UserDetailsService {
 
     @Override
     public User update(User user, String id) {
-        return null;
+        UserEntity userEntity = userRepository.findById(id).orElse(null);
+        userEntity.setEmail(user.email());
+        userEntity.setNickname(user.nickname());
+        userEntity.setName(user.name());
+        userRepository.save(userEntity);
+        return mapper.toDomain(userEntity);
     }
 
     @Override

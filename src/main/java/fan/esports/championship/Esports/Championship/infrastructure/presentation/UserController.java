@@ -25,6 +25,7 @@ public class UserController {
     private final FindUserByIdCase findUserByIdCase;
     private final FindUserByNicknameCase findUserByNicknameCase;
     private final LoginUserCase loginUserCase;
+    private final UpdateUserCase updateUserCase;
 
     @PostMapping("create")
     public ResponseEntity<?> createUser(@RequestBody UserDTO userDto){
@@ -76,5 +77,14 @@ public class UserController {
         response.put("User: ", userDtoMapper.toDto(user));
         return ResponseEntity.ok(response);
     }
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> updateUser(@PathVariable String id, @RequestBody UserDTO userDto){
+        Map<String,Object> response = new HashMap<>();
+        User user = userDtoMapper.toDomain(userDto);
+        updateUserCase.execute(user, id);
+        response.put("Updated User", userDtoMapper.toDto(user));
+        return ResponseEntity.ok(response);
+    }
+
 
 }

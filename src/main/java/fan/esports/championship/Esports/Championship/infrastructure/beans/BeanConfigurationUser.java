@@ -37,4 +37,8 @@ public class BeanConfigurationUser {
     public AuthenticatedUserCase authenticatedUserCase(UserGateway userGateway){
         return new AuthenticatedUserCaseImpl(userGateway);
     }
+    @Bean
+    public UpdateUserCase updateUser(UserGateway userGateway){
+        return new UpdateUserCaseImpl(userGateway);
+    }
 }
