@@ -14,22 +14,22 @@ import java.util.stream.Collectors;
 @Component
 public class TeamDtoMapper {
 
-    private UserDtoMapper userDtoMapper;
+    private UserDtoMapper userMapper;
 
     public Team toDomain (TeamDTO teamDTO){
-        if(teamDTO.membersId() == null) {
-            return new Team(teamDTO.id(), teamDTO.name(), new ArrayList<>());
-        }else{
-            return new Team(teamDTO.id(), teamDTO.name(), teamDTO.membersId());
-        }
-
+        return new Team(teamDTO.id(),
+                teamDTO.name(),
+                teamDTO.membersDto()
+                        .stream()
+                        .map(userMapper::toDomain)
+                        .collect(Collectors.toList()));
     }
     public TeamDTO toDTO(Team team){
-        if(team.membersId() == null) {
-            return new TeamDTO(team.id(), team.name(), new ArrayList<>());
-        }else {
-            return new TeamDTO(team.id(), team.name(),team.membersId());
-        }
-
+        return new TeamDTO(team.id(),
+                team.name(),
+                team.members()
+                        .stream()
+                        .map(userMapper::toDto)
+                        .collect(Collectors.toList()));
     }
 }

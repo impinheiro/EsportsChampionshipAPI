@@ -2,8 +2,10 @@ package fan.esports.championship.Esports.Championship.infrastructure.persistence
 
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.user.UserEntity;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,17 +14,23 @@ public class TeamEntity {
 
     @Id
     private String id;
+    @Indexed(unique = true)
     private String name;
-    private List<String> membersNickname;
+    @Indexed(unique = true)
+    private List<UserEntity> members;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public TeamEntity() {
 
     }
 
-    public TeamEntity(String id, String name, List<String> membersNickname) {
+    public TeamEntity(String id, String name, List<UserEntity> members, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
-        this.membersNickname = membersNickname;
+        this.members = members;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public String getId() {
@@ -41,12 +49,29 @@ public class TeamEntity {
         this.name = name;
     }
 
-    public List<String> getMembersNickname() {
-        return membersNickname;
+
+    public List<UserEntity> getMembers() {
+        return members;
     }
 
-    public void setMembersNickname(List<String> membersNickname) {
-        this.membersNickname = membersNickname;
+    public void setMembers(List<UserEntity> members) {
+        this.members = members;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
     @Override
@@ -54,7 +79,7 @@ public class TeamEntity {
         return "TeamEntity{" +
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
-                ", membersNickname=" + membersNickname +
+                ", members=" + members +
                 '}';
     }
 }

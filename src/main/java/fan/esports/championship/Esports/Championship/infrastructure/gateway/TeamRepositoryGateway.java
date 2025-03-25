@@ -58,6 +58,7 @@ public class TeamRepositoryGateway implements TeamGateway {
     public Team updateTeam(Team team, String id) {
 
         TeamEntity teamEntity = teamRepository.findById(id).orElse(null);
+        teamEntity.setName(team.name());
         teamEntity.setMembers(team.members()
                 .stream()
                 .map(UserEntityMapper::toEntity)

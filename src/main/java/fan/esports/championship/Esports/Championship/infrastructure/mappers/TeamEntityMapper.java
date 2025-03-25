@@ -1,35 +1,38 @@
 package fan.esports.championship.Esports.Championship.infrastructure.mappers;
 
 import fan.esports.championship.Esports.Championship.core.domain.Team;
-import fan.esports.championship.Esports.Championship.core.domain.User;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.team.TeamEntity;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.user.UserEntity;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.stream.Collectors;
+
 
 @Component
 public class TeamEntityMapper {
 
-    private UserEntityMapper userEntityMapper;
+    private UserEntityMapper userMapper;
 
     public Team toDomain (TeamEntity teamEntity){
-        if(teamEntity.getMembersNickname() == null) {
-            return new Team(teamEntity.getId(), teamEntity.getName(), new ArrayList<>());
-        }else{
-            return new Team(teamEntity.getId(), teamEntity.getName(), teamEntity.getMembersNickname());
-
-        }
+        return new Team(teamEntity.getId(),
+                teamEntity.getName(),
+                teamEntity.getMembers()
+                        .stream()
+                        .map(userMapper::toDomain)
+                        .collect(Collectors.toList()),
+                teamEntity.getCreatedAt(),
+                teamEntity.getUpdatedAt());
     }
 
     public TeamEntity toEntity(Team team){
-        if(team.membersId() == null) {
-            return new TeamEntity(team.id(), team.name(), new ArrayList<>());
-        }else {
-            return new TeamEntity(team.id(), team.name(), team.membersId());
-        }
+        return new TeamEntity(team.id(),
+                team.name(),
+                team.members()
+                        .stream()
+                        .map(userMapper::toEntity)
+                        .collect(Collectors.toList()),
+                team.createdAt(),
+                team.updatedAt());
     }
+
 
 }

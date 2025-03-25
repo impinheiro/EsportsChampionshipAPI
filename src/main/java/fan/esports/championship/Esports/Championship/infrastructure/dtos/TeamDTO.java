@@ -1,12 +1,9 @@
 package fan.esports.championship.Esports.Championship.infrastructure.dtos;
 
-import java.util.ArrayList;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
-public record TeamDTO(String id, String name, List<String> membersId) {
-    public TeamDTO{
-        if(membersId == null){
-            membersId = new ArrayList<>();
-        }
-    }
+public record TeamDTO(String id, String name, List<UserDTO> membersDto, LocalDateTime createdAt, LocalDateTime updatedAt) {
+
 }
