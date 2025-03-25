@@ -22,6 +22,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,8 +49,11 @@ public class UserRepositoryGateway implements UserGateway, UserDetailsService {
     @Override
     public User create(User user) {
         UserEntity userEntity = mapper.toEntity(user);
+        userEntity.setCreatedAt(LocalDateTime.now());
+        userEntity.setUpdatedAt(LocalDateTime.now());
         String password = userEntity.getPassword();
         userEntity.setPassword(passwordEncoder.encode(password));
+        userEntity.setRole(UserRole.PLAYER);
         UserEntity newUser = userRepository.save(userEntity);
         return mapper.toDomain(newUser);
     }
@@ -60,6 +64,7 @@ public class UserRepositoryGateway implements UserGateway, UserDetailsService {
         userEntity.setEmail(user.email());
         userEntity.setNickname(user.nickname());
         userEntity.setName(user.name());
+        userEntity.setUpdatedAt(LocalDateTime.now());
         userRepository.save(userEntity);
         return mapper.toDomain(userEntity);
     }
