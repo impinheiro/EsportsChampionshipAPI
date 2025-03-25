@@ -12,6 +12,10 @@ public class TeamEntityMapper {
 
     private UserEntityMapper userMapper;
 
+    public TeamEntityMapper(UserEntityMapper userMapper) {
+        this.userMapper = userMapper;
+    }
+
     public Team toDomain (TeamEntity teamEntity){
         return new Team(teamEntity.getId(),
                 teamEntity.getName(),

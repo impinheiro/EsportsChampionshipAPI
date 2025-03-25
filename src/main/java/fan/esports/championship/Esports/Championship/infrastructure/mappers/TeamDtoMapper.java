@@ -16,13 +16,19 @@ public class TeamDtoMapper {
 
     private UserDtoMapper userMapper;
 
+    public TeamDtoMapper(UserDtoMapper userMapper) {
+        this.userMapper = userMapper;
+    }
+
     public Team toDomain (TeamDTO teamDTO){
         return new Team(teamDTO.id(),
                 teamDTO.name(),
                 teamDTO.membersDto()
                         .stream()
                         .map(userMapper::toDomain)
-                        .collect(Collectors.toList()));
+                        .collect(Collectors.toList()),
+                teamDTO.createdAt(),
+                teamDTO.updatedAt());
     }
     public TeamDTO toDTO(Team team){
         return new TeamDTO(team.id(),
@@ -30,6 +36,8 @@ public class TeamDtoMapper {
                 team.members()
                         .stream()
                         .map(userMapper::toDto)
-                        .collect(Collectors.toList()));
+                        .collect(Collectors.toList()),
+                team.createdAt(),
+                team.updatedAt());
     }
 }

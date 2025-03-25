@@ -24,10 +24,12 @@ public class TeamRepositoryGateway implements TeamGateway {
 
     private final TeamRepository teamRepository;
     private final TeamEntityMapper mapper;
+    private final UserEntityMapper userMapper;
 
-    public TeamRepositoryGateway(TeamRepository teamRepository, TeamEntityMapper mapper) {
+    public TeamRepositoryGateway(TeamRepository teamRepository, TeamEntityMapper mapper, UserEntityMapper userMapper) {
         this.teamRepository = teamRepository;
         this.mapper = mapper;
+        this.userMapper = userMapper;
     }
 
 
@@ -61,7 +63,7 @@ public class TeamRepositoryGateway implements TeamGateway {
         teamEntity.setName(team.name());
         teamEntity.setMembers(team.members()
                 .stream()
-                .map(UserEntityMapper::toEntity)
+                .map(userMapper::toEntity)
                 .collect(Collectors.toList()));
         teamEntity.setUpdatedAt(LocalDateTime.now());
         teamRepository.save(teamEntity);
