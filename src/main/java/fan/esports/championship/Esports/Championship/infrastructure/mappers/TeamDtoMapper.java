@@ -23,7 +23,7 @@ public class TeamDtoMapper {
     public Team toDomain (TeamDTO teamDTO){
         return new Team(teamDTO.id(),
                 teamDTO.name(),
-                teamDTO.membersDto()
+                teamDTO.members()
                         .stream()
                         .map(userMapper::toDomain)
                         .collect(Collectors.toList()),
