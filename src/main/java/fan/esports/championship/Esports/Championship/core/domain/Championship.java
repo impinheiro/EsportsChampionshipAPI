@@ -8,7 +8,8 @@ import java.util.List;
 
 public record Championship(String id, String name, String gameName, ChampionshipType type,
                            Integer capacity, double subscriptionValue, ChampionshipFormat format,
-                           String rules,LocalDateTime startDate, LocalDateTime endDate,
+                           String rules, LocalDateTime startDate, LocalDateTime endDate,
                            String location, String  coverImage, String logoImage,
-                           String awardDescription, List<Registrations> registrations) {
+                           String awardDescription, List<Registration> registrations, LocalDateTime createdAt,
+                           LocalDateTime updatedAt) {
 }

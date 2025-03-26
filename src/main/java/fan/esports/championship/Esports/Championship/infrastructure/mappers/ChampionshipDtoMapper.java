@@ -1,24 +1,28 @@
 package fan.esports.championship.Esports.Championship.infrastructure.mappers;
 
+import fan.esports.championship.Esports.Championship.core.domain.Championship;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.ChampionshipDTO;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.championship.ChampionshipEntity;
+import fan.esports.championship.Esports.Championship.infrastructure.mappers.registration.RegistrationDtoMapper;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
-public class ChampionshipMapper {
-    public static ChampionshipDTO toDto(ChampionshipEntity championship){
-        return new ChampionshipDTO(championship.getId(), championship.getName(), championship.getGameName(),
-                championship.getType(), championship.getCapacity(),
-                championship.getSubscriptionValue(), championship.getFormat(),
-                championship.getRules(), championship.getStartDate(),
-                championship.getEndDate(), championship.getLocation(),
-                championship.getCoverImage(), championship.getLogoImage(),
-                championship.getAwardDescription());
+public class ChampionshipDtoMapper {
+
+    private final RegistrationDtoMapper registrationMapper;
+
+    public ChampionshipDtoMapper(RegistrationDtoMapper registrationMapper) {
+        this.registrationMapper = registrationMapper;
     }
-    public static ChampionshipEntity toEntity(ChampionshipDTO dto){
-        return new ChampionshipEntity(dto.id(), dto.name(), dto.gameName(), dto.championshipType(),
-                dto.capacity(), dto.subscriptionValue(), dto.championshipFormat(), dto.rules(),
-                dto.startDate(), dto.endDate(), dto.location(), dto.coverImage(), dto.logoImage(),
-                dto.awardDescription());
+
+    public Championship toDomain(ChampionshipDTO championshipDTO){
+        return new Championship(championshipDTO.id(), championshipDTO.name(), championshipDTO.gameName(),
+                championshipDTO.type(), championshipDTO.capacity(), championshipDTO.subscriptionValue(),
+                championshipDTO.format(), championshipDTO.rules(), championshipDTO.startDate(), championshipDTO.endDate(),
+                championshipDTO.location(), championshipDTO.coverImage(), championshipDTO.logoImage(),
+                championshipDTO.awardDescription(), championshipDTO.registrations()
+                .stream()
+                .map(registrationMapper::toDomain).collect(Collectors.toList()), championshipDTO.createdAt(), championshipDTO.updatedAt());
     }
 }
