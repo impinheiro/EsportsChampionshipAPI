@@ -3,7 +3,7 @@ package fan.esports.championship.Esports.Championship.infrastructure.gateway;
 import fan.esports.championship.Esports.Championship.core.domain.Team;
 import fan.esports.championship.Esports.Championship.core.gateway.TeamGateway;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.team.TeamEntityMapper;
-import fan.esports.championship.Esports.Championship.infrastructure.mappers.UserEntityMapper;
+import fan.esports.championship.Esports.Championship.infrastructure.mappers.user.UserEntityMapper;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.team.TeamEntity;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.team.TeamRepository;
 import org.springframework.stereotype.Component;

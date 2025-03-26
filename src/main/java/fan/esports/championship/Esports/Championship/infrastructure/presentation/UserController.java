@@ -4,7 +4,7 @@ import fan.esports.championship.Esports.Championship.core.domain.User;
 import fan.esports.championship.Esports.Championship.core.usecases.user.*;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.UserDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.UserRequestDTO;
-import fan.esports.championship.Esports.Championship.infrastructure.mappers.UserDtoMapper;
+import fan.esports.championship.Esports.Championship.infrastructure.mappers.user.UserDtoMapper;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,4 +1,4 @@
-package fan.esports.championship.Esports.Championship.infrastructure.mappers;
+package fan.esports.championship.Esports.Championship.infrastructure.mappers.user;
 
 import fan.esports.championship.Esports.Championship.core.domain.User;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.user.UserEntity;

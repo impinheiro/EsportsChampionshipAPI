@@ -2,7 +2,7 @@ package fan.esports.championship.Esports.Championship.infrastructure.mappers.tea
 
 import fan.esports.championship.Esports.Championship.core.domain.Team;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.TeamDTO;
-import fan.esports.championship.Esports.Championship.infrastructure.mappers.UserDtoMapper;
+import fan.esports.championship.Esports.Championship.infrastructure.mappers.user.UserDtoMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.stream.Collectors;
