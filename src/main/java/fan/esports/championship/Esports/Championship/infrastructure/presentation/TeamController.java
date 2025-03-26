@@ -13,7 +13,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
@@ -35,11 +37,17 @@ public class TeamController {
     }
 
     @PostMapping("create")
-    public ResponseEntity<?> createTeam(@RequestBody TeamDTO teamDto){
+    public ResponseEntity<Map<String,Object>> createTeam(@RequestBody TeamDTO teamDto){
+        Map<String, Object> response = new HashMap<>();
         Team team = mapper.toDomain(teamDto);
+        response.put("Team", team.name());
+        response.put("Team members: ",  team.members()
+                .stream()
+                .map(member -> member.nickname())
+                .toList());
         Team newTeam = createTeamCase.execute(team);
         if(team != null){
-            return ResponseEntity.ok(newTeam);
+            return ResponseEntity.ok(response);
         }else {
             return ResponseEntity.badRequest().build();
         }
@@ -54,10 +62,6 @@ public class TeamController {
         }else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no teams registered yet");
         }
-       /* return teams.stream()
-                .map(mapper::toDTO)
-                .collect(Collectors.toList());
-                */
     }
     @GetMapping("findById/{id}")
     public ResponseEntity<?> findTeamById(@PathVariable String id){
@@ -70,6 +74,11 @@ public class TeamController {
     }
     @PutMapping("update/{id}")
     public ResponseEntity<?> updateTeam(@PathVariable String id, @RequestBody TeamDTO teamDTO){
-        return ResponseEntity.ok(null);
+        Map<String, Object> response = new HashMap<>();
+        Team team = mapper.toDomain(teamDTO);
+        updateTeamCase.execute(team, id);
+        response.put("Message", "Team updated successfully");
+        response.put("Team", updateTeamCase.execute(team, id));
+        return ResponseEntity.ok(response);
     }
 }
