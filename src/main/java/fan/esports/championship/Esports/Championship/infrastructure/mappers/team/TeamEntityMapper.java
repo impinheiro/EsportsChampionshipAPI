@@ -1,6 +1,7 @@
-package fan.esports.championship.Esports.Championship.infrastructure.mappers;
+package fan.esports.championship.Esports.Championship.infrastructure.mappers.team;
 
 import fan.esports.championship.Esports.Championship.core.domain.Team;
+import fan.esports.championship.Esports.Championship.infrastructure.mappers.UserEntityMapper;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.team.TeamEntity;
 import org.springframework.stereotype.Component;
 

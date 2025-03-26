@@ -8,7 +8,7 @@ import fan.esports.championship.Esports.Championship.core.usecases.team.GetAllTe
 import fan.esports.championship.Esports.Championship.core.usecases.team.GetTeamById;
 import fan.esports.championship.Esports.Championship.core.usecases.team.UpdateTeamCase;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.TeamDTO;
-import fan.esports.championship.Esports.Championship.infrastructure.mappers.TeamDtoMapper;
+import fan.esports.championship.Esports.Championship.infrastructure.mappers.team.TeamDtoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

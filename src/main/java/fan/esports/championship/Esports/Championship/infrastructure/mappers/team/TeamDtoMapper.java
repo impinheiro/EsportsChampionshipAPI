@@ -1,14 +1,10 @@
-package fan.esports.championship.Esports.Championship.infrastructure.mappers;
+package fan.esports.championship.Esports.Championship.infrastructure.mappers.team;
 
 import fan.esports.championship.Esports.Championship.core.domain.Team;
-import fan.esports.championship.Esports.Championship.core.domain.User;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.TeamDTO;
-import fan.esports.championship.Esports.Championship.infrastructure.dtos.UserDTO;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.team.TeamEntity;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.user.UserEntity;
+import fan.esports.championship.Esports.Championship.infrastructure.mappers.UserDtoMapper;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 @Component
