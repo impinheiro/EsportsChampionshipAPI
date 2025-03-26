@@ -1,6 +1,7 @@
 package fan.esports.championship.Esports.Championship.infrastructure.beans;
 
 import fan.esports.championship.Esports.Championship.core.gateway.TeamGateway;
+import fan.esports.championship.Esports.Championship.core.gateway.UserGateway;
 import fan.esports.championship.Esports.Championship.core.usecases.team.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,8 +15,8 @@ public class BeanConfigurationTeam {
     }
 
     @Bean
-    public CreateTeamCase createTeamCase(TeamGateway teamGateway) {
-        return new CreateTeamCaseImpl(teamGateway);
+    public CreateTeamCase createTeamCase(TeamGateway teamGateway, UserGateway userGateway) {
+        return new CreateTeamCaseImpl(teamGateway, userGateway);
     }
     @Bean
     public UpdateTeamCase updateTeamCase(TeamGateway teamGateway) {
