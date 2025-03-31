@@ -8,4 +8,5 @@ public interface RegistrationGateway {
     Registration create(Registration registration);
     Registration update(String id, Registration registration);
     Optional<Registration> findById(String id);
+    void delete(String id);
 }
