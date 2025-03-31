@@ -21,4 +21,8 @@ public class BeanConfigurationRegistration {
     public GetRegistrationByIdCase getRegistrationByIdCase(RegistrationGateway registrationGateway){
         return new GetRegistrationByIdCaseImpl(registrationGateway);
     }
+    @Bean
+    public DeleteRegistrationCase deleteRegistrationCase(RegistrationGateway registrationGateway){
+        return new DeleteRegistrationCaseImpl(registrationGateway);
+    }
 }
