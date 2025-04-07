@@ -3,10 +3,10 @@ package fan.esports.championship.Esports.Championship.core.usecases.matches;
 import fan.esports.championship.Esports.Championship.core.domain.Match;
 import fan.esports.championship.Esports.Championship.core.gateway.MatchGateway;
 
-public class FindByIdCaseImpl implements FindByIdCase {
+public class FindMatchByIdCaseImpl implements FindMatchByIdCase {
     private final MatchGateway matchGateway;
 
-    public FindByIdCaseImpl(MatchGateway matchGateway) {
+    public FindMatchByIdCaseImpl(MatchGateway matchGateway) {
         this.matchGateway = matchGateway;
     }
 
