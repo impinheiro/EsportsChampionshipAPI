@@ -1,24 +1,36 @@
 package fan.esports.championship.Esports.Championship.infrastructure.persistence.match;
 
+
+import fan.esports.championship.Esports.Championship.infrastructure.persistence.user.UserEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Document(collection = "matches")
-public class MatchEntity<T> {
+public class MatchEntity{
 
     @Id
     private String id;
     @Indexed(unique = true)
     private String name;
-    private List<T> participants;
+    private List<UserEntity> participants;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    private String matchInfo;
 
-    public MatchEntity(String id, String name, List<T> participants) {
+    public MatchEntity() {
+    }
+
+    public MatchEntity(String id, String name, List<UserEntity> participants, LocalDateTime createdAt, LocalDateTime updatedAt, String matchInfo) {
         this.id = id;
         this.name = name;
         this.participants = participants;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.matchInfo = matchInfo;
     }
 
     public String getId() {
@@ -37,12 +49,36 @@ public class MatchEntity<T> {
         this.name = name;
     }
 
-    public List<T> getParticipants() {
+    public List<UserEntity> getParticipants() {
         return participants;
     }
 
-    public void setParticipants(List<T> participants) {
+    public void setParticipants(List<UserEntity> participants) {
         this.participants = participants;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public String getMatchInfo() {
+        return matchInfo;
+    }
+
+    public void setMatchInfo(String matchInfo) {
+        this.matchInfo = matchInfo;
     }
 
     @Override
@@ -51,6 +87,9 @@ public class MatchEntity<T> {
                 "id='" + id + '\'' +
                 ", name='" + name + '\'' +
                 ", participants=" + participants +
+                ", createdAt=" + createdAt +
+                ", updatedAt=" + updatedAt +
+                ", matchInfo='" + matchInfo + '\'' +
                 '}';
     }
 }

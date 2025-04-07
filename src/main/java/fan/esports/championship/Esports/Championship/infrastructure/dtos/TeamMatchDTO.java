@@ -1,4 +1,11 @@
 package fan.esports.championship.Esports.Championship.infrastructure.dtos;
 
-public class TeamMatchDTO {
+import fan.esports.championship.Esports.Championship.core.domain.Team;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+public record TeamMatchDTO (String id, String name,
+                            List<TeamDTO> participants, LocalDateTime createdAt,
+                            LocalDateTime updatedAt, String matchInfo){
 }

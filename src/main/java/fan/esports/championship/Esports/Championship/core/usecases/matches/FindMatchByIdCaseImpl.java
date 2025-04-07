@@ -12,6 +12,6 @@ public class FindMatchByIdCaseImpl implements FindMatchByIdCase {
 
     @Override
     public Match execute(String id) {
-        return  matchGateway.findById(id);
+        return  matchGateway.findById(id).orElse(null);
     }
 }
