@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/teams")
+@RequestMapping("api/v1/teams")
 public class TeamController {
 
     private final TeamDtoMapper mapper;

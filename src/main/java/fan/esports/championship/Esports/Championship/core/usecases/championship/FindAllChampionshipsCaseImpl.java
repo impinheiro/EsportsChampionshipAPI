@@ -4,6 +4,9 @@ import fan.esports.championship.Esports.Championship.core.domain.Championship;
 
 import java.util.List;
 
-public interface GetChampionshipCase {
-    public List<Championship> execute();
+public class GetChampionshipCaseImpl implements FindChampionshipByIdCase {
+    @Override
+    public List<Championship> execute() {
+        return List.of();
+    }
 }
