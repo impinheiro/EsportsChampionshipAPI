@@ -1,9 +1,8 @@
 package fan.esports.championship.Esports.Championship.infrastructure.persistence.championship;
 
-import fan.esports.championship.Esports.Championship.core.domain.Registration;
+
 import fan.esports.championship.Esports.Championship.core.enums.ChampionshipFormat;
 import fan.esports.championship.Esports.Championship.core.enums.ChampionshipType;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.match.MatchEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -28,13 +27,16 @@ public class ChampionshipEntity {
     private String coverImage;
     private String logoImage;
     private String awardDescription;
-    private List<MatchEntity> matches;
-    private List<Registration> registrations;
+    private List<String> registrationsId;
+    private List<String> matchesId;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
     public ChampionshipEntity() {
+
     }
 
-    public ChampionshipEntity(String id, String name, String gameName, ChampionshipType type, Integer capacity, double subscriptionValue, ChampionshipFormat format, String rules, LocalDateTime startDate, LocalDateTime endDate, String location, String coverImage, String logoImage, String awardDescription) {
+    public ChampionshipEntity(String id, String name, String gameName, ChampionshipType type, Integer capacity, double subscriptionValue, ChampionshipFormat format, String rules, LocalDateTime startDate, LocalDateTime endDate, String location, String coverImage, String logoImage, String awardDescription, List<String> registrationsId, List<String> matchesId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
         this.gameName = gameName;
@@ -49,6 +51,10 @@ public class ChampionshipEntity {
         this.coverImage = coverImage;
         this.logoImage = logoImage;
         this.awardDescription = awardDescription;
+        this.registrationsId = registrationsId;
+        this.matchesId = matchesId;
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
     }
 
     public String getId() {
@@ -163,23 +169,35 @@ public class ChampionshipEntity {
         this.awardDescription = awardDescription;
     }
 
-    @Override
-    public String toString() {
-        return "ChampionshipEntity{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", gameName='" + gameName + '\'' +
-                ", type=" + type +
-                ", capacity=" + capacity +
-                ", subscriptionValue=" + subscriptionValue +
-                ", format=" + format +
-                ", rules='" + rules + '\'' +
-                ", startDate=" + startDate +
-                ", endDate=" + endDate +
-                ", location='" + location + '\'' +
-                ", coverImage='" + coverImage + '\'' +
-                ", logoImage='" + logoImage + '\'' +
-                ", awardDescription='" + awardDescription + '\'' +
-                '}';
+    public List<String> getRegistrationsId() {
+        return registrationsId;
+    }
+
+    public void setRegistrationsId(List<String> registrationsId) {
+        this.registrationsId = registrationsId;
+    }
+
+    public List<String> getMatchesId() {
+        return matchesId;
+    }
+
+    public void setMatchesId(List<String> matchesId) {
+        this.matchesId = matchesId;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }
