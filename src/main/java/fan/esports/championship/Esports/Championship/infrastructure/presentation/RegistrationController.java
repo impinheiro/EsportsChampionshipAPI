@@ -1,12 +1,13 @@
 package fan.esports.championship.Esports.Championship.infrastructure.presentation;
 
 import fan.esports.championship.Esports.Championship.core.domain.Registration;
-import fan.esports.championship.Esports.Championship.core.usecases.registrations.CreateRegistrationCase;
-import fan.esports.championship.Esports.Championship.core.usecases.registrations.DeleteRegistrationCase;
-import fan.esports.championship.Esports.Championship.core.usecases.registrations.GetRegistrationByIdCase;
-import fan.esports.championship.Esports.Championship.core.usecases.registrations.UpdateRegistrationCase;
+import fan.esports.championship.Esports.Championship.core.domain.TeamRegistration;
+import fan.esports.championship.Esports.Championship.core.usecases.registrations.*;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.RegistrationDTO;
+import fan.esports.championship.Esports.Championship.infrastructure.dtos.TeamRegistrationDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.registration.RegistrationDtoMapper;
+import fan.esports.championship.Esports.Championship.infrastructure.mappers.registration.TeamRegistrationDtoMapper;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,17 +19,27 @@ import java.util.Map;
 public class RegistrationController {
 
     private final RegistrationDtoMapper registrationDtoMapper;
+    private final TeamRegistrationDtoMapper teamRegistrationDtoMapper;
     private final CreateRegistrationCase createRegistrationCase;
     private final UpdateRegistrationCase updateRegistrationCase;
     private final GetRegistrationByIdCase getRegistrationByIdCase;
     private final DeleteRegistrationCase deleteRegistrationCase;
+    private final CreateTeamRegistrationCase createTeamRegistrationCase;
+    private final UpdateTeamRegistrationCase updateTeamRegistrationCase;
+    private final FindTeamRegistrationByIdCase findTeamRegistrationByIdCase;
+    private final DeleteTeamRegistrationCase deleteTeamRegistrationCase;
 
-    public RegistrationController(RegistrationDtoMapper registrationDtoMapper, CreateRegistrationCase createRegistrationCase, UpdateRegistrationCase updateRegistrationCase, GetRegistrationByIdCase getRegistrationByIdCase, DeleteRegistrationCase deleteRegistrationCase) {
+    public RegistrationController(RegistrationDtoMapper registrationDtoMapper, TeamRegistrationDtoMapper teamRegistrationDtoMapper, CreateRegistrationCase createRegistrationCase, UpdateRegistrationCase updateRegistrationCase, GetRegistrationByIdCase getRegistrationByIdCase, DeleteRegistrationCase deleteRegistrationCase, CreateTeamRegistrationCase createTeamRegistrationCase, UpdateTeamRegistrationCase updateTeamRegistrationCase, FindTeamRegistrationByIdCase findTeamRegistrationByIdCase, DeleteTeamRegistrationCase deleteTeamRegistrationCase) {
         this.registrationDtoMapper = registrationDtoMapper;
+        this.teamRegistrationDtoMapper = teamRegistrationDtoMapper;
         this.createRegistrationCase = createRegistrationCase;
         this.updateRegistrationCase = updateRegistrationCase;
         this.getRegistrationByIdCase = getRegistrationByIdCase;
         this.deleteRegistrationCase = deleteRegistrationCase;
+        this.createTeamRegistrationCase = createTeamRegistrationCase;
+        this.updateTeamRegistrationCase = updateTeamRegistrationCase;
+        this.findTeamRegistrationByIdCase = findTeamRegistrationByIdCase;
+        this.deleteTeamRegistrationCase = deleteTeamRegistrationCase;
     }
 
     @GetMapping("/getById")
@@ -57,6 +68,7 @@ public class RegistrationController {
         response.put("Success", "Your registration has been updated");
         return ResponseEntity.ok(response);
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> delete(@PathVariable String id) {
         Map<String, Object> response = new HashMap<>();
@@ -64,4 +76,39 @@ public class RegistrationController {
         response.put("Success", "Your registration has been withdrawn");
         return ResponseEntity.ok(response);
     }
+
+    @GetMapping("/teamregistration/findById/{id}")
+    public ResponseEntity<?> findTeamRegistrationById(@PathVariable String id) {
+        Map<String, Object> response = new HashMap<>();
+        TeamRegistration teamRegistration = findTeamRegistrationByIdCase.execute(id);
+        response.put("Registration found: ", teamRegistrationDtoMapper.toDTO(teamRegistration));
+        return ResponseEntity.ok(response);
+    }
+
+    @PostMapping("/teamregistration/create")
+    public ResponseEntity<?> createTeamRegistration(@RequestBody TeamRegistrationDTO teamRegistrationDTO) {
+        Map<String, Object> response = new HashMap<>();
+        TeamRegistration teamRegistration = teamRegistrationDtoMapper.toDomain(teamRegistrationDTO);
+        createTeamRegistrationCase.execute(teamRegistration);
+        response.put("Success", "You have been registered");
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/teamregistration/update/{id}")
+    public ResponseEntity<?> updateTeamRegistration(@PathVariable String id,@RequestBody TeamRegistrationDTO teamRegistrationDTO) {
+        Map<String, Object> response = new HashMap<>();
+        TeamRegistration updatedData = teamRegistrationDtoMapper.toDomain(teamRegistrationDTO);
+        updateTeamRegistrationCase.execute(id, updatedData);
+        response.put("Success", "The registration has been updated");
+        return ResponseEntity.ok(response);
+    }
+
+    @DeleteMapping("/teamregistration/delete/{id}")
+    public ResponseEntity<?> deleteTeamRegistration(@PathVariable String id) {
+        Map<String, Object> response = new HashMap<>();
+        deleteTeamRegistrationCase.execute(id);
+        response.put("Success", "Registration of ID: "+id+" has been deleted");
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
+    }
+
 }

@@ -1,10 +1,14 @@
 package fan.esports.championship.Esports.Championship.infrastructure.gateway;
 
 import fan.esports.championship.Esports.Championship.core.domain.Registration;
+import fan.esports.championship.Esports.Championship.core.domain.TeamRegistration;
 import fan.esports.championship.Esports.Championship.core.gateway.RegistrationGateway;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.registration.RegistrationEntityMapper;
+import fan.esports.championship.Esports.Championship.infrastructure.mappers.registration.TeamRegistrationEntityMapper;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.registration.RegistrationEntity;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.registration.RegistrationRepository;
+import fan.esports.championship.Esports.Championship.infrastructure.persistence.registration.TeamRegistrationEntity;
+import fan.esports.championship.Esports.Championship.infrastructure.persistence.registration.TeamRegistrationRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
@@ -14,10 +18,14 @@ public class RegistrationRepositoryGateway implements RegistrationGateway {
 
     private final RegistrationRepository registrationRepository;
     private final RegistrationEntityMapper registrationEntityMapper;
+    private final TeamRegistrationRepository teamRegistrationRepository;
+    private final TeamRegistrationEntityMapper teamRegistrationEntityMapper;
 
-    public RegistrationRepositoryGateway(RegistrationRepository registrationRepository, RegistrationEntityMapper registrationEntityMapper) {
+    public RegistrationRepositoryGateway(RegistrationRepository registrationRepository, RegistrationEntityMapper registrationEntityMapper, TeamRegistrationRepository teamRegistrationRepository, TeamRegistrationEntityMapper teamRegistrationEntityMapper) {
         this.registrationRepository = registrationRepository;
         this.registrationEntityMapper = registrationEntityMapper;
+        this.teamRegistrationRepository = teamRegistrationRepository;
+        this.teamRegistrationEntityMapper = teamRegistrationEntityMapper;
     }
 
 
@@ -49,5 +57,38 @@ public class RegistrationRepositoryGateway implements RegistrationGateway {
     public void delete(String id) {
         RegistrationEntity toDelete = registrationRepository.findById(id).orElse(null);
         registrationRepository.delete(toDelete);
+    }
+
+    @Override
+    public TeamRegistration createTeamRegistration(TeamRegistration teamRegistration) {
+        TeamRegistrationEntity teamRegistrationData = teamRegistrationEntityMapper.toEntity(teamRegistration);
+        teamRegistrationRepository.save(teamRegistrationData);
+        return teamRegistrationEntityMapper.toDomain(teamRegistrationData);
+    }
+
+    @Override
+    public TeamRegistration updateTeamRegistration(String id, TeamRegistration teamRegistration) {
+        TeamRegistrationEntity teamRegistrationData = teamRegistrationRepository.findById(id).orElse(null);
+        TeamRegistrationEntity updatedData = teamRegistrationEntityMapper.toEntity(teamRegistration);
+        teamRegistrationData.setTeam(updatedData.getTeam());
+        teamRegistrationRepository.save(teamRegistrationData);
+        return teamRegistrationEntityMapper.toDomain(teamRegistrationData);
+    }
+
+    @Override
+    public Optional<TeamRegistration> findTeamRegistrationById(String id) {
+        TeamRegistrationEntity teamRegistrationData = teamRegistrationRepository.findById(id).orElse(null);
+        if (teamRegistrationData != null) {
+            return Optional.of(
+                    teamRegistrationEntityMapper.toDomain(teamRegistrationData)
+            );
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public void deleteTeamRegistration(String id) {
+        TeamRegistrationEntity teamRegistrationData = teamRegistrationRepository.findById(id).orElse(null);
+        teamRegistrationRepository.delete(teamRegistrationData);
     }
 }

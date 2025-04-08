@@ -12,10 +12,17 @@ public class TeamRegistrationDtoMapper {
     public TeamRegistrationDtoMapper(TeamDtoMapper teamDtoMapper) {
         this.teamDtoMapper = teamDtoMapper;
     }
+
     public TeamRegistrationDTO toDTO(TeamRegistration teamRegistration) {
-        return new  TeamRegistrationDTO(teamRegistration.id(), teamDtoMapper.toDTO(teamRegistration.team()));
+        return new  TeamRegistrationDTO(teamRegistration.id(),
+                teamDtoMapper.toDTO(teamRegistration.team())
+        );
     }
+
     public TeamRegistration toDomain(TeamRegistrationDTO teamRegistrationDTO) {
-        return new TeamRegistration(teamRegistrationDTO.id(), teamDtoMapper.toDomain(teamRegistrationDTO.teamDTO()));
+        return new TeamRegistration(teamRegistrationDTO.id(),
+                teamDtoMapper.toDomain(teamRegistrationDTO.teamDTO())
+        );
     }
+
 }
