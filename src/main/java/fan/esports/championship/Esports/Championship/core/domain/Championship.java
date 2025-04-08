@@ -10,6 +10,6 @@ public record Championship(String id, String name, String gameName, Championship
                            Integer capacity, double subscriptionValue, ChampionshipFormat format,
                            String rules, LocalDateTime startDate, LocalDateTime endDate,
                            String location, String  coverImage, String logoImage,
-                           String awardDescription, List<Registration> registrations, LocalDateTime createdAt,
+                           String awardDescription, List<String> registrationsId, LocalDateTime createdAt,
                            LocalDateTime updatedAt) {
 }
