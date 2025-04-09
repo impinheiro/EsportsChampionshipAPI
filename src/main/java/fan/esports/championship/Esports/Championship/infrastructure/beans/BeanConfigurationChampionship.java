@@ -1,6 +1,8 @@
 package fan.esports.championship.Esports.Championship.infrastructure.beans;
 
 import fan.esports.championship.Esports.Championship.core.gateway.ChampionshipGateway;
+import fan.esports.championship.Esports.Championship.core.gateway.MatchGateway;
+import fan.esports.championship.Esports.Championship.core.gateway.RegistrationGateway;
 import fan.esports.championship.Esports.Championship.core.gateway.UserGateway;
 import fan.esports.championship.Esports.Championship.core.usecases.championship.*;
 import org.springframework.context.annotation.Bean;
@@ -32,5 +34,15 @@ public class BeanConfigurationChampionship {
     @Bean
     public FindAllChampionshipsCase findAllChampionshipsCase(ChampionshipGateway championshipGateway) {
         return new FindAllChampionshipsCaseImpl(championshipGateway);
+    }
+
+    @Bean
+    public SubscribeMatchCase subscribeMatchCase(ChampionshipGateway championshipGateway, MatchGateway matchGateway) {
+        return new SubscribeMatchCaseImpl(championshipGateway, matchGateway);
+    }
+
+    @Bean
+    public SubscribeRegistrationCase subscribeRegistrationCase(ChampionshipGateway championshipGateway, RegistrationGateway registrationGateway) {
+        return new SubscribeRegistrationCaseImpl(championshipGateway, registrationGateway);
     }
 }
