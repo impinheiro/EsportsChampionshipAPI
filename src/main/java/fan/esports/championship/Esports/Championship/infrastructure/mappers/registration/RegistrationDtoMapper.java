@@ -14,7 +14,7 @@ public class RegistrationDtoMapper {
     }
 
     public Registration toDomain(RegistrationDTO registrationDTO){
-        return new Registration(registrationDTO.id(),userMapper.toDomain(registrationDTO.userDTO()));
+        return new Registration(registrationDTO.id(),userMapper.toDomain(registrationDTO.user()));
     }
     public RegistrationDTO toDTO(Registration registration){
         return new RegistrationDTO(registration.id(), userMapper.toDto(registration.user()));
