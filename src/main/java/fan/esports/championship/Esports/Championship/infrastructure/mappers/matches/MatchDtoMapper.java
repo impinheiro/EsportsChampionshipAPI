@@ -29,6 +29,7 @@ public class MatchDtoMapper {
                 matchesDTO.matchInfo()
         );
     }
+
     public MatchDTO toDTO(Match match){
         return new MatchDTO(
                 match.id(), match.name(),
@@ -36,8 +37,10 @@ public class MatchDtoMapper {
                         .stream()
                         .map(userMapper::toDto)
                         .collect(Collectors.toList()),
-                match.createdAt(), match.updatedAt(),
+                match.createdAt(),
+                match.updatedAt(),
                 match.matchInfo()
         );
     }
+
 }

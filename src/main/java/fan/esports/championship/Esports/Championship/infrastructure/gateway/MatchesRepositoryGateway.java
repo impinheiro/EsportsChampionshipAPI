@@ -51,18 +51,14 @@ public class MatchesRepositoryGateway implements MatchGateway {
 
     @Override
     public Match update(String id, Match match) {
-        MatchEntity matchToBeUpdated = matchRepository.findById(id).orElse(null);
-        List<UserEntity> participants = match.participants()
-                .stream()
-                .map(userEntityMapper::toEntity)
-                .collect(Collectors.toList()
-                );
-        matchToBeUpdated.setParticipants(participants);
-        matchToBeUpdated.setName(match.name());
-        matchToBeUpdated.setMatchInfo(match.matchInfo());
-        matchToBeUpdated.setUpdatedAt(LocalDateTime.now());
-        matchRepository.save(matchToBeUpdated);
-        return matchEntityMapper.toDomain(matchToBeUpdated);
+        MatchEntity databaseMatch = matchRepository.findById(id).orElse(null);
+        MatchEntity upodatedData = matchEntityMapper.toEntity(match);
+        databaseMatch.setName(upodatedData.getName());
+        databaseMatch.setMatchInfo(upodatedData.getMatchInfo());
+        databaseMatch.setUpdatedAt(LocalDateTime.now());
+        databaseMatch.setParticipants(upodatedData.getParticipants());
+        matchRepository.save(databaseMatch);
+        return matchEntityMapper.toDomain(databaseMatch);
     }
 
     @Override

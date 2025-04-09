@@ -2,7 +2,6 @@ package fan.esports.championship.Esports.Championship.infrastructure.presentatio
 
 import fan.esports.championship.Esports.Championship.core.domain.Match;
 import fan.esports.championship.Esports.Championship.core.domain.TeamMatch;
-import fan.esports.championship.Esports.Championship.core.gateway.MatchGateway;
 import fan.esports.championship.Esports.Championship.core.usecases.matches.*;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.MatchDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.TeamMatchDTO;
@@ -77,7 +76,7 @@ public class MatchController {
         Match match = matchDtoMapper.toDomain(matchDTO);
         updateMatchCase.execute(id, match);
         response.put("Success: ", "Match was updated");
-        response.put("Info: ", matchDTO);
+        response.put("Info: ", matchDtoMapper.toDTO(match));
         return ResponseEntity.ok(response);
     }
 
