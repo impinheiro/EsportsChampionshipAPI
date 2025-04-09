@@ -45,7 +45,13 @@ public class BeanConfigurationRegistration {
     }
 
     @Bean
-    FindTeamRegistrationByIdCase findTeamRegistrationByIdCase(RegistrationGateway registrationGateway){
+    public FindTeamRegistrationByIdCase findTeamRegistrationByIdCase(RegistrationGateway registrationGateway){
         return new FindTeamRegistrationByIdCaseImpl(registrationGateway);
     }
+
+    @Bean
+    public FindAllRegistrationsCase findAllRegistrationsCase(RegistrationGateway registrationGateway){
+        return new FindAllRegistrationsCaseImpl(registrationGateway);
+    }
+
 }

@@ -28,8 +28,9 @@ public class RegistrationController {
     private final UpdateTeamRegistrationCase updateTeamRegistrationCase;
     private final FindTeamRegistrationByIdCase findTeamRegistrationByIdCase;
     private final DeleteTeamRegistrationCase deleteTeamRegistrationCase;
+    private final FindAllRegistrationsCase findAllRegistrationsCase;
 
-    public RegistrationController(RegistrationDtoMapper registrationDtoMapper, TeamRegistrationDtoMapper teamRegistrationDtoMapper, CreateRegistrationCase createRegistrationCase, UpdateRegistrationCase updateRegistrationCase, GetRegistrationByIdCase getRegistrationByIdCase, DeleteRegistrationCase deleteRegistrationCase, CreateTeamRegistrationCase createTeamRegistrationCase, UpdateTeamRegistrationCase updateTeamRegistrationCase, FindTeamRegistrationByIdCase findTeamRegistrationByIdCase, DeleteTeamRegistrationCase deleteTeamRegistrationCase) {
+    public RegistrationController(RegistrationDtoMapper registrationDtoMapper, TeamRegistrationDtoMapper teamRegistrationDtoMapper, CreateRegistrationCase createRegistrationCase, UpdateRegistrationCase updateRegistrationCase, GetRegistrationByIdCase getRegistrationByIdCase, DeleteRegistrationCase deleteRegistrationCase, CreateTeamRegistrationCase createTeamRegistrationCase, UpdateTeamRegistrationCase updateTeamRegistrationCase, FindTeamRegistrationByIdCase findTeamRegistrationByIdCase, DeleteTeamRegistrationCase deleteTeamRegistrationCase, FindAllRegistrationsCase findAllRegistrationsCase) {
         this.registrationDtoMapper = registrationDtoMapper;
         this.teamRegistrationDtoMapper = teamRegistrationDtoMapper;
         this.createRegistrationCase = createRegistrationCase;
@@ -40,14 +41,22 @@ public class RegistrationController {
         this.updateTeamRegistrationCase = updateTeamRegistrationCase;
         this.findTeamRegistrationByIdCase = findTeamRegistrationByIdCase;
         this.deleteTeamRegistrationCase = deleteTeamRegistrationCase;
+        this.findAllRegistrationsCase = findAllRegistrationsCase;
     }
 
-    @GetMapping("/getById")
-    public ResponseEntity<?> findById(String id) {
+
+    @GetMapping("findAll")
+    public ResponseEntity<?> findAll(){
+        Map<String, Object> response = findAllRegistrationsCase.execute();
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<?> findById(@PathVariable String id) {
         Map<String, Object> response = new HashMap<>();
         Registration registration = getRegistrationByIdCase.execute(id);
         response.put("Registration ID: ", registration.id());
-        response.put("Registration owner: ", "Email: "+registration.user().email()+" Nickname: "+registration.user().nickname());
+        response.put("Registration owner: ", "[ Email: "+registration.user().email()+" ] "+ "[ Nickname: "+registration.user().nickname()+ " ]");
         return ResponseEntity.ok(response);
     }
 

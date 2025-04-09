@@ -11,6 +11,8 @@ import fan.esports.championship.Esports.Championship.infrastructure.persistence.
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.registration.TeamRegistrationRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @Component
@@ -90,5 +92,13 @@ public class RegistrationRepositoryGateway implements RegistrationGateway {
     public void deleteTeamRegistration(String id) {
         TeamRegistrationEntity teamRegistrationData = teamRegistrationRepository.findById(id).orElse(null);
         teamRegistrationRepository.delete(teamRegistrationData);
+    }
+
+    @Override
+    public Map<String, Object> findAll() {
+        Map<String, Object> result = new HashMap<>();
+        result.put("User registrations", registrationRepository.findAll());
+        result.put("Team registrations", teamRegistrationRepository.findAll());
+        return result;
     }
 }

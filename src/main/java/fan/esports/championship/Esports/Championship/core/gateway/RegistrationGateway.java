@@ -1,9 +1,9 @@
 package fan.esports.championship.Esports.Championship.core.gateway;
 
 import fan.esports.championship.Esports.Championship.core.domain.Registration;
-import fan.esports.championship.Esports.Championship.core.domain.Team;
 import fan.esports.championship.Esports.Championship.core.domain.TeamRegistration;
 
+import java.util.Map;
 import java.util.Optional;
 
 public interface RegistrationGateway {
@@ -15,4 +15,5 @@ public interface RegistrationGateway {
     TeamRegistration updateTeamRegistration(String id, TeamRegistration teamRegistration);
     Optional<TeamRegistration> findTeamRegistrationById(String id);
     void deleteTeamRegistration(String id);
+    Map<String, Object> findAll();
 }
