@@ -10,6 +10,7 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class ControllerExceptionHandler {
+
     @ExceptionHandler(UserNotFoundException.class)
     public ResponseEntity<?> handleException(UserNotFoundException ex) {
         Map<String, String> response = new HashMap<>();
@@ -17,6 +18,7 @@ public class ControllerExceptionHandler {
         response.put("Error", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
     @ExceptionHandler(InvalidLoginParameterException.class)
     public ResponseEntity<?> handleException(InvalidLoginParameterException ex) {
         Map<String, String> response = new HashMap<>();
@@ -24,6 +26,7 @@ public class ControllerExceptionHandler {
         response.put("Error", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(MissingPermissionException.class)
     public ResponseEntity<?> handleException(MissingPermissionException ex) {
         Map<String, String> response = new HashMap<>();
@@ -31,11 +34,28 @@ public class ControllerExceptionHandler {
         response.put("Error", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
+
     @ExceptionHandler(UserAlreadyExistsException.class)
     public ResponseEntity<?> handleException(UserAlreadyExistsException ex) {
         Map<String, String> response = new HashMap<>();
         response.put("Message", "Something went wrong");
         response.put("Error", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(RegistrationNotFoundException.class)
+    public ResponseEntity<?> handleException(RegistrationNotFoundException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("Message", "Registration not found");
+        response.put("Error", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(MatchNotFoundException.class)
+    public ResponseEntity<?> handleException(MatchNotFoundException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("Message", "Match not found");
+        response.put("Error", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 }

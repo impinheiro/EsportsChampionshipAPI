@@ -1,7 +1,7 @@
 package fan.esports.championship.Esports.Championship.infrastructure.exceptions;
 
-public class MatchNotFoundEx extends RuntimeException {
-    public MatchNotFoundEx(String message) {
+public class MatchNotFoundException extends RuntimeException {
+    public MatchNotFoundException(String message) {
         super(message);
     }
 }
