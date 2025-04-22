@@ -1,5 +1,6 @@
 package fan.esports.championship.Esports.Championship.infrastructure.persistence.user;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fan.esports.championship.Esports.Championship.core.enums.UserRole;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -152,31 +153,37 @@ public class UserEntity implements UserDetails {
                 '}';
     }
 
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of();
     }
 
+    @JsonIgnore
     @Override
     public String getUsername() {
         return "";
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isEnabled() {
         return true;

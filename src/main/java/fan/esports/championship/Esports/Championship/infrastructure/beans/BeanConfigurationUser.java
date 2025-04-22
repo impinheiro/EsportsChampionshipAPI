@@ -41,4 +41,8 @@ public class BeanConfigurationUser {
     public UpdateUserCase updateUser(UserGateway userGateway){
         return new UpdateUserCaseImpl(userGateway);
     }
+    @Bean
+    public PromoteUserCase promoteUser(UserGateway userGateway){
+        return new PromoteUserCaseImpl(userGateway);
+    }
 }

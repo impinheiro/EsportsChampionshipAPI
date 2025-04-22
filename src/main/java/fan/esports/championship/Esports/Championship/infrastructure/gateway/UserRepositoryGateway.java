@@ -69,6 +69,15 @@ public class UserRepositoryGateway implements UserGateway, UserDetailsService {
     }
 
     @Override
+    public User promote(String id, String role) {
+        UserEntity userEntity = userRepository.findById(id).orElse(null);
+        UserRole userRole = UserRole.valueOf(role.toUpperCase());
+        userEntity.setRole(userRole);
+        userRepository.save(userEntity);
+        return mapper.toDomain(userEntity);
+    }
+
+    @Override
     public List<User> findAllUsers() {
         List<UserEntity> userEntityList = userRepository.findAll();
 

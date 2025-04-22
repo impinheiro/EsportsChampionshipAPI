@@ -3,6 +3,7 @@ package fan.esports.championship.Esports.Championship.infrastructure.presentatio
 import fan.esports.championship.Esports.Championship.core.domain.User;
 import fan.esports.championship.Esports.Championship.core.usecases.user.*;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.UserDTO;
+import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.PromotionDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.UserRequestDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.user.UserDtoMapper;
 import lombok.AllArgsConstructor;
@@ -26,6 +27,7 @@ public class UserController {
     private final FindUserByNicknameCase findUserByNicknameCase;
     private final LoginUserCase loginUserCase;
     private final UpdateUserCase updateUserCase;
+    private final PromoteUserCase promoteUserCase;
 
     @PostMapping("create")
     public ResponseEntity<?> createUser(@RequestBody UserDTO userDto){
@@ -35,6 +37,7 @@ public class UserController {
         response.put("Created User", userDtoMapper.toResponseDto(userDto));
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
+
     @PostMapping("/login")
     public ResponseEntity<Map<String, Object>> login(@RequestBody UserRequestDTO userData){
         Map<String, Object> response = new HashMap<>();
@@ -44,6 +47,7 @@ public class UserController {
         response.put("token", token);
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("findAll")
     public ResponseEntity<?> findAllUsers(){
         Map<String,Object> response = new HashMap<>();
@@ -56,6 +60,7 @@ public class UserController {
         response.put("Users list: ", users.stream().map(userDtoMapper::toDto).collect(Collectors.toList()));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable String id){
         Map<String,Object> response = new HashMap<>();
@@ -63,6 +68,7 @@ public class UserController {
         response.put("User ID", id+" was deleted");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+
     @GetMapping("/getById/{id}")
     public ResponseEntity<Map<String, Object>> getUserById(@PathVariable String id){
         User user = findUserByIdCase.execute(id);
@@ -70,6 +76,7 @@ public class UserController {
         response.put("User: ", userDtoMapper.toDto(user));
         return ResponseEntity.ok(response);
     }
+
     @GetMapping("/getByNickname/{nickname}")
     public ResponseEntity<Map<String, Object>> getUserByNickname(@PathVariable String nickname){
         Map<String,Object> response = new HashMap<>();
@@ -77,6 +84,7 @@ public class UserController {
         response.put("User: ", userDtoMapper.toDto(user));
         return ResponseEntity.ok(response);
     }
+
     @PutMapping("/update/{id}")
     public ResponseEntity<?> updateUser(@PathVariable String id, @RequestBody UserDTO userDto){
         Map<String,Object> response = new HashMap<>();
@@ -86,5 +94,13 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
+    @PatchMapping("promote/{id}")
+    public ResponseEntity<?> promoteUser(@PathVariable String id, @RequestBody PromotionDTO promotionDTO){
+        Map<String,Object> response = new HashMap<>();
+        promoteUserCase.execute(id, promotionDTO.role());
+        User user = findUserByIdCase.execute(id);
+        response.put("User was promoted", user.name());
+        return ResponseEntity.ok(response);
+    }
 
 }

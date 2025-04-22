@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface UserGateway {
     User create(User user);
     User update(User user, String id);
+    User promote(String id, String role);
     List<User> findAllUsers();
     void delete(String id);
     Optional<User> findById(String id);
