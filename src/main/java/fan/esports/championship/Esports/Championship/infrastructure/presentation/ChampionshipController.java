@@ -1,9 +1,14 @@
 package fan.esports.championship.Esports.Championship.infrastructure.presentation;
 
 import fan.esports.championship.Esports.Championship.core.domain.Championship;
+import fan.esports.championship.Esports.Championship.core.domain.Registration;
+import fan.esports.championship.Esports.Championship.core.domain.TeamRegistration;
 import fan.esports.championship.Esports.Championship.core.usecases.championship.*;
+import fan.esports.championship.Esports.Championship.core.usecases.registrations.FindRegistrationByIdCase;
+import fan.esports.championship.Esports.Championship.core.usecases.registrations.FindTeamRegistrationByIdCase;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.ChampionshipDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.ChampionshipCreationDto;
+import fan.esports.championship.Esports.Championship.infrastructure.dtos.responses.RegistrationProof;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.championships.ChampionshipDtoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +23,7 @@ import java.util.stream.Collectors;
 @RequestMapping("api/v1/championship")
 public class ChampionshipController {
 
+    private final FindTeamRegistrationByIdCase findTeamRegistrationByIdCase;
     private final ChampionshipDtoMapper mapper;
     private final CreateChampionshipCase createChampionshipCase;
     private final UpdateChampionshipCase updateChampionshipCase;
@@ -26,8 +32,9 @@ public class ChampionshipController {
     private final FindChampionshipByIdCase  findChampionshipByIdCase;
     private final SubscribeRegistrationCase  subscribeRegistrationCase;
     private final SubscribeMatchCase  subscribeMatchCase;
+    private final FindRegistrationByIdCase findRegistrationByIdCase;
 
-    public ChampionshipController(ChampionshipDtoMapper mapper, CreateChampionshipCase createChampionshipCase, UpdateChampionshipCase updateChampionshipCase, DeleteChampionshipCase deleteChampionshipCase, FindAllChampionshipsCase findAllChampionshipsCase, FindChampionshipByIdCase findChampionshipByIdCase, SubscribeRegistrationCase subscribeRegistrationCase, SubscribeMatchCase subscribeMatchCase) {
+    public ChampionshipController(ChampionshipDtoMapper mapper, CreateChampionshipCase createChampionshipCase, UpdateChampionshipCase updateChampionshipCase, DeleteChampionshipCase deleteChampionshipCase, FindAllChampionshipsCase findAllChampionshipsCase, FindChampionshipByIdCase findChampionshipByIdCase, SubscribeRegistrationCase subscribeRegistrationCase, SubscribeMatchCase subscribeMatchCase, FindRegistrationByIdCase findRegistrationByIdCase, FindTeamRegistrationByIdCase findTeamRegistrationByIdCase) {
         this.mapper = mapper;
         this.createChampionshipCase = createChampionshipCase;
         this.updateChampionshipCase = updateChampionshipCase;
@@ -36,6 +43,8 @@ public class ChampionshipController {
         this.findChampionshipByIdCase = findChampionshipByIdCase;
         this.subscribeRegistrationCase = subscribeRegistrationCase;
         this.subscribeMatchCase = subscribeMatchCase;
+        this.findRegistrationByIdCase = findRegistrationByIdCase;
+        this.findTeamRegistrationByIdCase = findTeamRegistrationByIdCase;
     }
 
     @PostMapping("create")
@@ -85,10 +94,26 @@ public class ChampionshipController {
 
     @PatchMapping("subscriberegistration/{championshipId}/{registrationdId}")
     public ResponseEntity<?> subscribeRegistration(@PathVariable String championshipId, @PathVariable String registrationdId){
-        Map<String, Object> response = new HashMap<>();
         Championship subscribedChampionship = subscribeRegistrationCase.execute(championshipId, registrationdId);
-        response.put("Registration submitted: ", mapper.toDto(subscribedChampionship));
-        return ResponseEntity.ok(response);
+        RegistrationProof proof;
+        if(subscribedChampionship.type().toString() == "INDIVIDUAL"){
+            Registration registration = findRegistrationByIdCase.execute(registrationdId);
+            proof = new RegistrationProof(
+                    registration.user().name(),
+                    subscribedChampionship.startDate(),
+                    subscribedChampionship.rules(),
+                    subscribedChampionship.awardDescription()
+            );
+        }else{
+            TeamRegistration registration = findTeamRegistrationByIdCase.execute(registrationdId);
+            proof = new RegistrationProof(
+                    registration.team().name(),
+                    subscribedChampionship.startDate(),
+                    subscribedChampionship.rules(),
+                    subscribedChampionship.awardDescription()
+            );
+        }
+        return ResponseEntity.status(HttpStatus.ACCEPTED).body(proof);
     }
 
     @PatchMapping("subscribematch/{championshipId}/{matchId}")
@@ -99,3 +124,5 @@ public class ChampionshipController {
         return ResponseEntity.ok(response);
     }
 }
+
+
