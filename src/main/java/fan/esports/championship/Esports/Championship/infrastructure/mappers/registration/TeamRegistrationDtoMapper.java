@@ -21,7 +21,7 @@ public class TeamRegistrationDtoMapper {
 
     public TeamRegistration toDomain(TeamRegistrationDTO teamRegistrationDTO) {
         return new TeamRegistration(teamRegistrationDTO.id(),
-                teamDtoMapper.toDomain(teamRegistrationDTO.teamDTO())
+                teamDtoMapper.toDomain(teamRegistrationDTO.team())
         );
     }
 
