@@ -1,6 +1,4 @@
 package fan.esports.championship.Esports.Championship.core.domain;
 
-import java.util.List;
-
-public record Registration(String id, User user) {
+public record Registration (String id, User user){
 }
