@@ -54,4 +54,8 @@ public class BeanConfigurationRegistration {
         return new FindAllRegistrationsCaseImpl(registrationGateway);
     }
 
+    @Bean
+    public FindRegistrationByIdCase findRegistrationByIdCase(RegistrationGateway registrationGateway){
+        return new FindRegistrationByIdCaseImpl(registrationGateway);
+    }
 }
