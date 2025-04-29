@@ -13,6 +13,8 @@ public interface ChampionshipGateway {
      void delete(String id);
      Optional<Championship> findById(String id);
      List<Championship> findAll();
+     List<Championship> findAvailableChampionships();
+     List<Championship> findExpiredChampionships();
      Championship subscribeMatch(String championshipId, String matchId);
      Championship subscribeRegistration(String championshipId, String registrationId);
 }

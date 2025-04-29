@@ -45,4 +45,14 @@ public class BeanConfigurationChampionship {
     public SubscribeRegistrationCase subscribeRegistrationCase(ChampionshipGateway championshipGateway, RegistrationGateway registrationGateway) {
         return new SubscribeRegistrationCaseImpl(championshipGateway, registrationGateway);
     }
+
+    @Bean
+    public FindAvailableChampionshipsCase findAvailableChampionshipsCase(ChampionshipGateway championshipGateway) {
+        return new FindAvailableChampionshipsCaseImpl(championshipGateway);
+    }
+
+    @Bean
+    public FindExpiredChampionshipsCase findExpiredChampionshipsCase(ChampionshipGateway championshipGateway) {
+        return new FindExpiredChampionshipsCaseImpl(championshipGateway);
+    }
 }

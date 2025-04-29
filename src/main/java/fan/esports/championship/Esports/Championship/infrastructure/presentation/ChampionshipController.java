@@ -33,8 +33,10 @@ public class ChampionshipController {
     private final SubscribeRegistrationCase  subscribeRegistrationCase;
     private final SubscribeMatchCase  subscribeMatchCase;
     private final FindRegistrationByIdCase findRegistrationByIdCase;
+    private final FindAvailableChampionshipsCase findAvailableChampionshipsCase;
+    private final FindExpiredChampionshipsCase findExpiredChampionshipsCase;
 
-    public ChampionshipController(ChampionshipDtoMapper mapper, CreateChampionshipCase createChampionshipCase, UpdateChampionshipCase updateChampionshipCase, DeleteChampionshipCase deleteChampionshipCase, FindAllChampionshipsCase findAllChampionshipsCase, FindChampionshipByIdCase findChampionshipByIdCase, SubscribeRegistrationCase subscribeRegistrationCase, SubscribeMatchCase subscribeMatchCase, FindRegistrationByIdCase findRegistrationByIdCase, FindTeamRegistrationByIdCase findTeamRegistrationByIdCase) {
+    public ChampionshipController(ChampionshipDtoMapper mapper, CreateChampionshipCase createChampionshipCase, UpdateChampionshipCase updateChampionshipCase, DeleteChampionshipCase deleteChampionshipCase, FindAllChampionshipsCase findAllChampionshipsCase, FindChampionshipByIdCase findChampionshipByIdCase, SubscribeRegistrationCase subscribeRegistrationCase, SubscribeMatchCase subscribeMatchCase, FindRegistrationByIdCase findRegistrationByIdCase, FindTeamRegistrationByIdCase findTeamRegistrationByIdCase, FindAvailableChampionshipsCase findAvailableChampionshipsCase, FindExpiredChampionshipsCase findExpiredChampionshipsCase) {
         this.mapper = mapper;
         this.createChampionshipCase = createChampionshipCase;
         this.updateChampionshipCase = updateChampionshipCase;
@@ -45,6 +47,8 @@ public class ChampionshipController {
         this.subscribeMatchCase = subscribeMatchCase;
         this.findRegistrationByIdCase = findRegistrationByIdCase;
         this.findTeamRegistrationByIdCase = findTeamRegistrationByIdCase;
+        this.findAvailableChampionshipsCase = findAvailableChampionshipsCase;
+        this.findExpiredChampionshipsCase = findExpiredChampionshipsCase;
     }
 
     @PostMapping("create")
@@ -72,6 +76,20 @@ public class ChampionshipController {
                 .stream()
                 .map(mapper::toDto)
                 .collect(Collectors.toList()));
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("findAvailable")
+    public ResponseEntity<?> findAvailable(){
+        Map<String, Object> response = new HashMap<>();
+        response.put("Available Championships", findAvailableChampionshipsCase.execute());
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("findExpired")
+    public ResponseEntity<?> findAllChampionships(){
+        Map<String, Object> response = new HashMap<>();
+        response.put("Expired Championships", findExpiredChampionshipsCase.execute());
         return ResponseEntity.ok(response);
     }
 

@@ -7,6 +7,7 @@ import fan.esports.championship.Esports.Championship.infrastructure.persistence.
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.championship.ChampionshipRepository;
 import org.springframework.stereotype.Component;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -121,6 +122,25 @@ public class ChampionshipRepositoryGateway implements ChampionshipGateway {
     }
 
     @Override
+    public List<Championship> findAvailableChampionships() {
+        List<ChampionshipEntity> championships = championshipRepository.findAll()
+                .stream()
+                .filter(championshipEntity -> championshipEntity.getEndDate().isAfter(LocalDateTime.now()) ||
+                        championshipEntity.getRegistrationsId().size()<championshipEntity.getCapacity())
+                .collect(Collectors.toList());
+        return championships.stream().map(mapper::toDomain).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Championship> findExpiredChampionships() {
+        List<ChampionshipEntity> championships = championshipRepository.findAll()
+                .stream()
+                .filter(championshipEntity -> championshipEntity.getEndDate().isBefore(LocalDateTime.now()))
+                .collect(Collectors.toList());
+        return championships.stream().map(mapper::toDomain).collect(Collectors.toList());
+    }
+
+    @Override
     public Championship subscribeMatch(String championshipId, String matchId) {
         ChampionshipEntity subscribedChampionship = championshipRepository.findById(championshipId).orElse(null);
         List<String> matchesIds = new ArrayList<>();
@@ -137,14 +157,16 @@ public class ChampionshipRepositoryGateway implements ChampionshipGateway {
     @Override
     public Championship subscribeRegistration(String championshipId, String registrationId) {
         ChampionshipEntity subscribedChampionship = championshipRepository.findById(championshipId).orElse(null);
-        List<String> registrationIds = new ArrayList<>();
-        if (subscribedChampionship != null) {
-            registrationIds =  subscribedChampionship.getRegistrationsId();
-            registrationIds.add(registrationId);
-            subscribedChampionship.setRegistrationsId(registrationIds);
-            championshipRepository.save(subscribedChampionship);
-            return mapper.toDomain(subscribedChampionship);
+        if(subscribedChampionship != null && subscribedChampionship.getRegistrationsId().size() < subscribedChampionship.getCapacity()){
+            List<String> registrationIds = new ArrayList<>();
+                registrationIds =  subscribedChampionship.getRegistrationsId();
+                registrationIds.add(registrationId);
+                subscribedChampionship.setRegistrationsId(registrationIds);
+                championshipRepository.save(subscribedChampionship);
+                return mapper.toDomain(subscribedChampionship);
+            }
+         return null;
         }
-        return null;
-    }
 }
+
+
