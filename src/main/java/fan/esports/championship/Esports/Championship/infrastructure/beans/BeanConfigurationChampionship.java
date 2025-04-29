@@ -55,4 +55,19 @@ public class BeanConfigurationChampionship {
     public FindExpiredChampionshipsCase findExpiredChampionshipsCase(ChampionshipGateway championshipGateway) {
         return new FindExpiredChampionshipsCaseImpl(championshipGateway);
     }
+
+    @Bean
+    public FindByGameNameCase findByGameNameCase(ChampionshipGateway championshipGateway) {
+        return new FindByGameNameCaseImpl(championshipGateway);
+    }
+    @Bean
+    public FindByChampionshipFormatCase findByChampionshipFormatCase(ChampionshipGateway championshipGateway) {
+        return new FindByChampionshipFormatCaseImpl(championshipGateway);
+    }
+
+    @Bean
+    public FindByChampionshipTypeCase findByChampionshipTypeCase(ChampionshipGateway championshipGateway) {
+        return new FindByChampionshipTypeCaseImpl(championshipGateway);
+    }
+
 }

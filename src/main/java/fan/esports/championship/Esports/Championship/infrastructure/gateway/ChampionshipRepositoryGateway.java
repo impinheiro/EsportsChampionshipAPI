@@ -7,7 +7,6 @@ import fan.esports.championship.Esports.Championship.infrastructure.persistence.
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.championship.ChampionshipRepository;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -138,6 +137,36 @@ public class ChampionshipRepositoryGateway implements ChampionshipGateway {
                 .filter(championshipEntity -> championshipEntity.getEndDate().isBefore(LocalDateTime.now()))
                 .collect(Collectors.toList());
         return championships.stream().map(mapper::toDomain).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Championship> findByGameName(String gameName) {
+        List<ChampionshipEntity> championships = championshipRepository.findByGameName(gameName);
+        return championships
+                .stream()
+                .map(mapper::toDomain)
+                .collect(Collectors.toList()
+                );
+    }
+
+    @Override
+    public List<Championship> findByChampionshipType(String championshipType) {
+        List<ChampionshipEntity> championships = championshipRepository.findByType(championshipType);
+        return championships
+                .stream()
+                .map(mapper::toDomain)
+                .collect(Collectors.toList()
+                );
+    }
+
+    @Override
+    public List<Championship> findByChampionshipFormat(String championshipFormat) {
+        List<ChampionshipEntity> championships = championshipRepository.findByFormat(championshipFormat);
+        return championships
+                .stream()
+                .map(mapper::toDomain)
+                .collect(Collectors.toList()
+                );
     }
 
     @Override
