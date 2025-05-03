@@ -2,9 +2,11 @@ package fan.esports.championship.Esports.Championship.infrastructure.gateway;
 
 import fan.esports.championship.Esports.Championship.core.domain.Championship;
 import fan.esports.championship.Esports.Championship.core.gateway.ChampionshipGateway;
+import fan.esports.championship.Esports.Championship.infrastructure.config.JWTUserData;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.championships.ChampionShipEntityMapper;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.championship.ChampionshipEntity;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.championship.ChampionshipRepository;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -27,6 +29,9 @@ public class ChampionshipRepositoryGateway implements ChampionshipGateway {
     @Override
     public Championship create(Championship championship) {
         ChampionshipEntity newChampionship = mapper.toEntity(championship);
+        JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userId = userData.id().replaceAll("^\"|\"$", "");
+        newChampionship.setCreatedBy(userId);
         newChampionship.setCreatedAt(LocalDateTime.now());
         newChampionship.setUpdatedAt(LocalDateTime.now());
         newChampionship.setRegistrationsId(new ArrayList<>());

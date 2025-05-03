@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public record Championship(String id,
+                           String createdBy,
                            String name,
                            String gameName,
                            ChampionshipType type,

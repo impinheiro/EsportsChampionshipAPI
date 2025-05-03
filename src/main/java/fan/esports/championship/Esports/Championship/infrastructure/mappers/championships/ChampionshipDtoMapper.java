@@ -14,6 +14,7 @@ public class ChampionshipDtoMapper {
     public Championship toDomain(ChampionshipDTO dto) {
         return new Championship(
                 dto.id(),
+                dto.createdBy(),
                 dto.name(),
                 dto.gameName(),
                 dto.type(),
@@ -37,6 +38,7 @@ public class ChampionshipDtoMapper {
     public ChampionshipDTO toDto(Championship championship) {
         return new ChampionshipDTO(
                 championship.id(),
+                championship.createdBy(),
                 championship.name(),
                 championship.gameName(),
                 championship.type(),
@@ -59,6 +61,7 @@ public class ChampionshipDtoMapper {
 
     public Championship toDomain(ChampionshipCreationDto championship) {
         return new Championship(
+                null,
                 null,
                 championship.name(),
                 championship.gameName(),

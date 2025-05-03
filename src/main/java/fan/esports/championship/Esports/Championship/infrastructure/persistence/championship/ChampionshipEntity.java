@@ -1,6 +1,7 @@
 package fan.esports.championship.Esports.Championship.infrastructure.persistence.championship;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import fan.esports.championship.Esports.Championship.core.enums.ChampionshipFormat;
 import fan.esports.championship.Esports.Championship.core.enums.ChampionshipType;
 import org.springframework.data.annotation.Id;
@@ -14,6 +15,8 @@ public class ChampionshipEntity {
 
     @Id
     private String id;
+    @JsonIgnore
+    private String createdBy;
     private String name;
     private String gameName;
     private ChampionshipType type;
@@ -36,8 +39,9 @@ public class ChampionshipEntity {
 
     }
 
-    public ChampionshipEntity(String id, String name, String gameName, ChampionshipType type, Integer capacity, double subscriptionValue, ChampionshipFormat format, String rules, LocalDateTime startDate, LocalDateTime endDate, String location, String coverImage, String logoImage, String awardDescription, List<String> registrationsId, List<String> matchesId, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public ChampionshipEntity(String id, String createdBy, String name, String gameName, ChampionshipType type, Integer capacity, double subscriptionValue, ChampionshipFormat format, String rules, LocalDateTime startDate, LocalDateTime endDate, String location, String coverImage, String logoImage, String awardDescription, List<String> registrationsId, List<String> matchesId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
+        this.createdBy = createdBy;
         this.name = name;
         this.gameName = gameName;
         this.type = type;
@@ -63,6 +67,14 @@ public class ChampionshipEntity {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 
     public String getName() {

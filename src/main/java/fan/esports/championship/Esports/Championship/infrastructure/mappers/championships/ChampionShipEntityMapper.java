@@ -10,6 +10,7 @@ public class ChampionShipEntityMapper {
     public Championship toDomain(ChampionshipEntity championshipData){
         return new Championship(
                 championshipData.getId(),
+                championshipData.getCreatedBy(),
                 championshipData.getName(),
                 championshipData.getGameName(),
                 championshipData.getType(),
@@ -32,6 +33,7 @@ public class ChampionShipEntityMapper {
     public ChampionshipEntity toEntity(Championship championship){
         return new ChampionshipEntity(
                 championship.id(),
+                championship.createdBy(),
                 championship.name(),
                 championship.gameName(),
                 championship.type(),
