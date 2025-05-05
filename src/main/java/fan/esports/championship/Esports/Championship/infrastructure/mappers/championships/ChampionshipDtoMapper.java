@@ -3,6 +3,7 @@ package fan.esports.championship.Esports.Championship.infrastructure.mappers.cha
 import fan.esports.championship.Esports.Championship.core.domain.Championship;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.ChampionshipDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.ChampionshipCreationDto;
+import fan.esports.championship.Esports.Championship.infrastructure.dtos.responses.ChampionshipInfo;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.registration.RegistrationDtoMapper;
 import org.springframework.stereotype.Component;
 
@@ -81,5 +82,25 @@ public class ChampionshipDtoMapper {
                 null,
                 null
         );
+    }
+
+    public ChampionshipInfo toInfo(Championship dto) {
+        Integer availableVacancies = calculateVacancies(dto);
+        return new ChampionshipInfo(
+                dto.name(),
+                dto.gameName(),
+                dto.type(),
+                dto.format(),
+                dto.rules(),
+                dto.awardDescription(),
+                dto.capacity(),
+                availableVacancies
+                );
+    }
+
+    public static Integer calculateVacancies(Championship championshipDTO) {
+        Integer vacancies = championshipDTO.capacity();
+        Integer registrations = championshipDTO.registrationsId().size();
+        return vacancies - registrations;
     }
 }

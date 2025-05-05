@@ -88,7 +88,11 @@ public class ChampionshipController {
     @GetMapping("findAvailable")
     public ResponseEntity<?> findAvailable(){
         Map<String, Object> response = new HashMap<>();
-        response.put("Available Championships", findAvailableChampionshipsCase.execute());
+        List<Championship> foundChampionships = findAvailableChampionshipsCase.execute();
+        response.put("Available Championships", foundChampionships
+                .stream()
+                .map(mapper::toInfo)
+                .collect(Collectors.toList()));
         return ResponseEntity.ok(response);
     }
 
