@@ -2,8 +2,8 @@ package fan.esports.championship.Esports.Championship.infrastructure.beans;
 
 import fan.esports.championship.Esports.Championship.core.gateway.ChampionshipGateway;
 import fan.esports.championship.Esports.Championship.core.gateway.UserGateway;
-import fan.esports.championship.Esports.Championship.core.usecases.championship.promoters.FindProprietaryChampionshipsCase;
-import fan.esports.championship.Esports.Championship.core.usecases.championship.promoters.FindProprietaryChampionshipsCaseImpl;
+import fan.esports.championship.Esports.Championship.core.usecases.promoters.FindProprietaryChampionshipsCase;
+import fan.esports.championship.Esports.Championship.core.usecases.promoters.FindProprietaryChampionshipsCaseImpl;
 import fan.esports.championship.Esports.Championship.core.usecases.user.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

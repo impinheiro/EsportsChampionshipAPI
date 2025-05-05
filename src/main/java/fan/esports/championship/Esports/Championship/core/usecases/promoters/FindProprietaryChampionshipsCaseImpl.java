@@ -1,4 +1,4 @@
-package fan.esports.championship.Esports.Championship.core.usecases.championship.promoters;
+package fan.esports.championship.Esports.Championship.core.usecases.promoters;
 
 import fan.esports.championship.Esports.Championship.core.domain.Championship;
 import fan.esports.championship.Esports.Championship.core.gateway.ChampionshipGateway;

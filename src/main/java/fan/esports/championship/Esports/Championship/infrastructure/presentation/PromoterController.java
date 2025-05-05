@@ -1,7 +1,7 @@
 package fan.esports.championship.Esports.Championship.infrastructure.presentation;
 
 import fan.esports.championship.Esports.Championship.core.domain.Championship;
-import fan.esports.championship.Esports.Championship.core.usecases.championship.promoters.FindProprietaryChampionshipsCase;
+import fan.esports.championship.Esports.Championship.core.usecases.promoters.FindProprietaryChampionshipsCase;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
