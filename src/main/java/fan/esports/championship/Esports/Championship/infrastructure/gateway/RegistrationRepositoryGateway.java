@@ -2,6 +2,7 @@ package fan.esports.championship.Esports.Championship.infrastructure.gateway;
 
 import fan.esports.championship.Esports.Championship.core.domain.Registration;
 import fan.esports.championship.Esports.Championship.core.domain.TeamRegistration;
+import fan.esports.championship.Esports.Championship.core.enums.RegistrationStatus;
 import fan.esports.championship.Esports.Championship.core.gateway.RegistrationGateway;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.registration.RegistrationEntityMapper;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.registration.TeamRegistrationEntityMapper;
@@ -34,6 +35,7 @@ public class RegistrationRepositoryGateway implements RegistrationGateway {
     @Override
     public Registration create(Registration registration) {
         RegistrationEntity newRegistration = registrationEntityMapper.toEntity(registration);
+        newRegistration.setStatus(RegistrationStatus.PENDING);
         registrationRepository.save(newRegistration);
         return registrationEntityMapper.toDomain(newRegistration);
     }

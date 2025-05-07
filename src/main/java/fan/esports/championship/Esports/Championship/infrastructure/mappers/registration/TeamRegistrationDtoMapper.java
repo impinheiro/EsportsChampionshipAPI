@@ -14,14 +14,18 @@ public class TeamRegistrationDtoMapper {
     }
 
     public TeamRegistrationDTO toDTO(TeamRegistration teamRegistration) {
-        return new  TeamRegistrationDTO(teamRegistration.id(),
-                teamDtoMapper.toDTO(teamRegistration.team())
+        return new  TeamRegistrationDTO(
+                teamRegistration.id(),
+                teamDtoMapper.toDTO(teamRegistration.team()),
+                teamRegistration.status()
         );
     }
 
     public TeamRegistration toDomain(TeamRegistrationDTO teamRegistrationDTO) {
-        return new TeamRegistration(teamRegistrationDTO.id(),
-                teamDtoMapper.toDomain(teamRegistrationDTO.team())
+        return new TeamRegistration(
+                teamRegistrationDTO.id(),
+                teamDtoMapper.toDomain(teamRegistrationDTO.team()),
+                teamRegistrationDTO.status()
         );
     }
 

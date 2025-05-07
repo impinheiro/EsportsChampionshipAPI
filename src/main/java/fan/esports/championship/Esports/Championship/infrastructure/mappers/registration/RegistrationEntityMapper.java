@@ -15,9 +15,9 @@ public class RegistrationEntityMapper {
     }
 
     public RegistrationEntity toEntity(Registration registration) {
-        return new RegistrationEntity(userEntityMapper.toEntity(registration.user()),registration.id());
+        return new RegistrationEntity(registration.id(), userEntityMapper.toEntity(registration.user()), registration.status());
     }
     public Registration toDomain(RegistrationEntity registrationEntity) {
-        return new Registration(registrationEntity.getId(), userEntityMapper.toDomain(registrationEntity.getUser()));
+        return new Registration(registrationEntity.getId(), userEntityMapper.toDomain(registrationEntity.getUser()), registrationEntity.getStatus());
     }
 }

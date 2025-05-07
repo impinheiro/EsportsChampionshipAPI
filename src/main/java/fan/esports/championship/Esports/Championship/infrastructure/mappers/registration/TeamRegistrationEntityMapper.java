@@ -16,14 +16,16 @@ public class TeamRegistrationEntityMapper {
     public TeamRegistration toDomain(TeamRegistrationEntity teamRegistrationEntity){
         return new TeamRegistration(
                 teamRegistrationEntity.getId(),
-                teamEntityMapper.toDomain(teamRegistrationEntity.getTeam())
+                teamEntityMapper.toDomain(teamRegistrationEntity.getTeam()),
+                teamRegistrationEntity.getStatus()
         );
     }
 
     public TeamRegistrationEntity toEntity(TeamRegistration teamRegistration){
         return new TeamRegistrationEntity(
                 teamRegistration.id(),
-                teamEntityMapper.toEntity(teamRegistration.team())
+                teamEntityMapper.toEntity(teamRegistration.team()),
+                teamRegistration.status()
         );
     }
 }
