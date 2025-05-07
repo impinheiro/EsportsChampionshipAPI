@@ -56,9 +56,4 @@ public class BeanConfigurationUser {
         return new PromoteUserCaseImpl(userGateway);
     }
 
-    @Bean
-    public FindProprietaryChampionshipsCase findProprietaryChampionshipsCase(ChampionshipGateway championshipGateway, UserGateway userGateway){
-        return new FindProprietaryChampionshipsCaseImpl(championshipGateway, userGateway);
-    }
-
 }
