@@ -44,7 +44,7 @@ public class MatchesRepositoryGateway implements MatchGateway {
         MatchEntity matchEntity = matchEntityMapper.toEntity(match);
         matchEntity.setCreatedAt(LocalDateTime.now());
         matchEntity.setUpdatedAt(LocalDateTime.now());
-        matchEntity.setMatchInfo("Winner(s): ");
+        matchEntity.setMatchResults(null);
         matchRepository.save(matchEntity);
         return matchEntityMapper.toDomain(matchEntity);
     }
@@ -54,7 +54,7 @@ public class MatchesRepositoryGateway implements MatchGateway {
         MatchEntity databaseMatch = matchRepository.findById(id).orElse(null);
         MatchEntity upodatedData = matchEntityMapper.toEntity(match);
         databaseMatch.setName(upodatedData.getName());
-        databaseMatch.setMatchInfo(upodatedData.getMatchInfo());
+        databaseMatch.setMatchResults(upodatedData.getMatchResults());
         databaseMatch.setUpdatedAt(LocalDateTime.now());
         databaseMatch.setParticipants(upodatedData.getParticipants());
         matchRepository.save(databaseMatch);
@@ -88,7 +88,7 @@ public class MatchesRepositoryGateway implements MatchGateway {
     @Override
     public TeamMatch createTeamMatch(TeamMatch teamMatch) {
         TeamMatchEntity teamMatchEntity = teamMatchEntityMapper.toEntity(teamMatch);
-        teamMatchEntity.setMatchInfo("Winner(s): ");
+        teamMatchEntity.setMatchResults(null);
         teamMatchEntity.setCreatedAt(LocalDateTime.now());
         teamMatchEntity.setUpdatedAt(LocalDateTime.now());
         teamMatchRepository.save(teamMatchEntity);
@@ -101,7 +101,7 @@ public class MatchesRepositoryGateway implements MatchGateway {
         List<TeamEntity> participants = teamMatch.participants().stream().map(teamEntityMapper::toEntity).collect(Collectors.toList());
         teamMatchEntity.setParticipants(participants);
         teamMatchEntity.setName(teamMatch.name());
-        teamMatchEntity.setMatchInfo(teamMatch.matchInfo());
+        teamMatchEntity.setMatchResults(teamMatch.matchResults());
         teamMatchEntity.setUpdatedAt(LocalDateTime.now());
         teamMatchRepository.save(teamMatchEntity);
         return teamMatchEntityMapper.toDomain(teamMatchEntity);

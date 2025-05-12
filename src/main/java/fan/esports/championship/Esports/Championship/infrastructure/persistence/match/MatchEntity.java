@@ -1,6 +1,7 @@
 package fan.esports.championship.Esports.Championship.infrastructure.persistence.match;
 
 
+import fan.esports.championship.Esports.Championship.core.domain.MatchResults;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.user.UserEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -19,18 +20,18 @@ public class MatchEntity{
     private List<UserEntity> participants;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private String matchInfo;
+    private MatchResults matchResults;
 
     public MatchEntity() {
     }
 
-    public MatchEntity(String id, String name, List<UserEntity> participants, LocalDateTime createdAt, LocalDateTime updatedAt, String matchInfo) {
+    public MatchEntity(String id, String name, List<UserEntity> participants, LocalDateTime createdAt, LocalDateTime updatedAt, MatchResults matchResults) {
         this.id = id;
         this.name = name;
         this.participants = participants;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.matchInfo = matchInfo;
+        this.matchResults = matchResults;
     }
 
     public String getId() {
@@ -73,23 +74,11 @@ public class MatchEntity{
         this.updatedAt = updatedAt;
     }
 
-    public String getMatchInfo() {
-        return matchInfo;
+    public MatchResults getMatchResults() {
+        return matchResults;
     }
 
-    public void setMatchInfo(String matchInfo) {
-        this.matchInfo = matchInfo;
-    }
-
-    @Override
-    public String toString() {
-        return "MatchEntity{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", participants=" + participants +
-                ", createdAt=" + createdAt +
-                ", updatedAt=" + updatedAt +
-                ", matchInfo='" + matchInfo + '\'' +
-                '}';
+    public void setMatchResults(MatchResults matchResults) {
+        this.matchResults = matchResults;
     }
 }

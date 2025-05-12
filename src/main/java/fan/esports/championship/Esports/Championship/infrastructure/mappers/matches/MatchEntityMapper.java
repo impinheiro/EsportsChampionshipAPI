@@ -26,7 +26,7 @@ public class MatchEntityMapper {
                         .collect(Collectors.toList()),
                 matchEntity.getCreatedAt(),
                 matchEntity.getUpdatedAt(),
-                matchEntity.getMatchInfo()
+                matchEntity.getMatchResults()
         );
     }
     public MatchEntity toEntity(Match match){
@@ -39,7 +39,7 @@ public class MatchEntityMapper {
                         .collect(Collectors.toList()),
                 match.createdAt(),
                 match.updatedAt(),
-                match.matchInfo()
+                match.matchResults()
         );
     }
 }

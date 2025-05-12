@@ -26,7 +26,7 @@ public class MatchDtoMapper {
                         .map(userMapper::toDomain)
                         .collect(Collectors.toList())
                 , matchesDTO.createdAt(), matchesDTO.updatedAt(),
-                matchesDTO.matchInfo()
+                matchesDTO.matchResults()
         );
     }
 
@@ -39,7 +39,7 @@ public class MatchDtoMapper {
                         .collect(Collectors.toList()),
                 match.createdAt(),
                 match.updatedAt(),
-                match.matchInfo()
+                match.matchResults()
         );
     }
 

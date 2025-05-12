@@ -26,7 +26,7 @@ public class TeamMatchEntityMapper {
                         .collect(Collectors.toList()),
                 teamMatchEntity.getCreatedAt(),
                 teamMatchEntity.getUpdatedAt(),
-                teamMatchEntity.getMatchInfo()
+                teamMatchEntity.getMatchResults()
         );
     }
     public TeamMatchEntity toEntity(TeamMatch teamMatch){
@@ -38,7 +38,7 @@ public class TeamMatchEntityMapper {
                         .map(teamMapper::toEntity)
                         .collect(Collectors.toList()),
                 teamMatch.createdAt(),
-                teamMatch.updatedAt(), teamMatch.matchInfo()
+                teamMatch.updatedAt(), teamMatch.matchResults()
         );
     }
 }

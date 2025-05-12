@@ -26,7 +26,7 @@ public class TeamMatchDtoMapper {
                         .collect(Collectors.toList()),
                 teamMatchDTO.createdAt(),
                 teamMatchDTO.updatedAt(),
-                teamMatchDTO.matchInfo()
+                teamMatchDTO.matchResults()
         );
     }
 
@@ -40,7 +40,7 @@ public class TeamMatchDtoMapper {
                         .collect(Collectors.toList()),
                 teamMatch.createdAt(),
                 teamMatch.updatedAt(),
-                teamMatch.matchInfo()
+                teamMatch.matchResults()
         );
     }
 }
