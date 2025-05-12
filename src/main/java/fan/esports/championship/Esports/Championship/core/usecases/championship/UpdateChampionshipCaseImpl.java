@@ -23,9 +23,7 @@ public class UpdateChampionshipCaseImpl implements UpdateChampionshipCase {
         }
         if (userGateway.getAuthenticatedUser().role().name().equals("PROMOTER")) {
             Championship ch = championshipGateway.findById(id).orElse(null);
-            if (ch != null && !ch.createdBy().equals(authenticatedId)) {
-                throw new MissingPermissionException("You do not own this championship to make changes");
-            }
+            if (ch != null && !ch.createdBy().equals(authenticatedId)) throw new MissingPermissionException("You do not own this championship to make changes");
         }
         return championshipGateway.update(id, championship);
     }
