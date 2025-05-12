@@ -177,12 +177,15 @@ public class ChampionshipRepositoryGateway implements ChampionshipGateway {
     @Override
     public Championship subscribeMatch(String championshipId, String matchId) {
         ChampionshipEntity subscribedChampionship = championshipRepository.findById(championshipId).orElse(null);
+
         List<String> matchesIds = new ArrayList<>();
+
         if (subscribedChampionship != null) {
             matchesIds =  subscribedChampionship.getMatchesId();
             matchesIds.add(matchId);
             subscribedChampionship.setMatchesId(matchesIds);
             championshipRepository.save(subscribedChampionship);
+
             return mapper.toDomain(subscribedChampionship);
         }
         return null;
@@ -190,17 +193,18 @@ public class ChampionshipRepositoryGateway implements ChampionshipGateway {
 
     @Override
     public Championship subscribeRegistration(String championshipId, String registrationId) {
+
         ChampionshipEntity subscribedChampionship = championshipRepository.findById(championshipId).orElse(null);
-        if(subscribedChampionship != null && subscribedChampionship.getRegistrationsId().size() < subscribedChampionship.getCapacity()){
-            List<String> registrationIds = new ArrayList<>();
-                registrationIds =  subscribedChampionship.getRegistrationsId();
-                registrationIds.add(registrationId);
-                subscribedChampionship.setRegistrationsId(registrationIds);
-                championshipRepository.save(subscribedChampionship);
-                return mapper.toDomain(subscribedChampionship);
-            }
-         return null;
-        }
+
+        List<String> registrationIds = new ArrayList<>();
+        registrationIds =  subscribedChampionship.getRegistrationsId();
+        registrationIds.add(registrationId);
+        subscribedChampionship.setRegistrationsId(registrationIds);
+        championshipRepository.save(subscribedChampionship);
+
+        return mapper.toDomain(subscribedChampionship);
+
+    }
 }
 
 
