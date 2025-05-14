@@ -45,6 +45,8 @@ public class RegistrationRepositoryGateway implements RegistrationGateway {
         RegistrationEntity toUpdate = registrationRepository.findById(id).orElse(null);
         RegistrationEntity registrationData = registrationEntityMapper.toEntity(registration);
         toUpdate.setUser(registrationData.getUser());
+        toUpdate.setStatus(registrationData.getStatus());
+        registrationRepository.save(toUpdate);
         return registrationEntityMapper.toDomain(toUpdate);
     }
 
@@ -75,6 +77,7 @@ public class RegistrationRepositoryGateway implements RegistrationGateway {
         TeamRegistrationEntity teamRegistrationData = teamRegistrationRepository.findById(id).orElse(null);
         TeamRegistrationEntity updatedData = teamRegistrationEntityMapper.toEntity(teamRegistration);
         teamRegistrationData.setTeam(updatedData.getTeam());
+        teamRegistrationData.setStatus(updatedData.getStatus());
         teamRegistrationRepository.save(teamRegistrationData);
         return teamRegistrationEntityMapper.toDomain(teamRegistrationData);
     }
