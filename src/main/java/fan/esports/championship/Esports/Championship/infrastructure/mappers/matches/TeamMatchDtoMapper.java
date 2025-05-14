@@ -2,6 +2,7 @@ package fan.esports.championship.Esports.Championship.infrastructure.mappers.mat
 
 import fan.esports.championship.Esports.Championship.core.domain.TeamMatch;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.TeamMatchDTO;
+import fan.esports.championship.Esports.Championship.infrastructure.dtos.responses.TeamMatchData;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.team.TeamDtoMapper;
 import org.springframework.stereotype.Component;
 
@@ -40,6 +41,14 @@ public class TeamMatchDtoMapper {
                         .collect(Collectors.toList()),
                 teamMatch.createdAt(),
                 teamMatch.updatedAt(),
+                teamMatch.matchResults()
+        );
+    }
+
+    public TeamMatchData toTeamMatchData(TeamMatch teamMatch){
+        return new TeamMatchData(teamMatch.id(),
+                teamMatch.name(),
+                teamMatch.participants().stream().map(teamMapper::toTeamData).collect(Collectors.toList()),
                 teamMatch.matchResults()
         );
     }

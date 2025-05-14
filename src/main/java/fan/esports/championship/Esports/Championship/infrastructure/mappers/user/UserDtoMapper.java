@@ -2,6 +2,7 @@ package fan.esports.championship.Esports.Championship.infrastructure.mappers.use
 
 import fan.esports.championship.Esports.Championship.core.domain.User;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.UserDTO;
+import fan.esports.championship.Esports.Championship.infrastructure.dtos.responses.UserData;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.responses.UserResponseDTO;
 import org.springframework.stereotype.Component;
 
@@ -40,5 +41,13 @@ public class UserDtoMapper {
                 user.nickname(),
                 user.email()
         );
+    }
+
+    public UserData toUserData(User user){
+        return new UserData(user.name(),
+                user.nickname(),
+                user.email(),
+                user.birthday(),
+                user.profilePhoto());
     }
 }

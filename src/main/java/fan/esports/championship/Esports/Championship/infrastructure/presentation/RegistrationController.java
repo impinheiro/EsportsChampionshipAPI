@@ -55,8 +55,7 @@ public class RegistrationController {
     public ResponseEntity<?> findById(@PathVariable String id) {
         Map<String, Object> response = new HashMap<>();
         Registration registration = getRegistrationByIdCase.execute(id);
-        response.put("Registration ID: ", registration.id());
-        response.put("Registration owner: ", "[ Email: "+registration.user().email()+" ] "+ "[ Nickname: "+registration.user().nickname()+ " ]");
+        response.put("Registration", registrationDtoMapper.toRegistrationData(registration));
         return ResponseEntity.ok(response);
     }
 
@@ -65,7 +64,7 @@ public class RegistrationController {
         Map<String, Object> response = new HashMap<>();
         Registration registration = registrationDtoMapper.toDomain(registrationDto);
         createRegistrationCase.execute(registration);
-        response.put("Registration", registration);
+        response.put("Registration", registrationDtoMapper.toRegistrationData(registration));
         return ResponseEntity.ok(response);
     }
 
@@ -90,7 +89,7 @@ public class RegistrationController {
     public ResponseEntity<?> findTeamRegistrationById(@PathVariable String id) {
         Map<String, Object> response = new HashMap<>();
         TeamRegistration teamRegistration = findTeamRegistrationByIdCase.execute(id);
-        response.put("Registration found: ", teamRegistrationDtoMapper.toDTO(teamRegistration));
+        response.put("Registration found: ", teamRegistrationDtoMapper.toTeamRegistrationData(teamRegistration));
         return ResponseEntity.ok(response);
     }
 

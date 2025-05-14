@@ -87,13 +87,15 @@ public class PromoterRepositoryGateway implements PromoterGateway {
         Map<String, TeamRegistration> teamRegistrationMap = new HashMap<>();
 
         for(Registration registration : userRegistrations){
-            userRegistrationMap.put(registrationId, registration);
+            userRegistrationMap.put(registration.id(), registration);
         }
+
         for(TeamRegistration teamRegistration : teamRegistrations){
             teamRegistrationMap.put(teamRegistration.id(), teamRegistration);
         }
 
         Registration registration = userRegistrationMap.get(registrationId);
+
         TeamRegistration teamRegistration = teamRegistrationMap.get(registrationId);
 
         if(registration != null){

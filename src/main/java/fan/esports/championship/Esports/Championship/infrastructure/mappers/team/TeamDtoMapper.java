@@ -2,6 +2,7 @@ package fan.esports.championship.Esports.Championship.infrastructure.mappers.tea
 
 import fan.esports.championship.Esports.Championship.core.domain.Team;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.TeamDTO;
+import fan.esports.championship.Esports.Championship.infrastructure.dtos.responses.TeamData;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.user.UserDtoMapper;
 import org.springframework.stereotype.Component;
 
@@ -17,6 +18,7 @@ public class TeamDtoMapper {
     }
 
     public Team toDomain (TeamDTO teamDTO){
+
         return new Team(teamDTO.id(),
                 teamDTO.name(),
                 teamDTO.members()
@@ -24,9 +26,11 @@ public class TeamDtoMapper {
                         .map(userMapper::toDomain)
                         .collect(Collectors.toList()),
                 teamDTO.createdAt(),
-                teamDTO.updatedAt());
+                teamDTO.updatedAt()
+        );
     }
     public TeamDTO toDTO(Team team){
+
         return new TeamDTO(team.id(),
                 team.name(),
                 team.members()
@@ -34,6 +38,18 @@ public class TeamDtoMapper {
                         .map(userMapper::toDto)
                         .collect(Collectors.toList()),
                 team.createdAt(),
-                team.updatedAt());
+                team.updatedAt()
+        );
+
+    }
+
+    public TeamData toTeamData(Team team){
+        return new TeamData(team.id(),
+                team.name(),
+                team.members()
+                        .stream()
+                        .map(userMapper::toUserData)
+                        .collect(Collectors.toList())
+        );
     }
 }

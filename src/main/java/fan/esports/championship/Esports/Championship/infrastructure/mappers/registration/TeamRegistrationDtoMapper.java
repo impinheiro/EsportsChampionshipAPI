@@ -2,6 +2,7 @@ package fan.esports.championship.Esports.Championship.infrastructure.mappers.reg
 
 import fan.esports.championship.Esports.Championship.core.domain.TeamRegistration;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.TeamRegistrationDTO;
+import fan.esports.championship.Esports.Championship.infrastructure.dtos.responses.TeamRegistrationData;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.team.TeamDtoMapper;
 import org.springframework.stereotype.Component;
 
@@ -14,6 +15,7 @@ public class TeamRegistrationDtoMapper {
     }
 
     public TeamRegistrationDTO toDTO(TeamRegistration teamRegistration) {
+
         return new  TeamRegistrationDTO(
                 teamRegistration.id(),
                 teamDtoMapper.toDTO(teamRegistration.team()),
@@ -22,6 +24,7 @@ public class TeamRegistrationDtoMapper {
     }
 
     public TeamRegistration toDomain(TeamRegistrationDTO teamRegistrationDTO) {
+
         return new TeamRegistration(
                 teamRegistrationDTO.id(),
                 teamDtoMapper.toDomain(teamRegistrationDTO.team()),
@@ -29,4 +32,11 @@ public class TeamRegistrationDtoMapper {
         );
     }
 
+    public TeamRegistrationData toTeamRegistrationData(TeamRegistration teamRegistration) {
+
+        return new TeamRegistrationData(teamRegistration.id(),
+                teamDtoMapper.toTeamData(teamRegistration.team()),
+                teamRegistration.status()
+        );
+    }
 }

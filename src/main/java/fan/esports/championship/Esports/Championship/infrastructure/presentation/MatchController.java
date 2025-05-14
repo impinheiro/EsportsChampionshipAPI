@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -49,14 +50,15 @@ public class MatchController {
     @GetMapping("/findAll")
     public ResponseEntity<?> findAll() {
         Map<String, Object> response = new HashMap<>();
-        response.put("Matches: ", findAllMatchesCase.execute());
+        List<Match> matches = findAllMatchesCase.execute();
+        response.put("Matches: ", matches.stream().map(matchDtoMapper::toMatchData).toList());
         return ResponseEntity.ok(response);
     }
     @GetMapping("/findById/{id}")
     public ResponseEntity<?> findById(@PathVariable String id) {
         Map<String, Object> response = new HashMap<>();
         Match match = findMatchByIdCase.execute(id);
-        response.put("Match found: ", match);
+        response.put("Match found: ", matchDtoMapper.toMatchData(match));
         return ResponseEntity.ok(response);
     }
 
@@ -66,7 +68,7 @@ public class MatchController {
         Match match = matchDtoMapper.toDomain(matchDTO);
         createMatchCase.execute(match);
         response.put("Success: ", "Match was created");
-        response.put("Info: ", matchDTO);
+        response.put("Info: ", matchDtoMapper.toMatchData(match));
         return ResponseEntity.ok(response);
     }
 
@@ -76,7 +78,7 @@ public class MatchController {
         Match match = matchDtoMapper.toDomain(matchDTO);
         updateMatchCase.execute(id, match);
         response.put("Success: ", "Match was updated");
-        response.put("Info: ", matchDtoMapper.toDTO(match));
+        response.put("Info: ", matchDtoMapper.toMatchData(match));
         return ResponseEntity.ok(response);
     }
 

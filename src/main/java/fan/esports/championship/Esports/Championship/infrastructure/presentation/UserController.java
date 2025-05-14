@@ -57,7 +57,7 @@ public class UserController {
             response.put("Users list: ", "Users list is empty");
             return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
         }
-        response.put("Users list: ", users.stream().map(userDtoMapper::toDto).collect(Collectors.toList()));
+        response.put("Users list: ", users.stream().map(userDtoMapper::toUserData).collect(Collectors.toList()));
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
@@ -73,7 +73,7 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> getUserById(@PathVariable String id){
         User user = findUserByIdCase.execute(id);
         Map<String, Object> response = new HashMap<>();
-        response.put("User: ", userDtoMapper.toDto(user));
+        response.put("User: ", userDtoMapper.toUserData(user));
         return ResponseEntity.ok(response);
     }
 
@@ -81,7 +81,7 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> getUserByNickname(@PathVariable String nickname){
         Map<String,Object> response = new HashMap<>();
         User user = findUserByNicknameCase.execute(nickname);
-        response.put("User: ", userDtoMapper.toDto(user));
+        response.put("User: ", userDtoMapper.toUserData(user));
         return ResponseEntity.ok(response);
     }
 
@@ -90,7 +90,7 @@ public class UserController {
         Map<String,Object> response = new HashMap<>();
         User user = userDtoMapper.toDomain(userDto);
         updateUserCase.execute(user, id);
-        response.put("Updated User", userDtoMapper.toDto(user));
+        response.put("Updated User", userDtoMapper.toUserData(user));
         return ResponseEntity.ok(response);
     }
 

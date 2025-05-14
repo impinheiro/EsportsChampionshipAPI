@@ -8,7 +8,9 @@ import fan.esports.championship.Esports.Championship.core.usecases.team.GetAllTe
 import fan.esports.championship.Esports.Championship.core.usecases.team.GetTeamById;
 import fan.esports.championship.Esports.Championship.core.usecases.team.UpdateTeamCase;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.TeamDTO;
+import fan.esports.championship.Esports.Championship.infrastructure.dtos.responses.TeamData;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.team.TeamDtoMapper;
+import fan.esports.championship.Esports.Championship.infrastructure.mappers.user.UserDtoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,13 +29,17 @@ public class TeamController {
     private final GetAllTeamsCase  getAllTeamsCase;
     private final UpdateTeamCase updateTeamCase;
     private final GetTeamById getTeamById;
+    private final UserDtoMapper userDtoMapper;
+    private final TeamDtoMapper teamDtoMapper;
 
-    public TeamController(TeamDtoMapper mapper, CreateTeamCase createTeamCase, GetAllTeamsCase getAllTeamsCase, UpdateTeamCase updateTeamCase, GetTeamById getTeamById) {
+    public TeamController(TeamDtoMapper mapper, CreateTeamCase createTeamCase, GetAllTeamsCase getAllTeamsCase, UpdateTeamCase updateTeamCase, GetTeamById getTeamById, UserDtoMapper userDtoMapper, TeamDtoMapper teamDtoMapper) {
         this.mapper = mapper;
         this.createTeamCase = createTeamCase;
         this.getAllTeamsCase = getAllTeamsCase;
         this.updateTeamCase = updateTeamCase;
         this.getTeamById = getTeamById;
+        this.userDtoMapper = userDtoMapper;
+        this.teamDtoMapper = teamDtoMapper;
     }
 
     @PostMapping("create")
@@ -43,7 +49,7 @@ public class TeamController {
         response.put("Team", team.name());
         response.put("Team members: ",  team.members()
                 .stream()
-                .map(member -> member.nickname())
+                .map(userDtoMapper::toUserData)
                 .toList());
         Team newTeam = createTeamCase.execute(team);
         if(team != null){
@@ -56,7 +62,7 @@ public class TeamController {
     @GetMapping("findAll")
     public ResponseEntity<?> findAllTeams(){
         List<Team> teams = getAllTeamsCase.execute();
-        List<TeamDTO>  teamDTOs = teams.stream().map(mapper::toDTO).collect(Collectors.toList());
+        List<TeamData>  teamDTOs = teams.stream().map(mapper::toTeamData).collect(Collectors.toList());
         if(teams != null){
             return ResponseEntity.ok(teamDTOs);
         }else {
@@ -69,16 +75,16 @@ public class TeamController {
         if(teamFound == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Team not found");
         } else{
-            return ResponseEntity.ok(teamFound);
+            return ResponseEntity.ok(teamDtoMapper.toTeamData(teamFound));
         }
     }
     @PutMapping("update/{id}")
     public ResponseEntity<?> updateTeam(@PathVariable String id, @RequestBody TeamDTO teamDTO){
         Map<String, Object> response = new HashMap<>();
         Team team = mapper.toDomain(teamDTO);
-        updateTeamCase.execute(team, id);
+        Team updatedTeam = updateTeamCase.execute(team, id);
         response.put("Message", "Team updated successfully");
-        response.put("Team", updateTeamCase.execute(team, id));
+        response.put("Team", teamDtoMapper.toTeamData(updatedTeam));
         return ResponseEntity.ok(response);
     }
 }
