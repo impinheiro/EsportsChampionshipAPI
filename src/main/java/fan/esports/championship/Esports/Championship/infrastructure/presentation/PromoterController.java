@@ -3,13 +3,11 @@ package fan.esports.championship.Esports.Championship.infrastructure.presentatio
 import fan.esports.championship.Esports.Championship.core.domain.Championship;
 import fan.esports.championship.Esports.Championship.core.domain.Registration;
 import fan.esports.championship.Esports.Championship.core.domain.TeamRegistration;
-import fan.esports.championship.Esports.Championship.core.usecases.promoters.FindPendingRegistrationsCase;
-import fan.esports.championship.Esports.Championship.core.usecases.promoters.FindPendingTeamRegistrationsCase;
-import fan.esports.championship.Esports.Championship.core.usecases.promoters.FindProprietaryChampionshipsCase;
+import fan.esports.championship.Esports.Championship.core.enums.RegistrationStatus;
+import fan.esports.championship.Esports.Championship.core.usecases.promoters.*;
+import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.RegistrationStatusQuery;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,14 +15,17 @@ import java.util.List;
 @RequestMapping("api/v1/promoter")
 
 public class PromoterController {
+
     private final FindProprietaryChampionshipsCase findProprietaryChampionshipsCase;
     private final FindPendingRegistrationsCase findPendingRegistrationsCase;
     private final FindPendingTeamRegistrationsCase findPendingTeamRegistrationsCase;
+    private final ChangeRegistrationsStatusCase changeRegistrationsStatusCase;
 
-    public PromoterController(FindProprietaryChampionshipsCase findProprietaryChampionshipsCase, FindPendingRegistrationsCase findPendingRegistrationsCase, FindPendingTeamRegistrationsCase findPendingTeamRegistrationsCase) {
+    public PromoterController(FindProprietaryChampionshipsCase findProprietaryChampionshipsCase, FindPendingRegistrationsCase findPendingRegistrationsCase, FindPendingTeamRegistrationsCase findPendingTeamRegistrationsCase, ChangeRegistrationsStatusCase changeRegistrationsStatusCase) {
         this.findProprietaryChampionshipsCase = findProprietaryChampionshipsCase;
         this.findPendingRegistrationsCase = findPendingRegistrationsCase;
         this.findPendingTeamRegistrationsCase = findPendingTeamRegistrationsCase;
+        this.changeRegistrationsStatusCase = changeRegistrationsStatusCase;
     }
 
     @GetMapping("findChampionships")
@@ -43,5 +44,11 @@ public class PromoterController {
     public ResponseEntity<?> findPendingTeamRegistrationsCase() {
         List<TeamRegistration> registrations = findPendingTeamRegistrationsCase.execute();
         return ResponseEntity.ok(registrations);
+    }
+
+    @PutMapping("/manageRegistrations/{id}")
+    public ResponseEntity<?> manageRegistrations(@PathVariable String id, @RequestBody RegistrationStatusQuery status) {
+        changeRegistrationsStatusCase.execute(id, status.name().toUpperCase());
+        return ResponseEntity.ok().build();
     }
 }
