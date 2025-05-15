@@ -10,10 +10,12 @@ public class TeamScoreEntity {
     @Id
     private String id;
     private TeamEntity team;
+    private int score;
 
-    public TeamScoreEntity(String id, TeamEntity team) {
+    public TeamScoreEntity(String id, TeamEntity team, int score) {
         this.id = id;
         this.team = team;
+        this.score = score;
     }
 
     public String getId() {
@@ -30,5 +32,13 @@ public class TeamScoreEntity {
 
     public void setTeam(TeamEntity team) {
         this.team = team;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 }
