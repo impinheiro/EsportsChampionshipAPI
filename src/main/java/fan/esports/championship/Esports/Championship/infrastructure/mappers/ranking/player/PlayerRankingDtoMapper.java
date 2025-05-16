@@ -25,7 +25,10 @@ public class PlayerRankingDtoMapper {
         return new PlayerRankingDTO(
                 playerRanking.id(),
                 championshipDtoMapper.toDto(playerRanking.championship()),
-                playerRanking.scores().stream().map(playerScoreDtoMapper::toDto).collect(Collectors.toList())
+                playerRanking.scores()
+                        .stream()
+                        .map(playerScoreDtoMapper::toDTO)
+                        .collect(Collectors.toList())
         );
     }
 }
