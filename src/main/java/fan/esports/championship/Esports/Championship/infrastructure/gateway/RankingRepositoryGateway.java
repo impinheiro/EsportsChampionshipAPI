@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
 public class RankingRepositoryGateway implements RankingGateway {
@@ -35,7 +36,7 @@ public class RankingRepositoryGateway implements RankingGateway {
     }
 
     @Override
-    public PlayerRanking findPlayerRankingById(String id) {
+    public Optional<PlayerRanking> findPlayerRankingById(String id) {
         return null;
     }
 
@@ -60,7 +61,7 @@ public class RankingRepositoryGateway implements RankingGateway {
     }
 
     @Override
-    public TeamRanking findTeamRankingById(String id) {
+    public Optional<TeamRanking> findTeamRankingById(String id) {
         return null;
     }
 

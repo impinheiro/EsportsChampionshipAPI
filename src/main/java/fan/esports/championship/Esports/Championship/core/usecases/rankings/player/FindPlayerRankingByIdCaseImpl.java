@@ -13,6 +13,6 @@ public class FindPlayerRankingByIdCaseImpl implements FindPlayerRankingByIdCase 
 
     @Override
     public PlayerRanking execute(String id) {
-        return rankingGateway.findPlayerRankingById(id);
+        return rankingGateway.findPlayerRankingById(id).orElse(null);
     }
 }
