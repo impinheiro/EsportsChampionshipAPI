@@ -1,4 +1,9 @@
-package fan.esports.championship.Esports.Championship.core.usecases.scores;
+package fan.esports.championship.Esports.Championship.core.usecases.scores.player;
 
-public interface CretaPlayerScoreCase {
+import fan.esports.championship.Esports.Championship.core.domain.PlayerScore;
+
+public interface CreatePlayerScoreCase {
+
+    PlayerScore execute(PlayerScore playerScore);
+
 }
