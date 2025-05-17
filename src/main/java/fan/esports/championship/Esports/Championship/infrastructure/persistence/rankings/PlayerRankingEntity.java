@@ -1,8 +1,9 @@
 package fan.esports.championship.Esports.Championship.infrastructure.persistence.rankings;
 
+import fan.esports.championship.Esports.Championship.core.domain.PlayerScore;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.championship.ChampionshipEntity;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.scores.PlayerScoreEntity;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -12,12 +13,22 @@ public class PlayerRankingEntity {
 
     @Id
     private String id;
-    private ChampionshipEntity championship;
-    private List<PlayerScoreEntity> scores;
+    @Indexed(unique = true)
+    private String championshipId;
+    private List<PlayerScore> scores;
 
-    public PlayerRankingEntity(String id, ChampionshipEntity championship, List<PlayerScoreEntity> scores) {
+    public PlayerRankingEntity() {
+    }
+
+
+    public PlayerRankingEntity(String id, String championshipId) {
         this.id = id;
-        this.championship = championship;
+        this.championshipId = championshipId;
+    }
+
+    public PlayerRankingEntity(String id, String championshipId, List<PlayerScore> scores) {
+        this.id = id;
+        this.championshipId = championshipId;
         this.scores = scores;
     }
 
@@ -29,19 +40,20 @@ public class PlayerRankingEntity {
         this.id = id;
     }
 
-    public ChampionshipEntity getChampionship() {
-        return championship;
+    public String getChampionshipId() {
+        return championshipId;
     }
 
-    public void setChampionship(ChampionshipEntity championship) {
-        this.championship = championship;
+    public void setChampionshipId(String championshipId) {
+        this.championshipId = championshipId;
     }
 
-    public List<PlayerScoreEntity> getScores() {
+    public List<PlayerScore> getScores() {
         return scores;
     }
 
-    public void setScores(List<PlayerScoreEntity> scores) {
+    public void setScores(List<PlayerScore> scores) {
         this.scores = scores;
     }
+
 }

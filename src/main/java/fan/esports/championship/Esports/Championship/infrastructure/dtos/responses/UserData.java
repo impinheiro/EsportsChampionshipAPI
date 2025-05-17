@@ -2,7 +2,8 @@ package fan.esports.championship.Esports.Championship.infrastructure.dtos.respon
 
 import java.util.Date;
 
-public record UserData(String name,
+public record UserData(String id,
+                       String name,
                        String nickname,
                        String email,
                        Date birthday,

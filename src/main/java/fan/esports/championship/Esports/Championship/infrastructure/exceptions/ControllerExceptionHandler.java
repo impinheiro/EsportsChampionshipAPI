@@ -58,4 +58,11 @@ public class ControllerExceptionHandler {
         response.put("Error", ex.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+    @ExceptionHandler(DuplicateKeyException.class)
+    public ResponseEntity<?> handleException(DuplicateKeyException ex) {
+        Map<String, String> response = new HashMap<>();
+        response.put("Message", "Something went wrong");
+        response.put("Error", ex.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
 }

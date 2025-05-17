@@ -44,7 +44,8 @@ public class UserDtoMapper {
     }
 
     public UserData toUserData(User user){
-        return new UserData(user.name(),
+        return new UserData(user.id(),
+                user.name(),
                 user.nickname(),
                 user.email(),
                 user.birthday(),

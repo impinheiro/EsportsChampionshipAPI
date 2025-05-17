@@ -81,4 +81,5 @@ public class MatchEntity{
     public void setMatchResults(MatchResults matchResults) {
         this.matchResults = matchResults;
     }
+
 }

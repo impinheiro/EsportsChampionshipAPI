@@ -1,8 +1,9 @@
 package fan.esports.championship.Esports.Championship.infrastructure.persistence.rankings;
 
+import fan.esports.championship.Esports.Championship.core.domain.TeamScore;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.championship.ChampionshipEntity;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.scores.TeamScoreEntity;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
@@ -12,12 +13,21 @@ public class TeamRankingEntity {
 
     @Id
     private String id;
-    private ChampionshipEntity championship;
-    private List<TeamScoreEntity> scores;
+    @Indexed(unique = true)
+    private String championshipId;
+    private List<TeamScore> scores;
 
-    public TeamRankingEntity(String id, ChampionshipEntity championship, List<TeamScoreEntity> scores) {
+    public TeamRankingEntity() {
+    }
+
+    public TeamRankingEntity(String id, String championshipId) {
         this.id = id;
-        this.championship = championship;
+        this.championshipId = championshipId;
+    }
+
+    public TeamRankingEntity(String id, String championshipId, List<TeamScore> scores) {
+        this.id = id;
+        this.championshipId = championshipId;
         this.scores = scores;
     }
 
@@ -29,19 +39,19 @@ public class TeamRankingEntity {
         this.id = id;
     }
 
-    public ChampionshipEntity getChampionship() {
-        return championship;
+    public String getChampionshipId() {
+        return championshipId;
     }
 
-    public void setChampionship(ChampionshipEntity championship) {
-        this.championship = championship;
+    public void setChampionshipId(String championshipId) {
+        this.championshipId = championshipId;
     }
 
-    public List<TeamScoreEntity> getScores() {
+    public List<TeamScore> getScores() {
         return scores;
     }
 
-    public void setScores(List<TeamScoreEntity> scores) {
+    public void setScores(List<TeamScore> scores) {
         this.scores = scores;
     }
 }

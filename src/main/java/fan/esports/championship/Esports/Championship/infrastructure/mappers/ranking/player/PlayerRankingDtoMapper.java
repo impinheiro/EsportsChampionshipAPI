@@ -2,33 +2,36 @@ package fan.esports.championship.Esports.Championship.infrastructure.mappers.ran
 
 import fan.esports.championship.Esports.Championship.core.domain.PlayerRanking;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.PlayerRankingDTO;
-import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.NewPlayerRanking;
-import fan.esports.championship.Esports.Championship.infrastructure.mappers.championships.ChampionshipDtoMapper;
-import fan.esports.championship.Esports.Championship.infrastructure.mappers.scores.players.PlayerScoreDtoMapper;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.rankings.PlayerRankingEntity;
+import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.NewRanking;
+import org.springframework.stereotype.Component;
 
-import java.util.stream.Collectors;
+import java.util.ArrayList;
 
+@Component
 public class PlayerRankingDtoMapper {
-    private ChampionshipDtoMapper championshipDtoMapper;
-    private PlayerScoreDtoMapper playerScoreDtoMapper;
 
-    public PlayerRanking toDomain(NewPlayerRanking playerRanking) {
+
+    public PlayerRanking toDomain(NewRanking playerRanking) {
         return new PlayerRanking(
                 playerRanking.id(),
-                championshipDtoMapper.toDomain(playerRanking.championship()),
-                null
+                playerRanking.championshipId(),
+                new ArrayList<>()
         );
     }
 
     public PlayerRankingDTO toDto(PlayerRanking playerRanking) {
         return new PlayerRankingDTO(
                 playerRanking.id(),
-                championshipDtoMapper.toDto(playerRanking.championship()),
+                playerRanking.championshipId(),
                 playerRanking.scores()
-                        .stream()
-                        .map(playerScoreDtoMapper::toDTO)
-                        .collect(Collectors.toList())
+        );
+    }
+
+    public PlayerRanking toDomain(PlayerRankingDTO dto) {
+        return new PlayerRanking(
+                dto.id(),
+                dto.championshipId(),
+                dto.scores()
         );
     }
 }
