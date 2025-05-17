@@ -34,6 +34,7 @@ public class ChampionshipRepositoryGateway implements ChampionshipGateway {
         newChampionship.setCreatedBy(userId);
         newChampionship.setCreatedAt(LocalDateTime.now());
         newChampionship.setUpdatedAt(LocalDateTime.now());
+        newChampionship.setRankingId(null);
         newChampionship.setRegistrationsId(new ArrayList<>());
         newChampionship.setMatchesId(new ArrayList<>());
         championshipRepository.save(newChampionship);
@@ -204,6 +205,16 @@ public class ChampionshipRepositoryGateway implements ChampionshipGateway {
 
         return mapper.toDomain(subscribedChampionship);
 
+    }
+
+    @Override
+    public void setRanking(String championshipId, String rankingId) {
+
+        ChampionshipEntity championship = championshipRepository.findById(championshipId).orElse(null);
+
+        championship.setRankingId(rankingId);
+
+        championshipRepository.save(championship);
     }
 }
 

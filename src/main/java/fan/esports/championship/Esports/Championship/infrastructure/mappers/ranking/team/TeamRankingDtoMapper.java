@@ -3,9 +3,11 @@ package fan.esports.championship.Esports.Championship.infrastructure.mappers.ran
 import fan.esports.championship.Esports.Championship.core.domain.TeamRanking;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.TeamRankingDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.NewRanking;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 
+@Component
 public class TeamRankingDtoMapper {
 
     public TeamRanking toDomain(NewRanking teamRanking) {

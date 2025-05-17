@@ -20,4 +20,5 @@ public interface ChampionshipGateway {
      List<Championship> findExpiredChampionships();
      Championship subscribeMatch(String championshipId, String matchId);
      Championship subscribeRegistration(String championshipId, String registrationId);
+     void setRanking(String championshipId, String rankingId);
 }

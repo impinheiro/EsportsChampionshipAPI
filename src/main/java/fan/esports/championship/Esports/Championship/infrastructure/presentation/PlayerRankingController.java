@@ -37,9 +37,7 @@ public class PlayerRankingController {
     @PostMapping("create")
     public ResponseEntity<?> create(@RequestBody NewRanking ranking) {
 
-        Championship championship = findChampionshipByIdCase.execute(ranking.championshipId());
-        PlayerRanking playerRanking = new PlayerRanking(ranking.id(), championship,new ArrayList<>());
-
+        PlayerRanking playerRanking = playerRankingDtoMapper.toDomain(ranking);
         createPlayerRankingCase.execute(playerRanking);
 
         return ResponseEntity.ok(playerRanking);

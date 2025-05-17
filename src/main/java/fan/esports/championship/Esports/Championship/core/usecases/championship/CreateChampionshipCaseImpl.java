@@ -1,6 +1,8 @@
 package fan.esports.championship.Esports.Championship.core.usecases.championship;
 
 import fan.esports.championship.Esports.Championship.core.domain.Championship;
+import fan.esports.championship.Esports.Championship.core.domain.PlayerRanking;
+import fan.esports.championship.Esports.Championship.core.enums.ChampionshipType;
 import fan.esports.championship.Esports.Championship.core.gateway.ChampionshipGateway;
 import fan.esports.championship.Esports.Championship.core.gateway.UserGateway;
 import fan.esports.championship.Esports.Championship.infrastructure.exceptions.MissingPermissionException;

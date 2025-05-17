@@ -70,4 +70,8 @@ public class BeanConfigurationChampionship {
         return new FindByChampionshipTypeCaseImpl(championshipGateway);
     }
 
+    @Bean
+    public SetChampionshipRankingCase setChampionshipRankingCase(ChampionshipGateway championshipGateway) {
+        return new SetChampionshipRankingCaseImpl(championshipGateway);
+    }
 }

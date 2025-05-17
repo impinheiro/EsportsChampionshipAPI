@@ -7,6 +7,7 @@ import fan.esports.championship.Esports.Championship.infrastructure.mappers.rank
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.ranking.team.TeamRankingEntityMapper;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.rankings.PlayerRankingEntity;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.rankings.PlayerRankingRepository;
+import fan.esports.championship.Esports.Championship.infrastructure.persistence.rankings.TeamRankingEntity;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.rankings.TeamRankingRepository;
 import org.springframework.stereotype.Component;
 
@@ -17,12 +18,14 @@ import java.util.Optional;
 @Component
 public class RankingRepositoryGateway implements RankingGateway {
 
-    private PlayerRankingEntityMapper playerRankingEntityMapper;
-    private TeamRankingEntityMapper teamRankingEntityMapper;
+    private final PlayerRankingEntityMapper playerRankingEntityMapper;
+    private final TeamRankingEntityMapper teamRankingEntityMapper;
     private final PlayerRankingRepository playerRankingRepository;
     private final TeamRankingRepository teamRankingRepository;
 
-    public RankingRepositoryGateway(PlayerRankingRepository playerRankingRepository, TeamRankingRepository teamRankingRepository) {
+    public RankingRepositoryGateway(PlayerRankingEntityMapper playerRankingEntityMapper, TeamRankingEntityMapper teamRankingEntityMapper, PlayerRankingRepository playerRankingRepository, TeamRankingRepository teamRankingRepository) {
+        this.playerRankingEntityMapper = playerRankingEntityMapper;
+        this.teamRankingEntityMapper = teamRankingEntityMapper;
         this.playerRankingRepository = playerRankingRepository;
         this.teamRankingRepository = teamRankingRepository;
     }
@@ -57,7 +60,10 @@ public class RankingRepositoryGateway implements RankingGateway {
 
     @Override
     public TeamRanking createTeamRanking(TeamRanking teamRanking) {
-        return null;
+        TeamRankingEntity newTeamRanking = teamRankingEntityMapper.toEntity(teamRanking);
+        newTeamRanking.setScores(new ArrayList<>());
+        teamRankingRepository.save(newTeamRanking);
+        return teamRankingEntityMapper.toDomain(newTeamRanking);
     }
 
     @Override
