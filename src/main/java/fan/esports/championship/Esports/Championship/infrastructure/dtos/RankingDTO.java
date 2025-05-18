@@ -1,11 +1,11 @@
 package fan.esports.championship.Esports.Championship.infrastructure.dtos;
 
-import fan.esports.championship.Esports.Championship.core.domain.PlayerScore;
+import fan.esports.championship.Esports.Championship.core.domain.Score;
 
 import java.util.List;
 
-public record PlayerRankingDTO(
+public record RankingDTO(
                     String id,
                     String championshipId,
-                    List<PlayerScore> scores) {
+                    List<Score> scores) {
 }

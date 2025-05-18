@@ -1,8 +1,7 @@
 package fan.esports.championship.Esports.Championship.infrastructure.beans;
 
 import fan.esports.championship.Esports.Championship.core.gateway.RankingGateway;
-import fan.esports.championship.Esports.Championship.core.usecases.rankings.player.*;
-import fan.esports.championship.Esports.Championship.core.usecases.rankings.team.*;
+import fan.esports.championship.Esports.Championship.core.usecases.rankings.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,53 +9,28 @@ import org.springframework.context.annotation.Configuration;
 public class BeanConfigurationRanking {
 
     @Bean
-    public CreatePlayerRankingCase createPlayerRankingCase(RankingGateway rankingGateway) {
-        return new CreatePlayerRankingCaseImpl(rankingGateway);
+    public CreateRankingCase createRankingCase(RankingGateway rankingGateway) {
+        return new CreateRankingCaseImpl(rankingGateway);
     }
 
     @Bean
-    public FindPlayerRankingByIdCase findPlayerRankingByIdCase(RankingGateway rankingGateway) {
-        return new FindPlayerRankingByIdCaseImpl(rankingGateway);
+    public FindRankingByIdCase findRankingByIdCase(RankingGateway rankingGateway) {
+        return new FindRankingByIdCaseImpl(rankingGateway);
     }
 
     @Bean
-    public FindPlayerRankingsCase findPlayerRankingsCase(RankingGateway rankingGateway) {
-        return new FindPlayerRankingsCaseImpl(rankingGateway);
+    public FindAllRankingsCase findAllRankingsCase(RankingGateway rankingGateway) {
+        return new FindAllRankingsCaseImpl(rankingGateway);
     }
 
     @Bean
-    public UpdatePlayerRankingCase updatePlayerRankingCase(RankingGateway rankingGateway) {
-        return new UpdatePlayerRankingCaseImpl(rankingGateway);
+    public UpdateRankingCase updateRankingCase(RankingGateway rankingGateway) {
+        return new UpdateRankingCaseImpl(rankingGateway);
     }
 
     @Bean
-    public DeletePlayerRankingCase deletePlayerRankingCase(RankingGateway rankingGateway) {
-        return new DeletePlayerRankingCaseImpl(rankingGateway);
-    }
-
-    @Bean
-    public CreateTeamRankingCase createTeamRankingCase(RankingGateway rankingGateway) {
-        return new CreateTeamRankingCaseImpl(rankingGateway);
-    }
-
-    @Bean
-    public FindTeamRankingByIdCase findTeamRankingByIdCase(RankingGateway rankingGateway) {
-        return new FindTeamRankingByIdCaseImpl(rankingGateway);
-    }
-
-    @Bean
-    public FindAllTeamRankingsCase findAllTeamRankingsCase(RankingGateway rankingGateway) {
-        return new FindAllTeamRankingsCaseImpl(rankingGateway);
-    }
-
-    @Bean
-    public UpdateTeamRankingCase updateTeamRankingCase(RankingGateway rankingGateway) {
-        return new UpdateTeamRankingCaseImpl(rankingGateway);
-    }
-
-    @Bean
-    public DeleteTeamRankingCase deleteTeamRankingCase(RankingGateway rankingGateway) {
-        return new DeleteTeamRankingCaseImpl(rankingGateway);
+    public DeleteRankingCase deleteRankingCase(RankingGateway rankingGateway) {
+        return new DeleteRankingCaseImpl(rankingGateway);
     }
 
 }

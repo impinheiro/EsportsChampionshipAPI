@@ -1,31 +1,29 @@
 package fan.esports.championship.Esports.Championship.infrastructure.presentation;
 
-import fan.esports.championship.Esports.Championship.core.domain.Championship;
-import fan.esports.championship.Esports.Championship.core.domain.PlayerRanking;
+import fan.esports.championship.Esports.Championship.core.domain.Ranking;
 import fan.esports.championship.Esports.Championship.core.usecases.championship.FindChampionshipByIdCase;
-import fan.esports.championship.Esports.Championship.core.usecases.rankings.player.*;
-import fan.esports.championship.Esports.Championship.infrastructure.dtos.PlayerRankingDTO;
+import fan.esports.championship.Esports.Championship.core.usecases.rankings.*;
+import fan.esports.championship.Esports.Championship.infrastructure.dtos.RankingDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.NewRanking;
-import fan.esports.championship.Esports.Championship.infrastructure.mappers.ranking.player.PlayerRankingDtoMapper;
+import fan.esports.championship.Esports.Championship.infrastructure.mappers.ranking.RankingDtoMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/player-ranking")
 public class PlayerRankingController {
 
-    private PlayerRankingDtoMapper playerRankingDtoMapper;
+    private RankingDtoMapper rankingDtoMapper;
     private final FindChampionshipByIdCase findChampionshipByIdCase;
-    private final CreatePlayerRankingCase createPlayerRankingCase;
-    private final FindPlayerRankingByIdCase findPlayerRankingByIdCase;
-    private final FindPlayerRankingsCase findPlayerRankingsCase;
-    private final UpdatePlayerRankingCase updatePlayerRankingCase;
-    private final DeletePlayerRankingCase deletePlayerRankingCase;
+    private final CreateRankingCase createPlayerRankingCase;
+    private final FindRankingByIdCase findPlayerRankingByIdCase;
+    private final FindAllRankingsCase findPlayerRankingsCase;
+    private final UpdateRankingCase updatePlayerRankingCase;
+    private final DeleteRankingCase deletePlayerRankingCase;
 
-    public PlayerRankingController(FindChampionshipByIdCase findChampionshipByIdCase, CreatePlayerRankingCase createPlayerRankingCase, FindPlayerRankingByIdCase findPlayerRankingByIdCase, FindPlayerRankingsCase findPlayerRankingsCase, UpdatePlayerRankingCase updatePlayerRankingCase, DeletePlayerRankingCase deletePlayerRankingCase) {
+    public PlayerRankingController(FindChampionshipByIdCase findChampionshipByIdCase, CreateRankingCase createPlayerRankingCase, FindRankingByIdCase findPlayerRankingByIdCase, FindAllRankingsCase findPlayerRankingsCase, UpdateRankingCase updatePlayerRankingCase, DeleteRankingCase deletePlayerRankingCase) {
         this.findChampionshipByIdCase = findChampionshipByIdCase;
         this.createPlayerRankingCase = createPlayerRankingCase;
         this.findPlayerRankingByIdCase = findPlayerRankingByIdCase;
@@ -37,7 +35,7 @@ public class PlayerRankingController {
     @PostMapping("create")
     public ResponseEntity<?> create(@RequestBody NewRanking ranking) {
 
-        PlayerRanking playerRanking = playerRankingDtoMapper.toDomain(ranking);
+        Ranking playerRanking = rankingDtoMapper.toDomain(ranking);
         createPlayerRankingCase.execute(playerRanking);
 
         return ResponseEntity.ok(playerRanking);
@@ -46,7 +44,7 @@ public class PlayerRankingController {
     @GetMapping("/findById/{id}")
     public ResponseEntity<?> findById(@PathVariable String id) {
 
-        PlayerRanking playerRanking = findPlayerRankingByIdCase.execute(id);
+        Ranking playerRanking = findPlayerRankingByIdCase.execute(id);
 
         return ResponseEntity.ok(playerRanking);
 
@@ -55,15 +53,15 @@ public class PlayerRankingController {
     @GetMapping("/findAll")
     public ResponseEntity<?> findAll() {
 
-        List<PlayerRanking> playerRankings = findPlayerRankingsCase.execute();
+        List<Ranking> playerRankings = findPlayerRankingsCase.execute();
 
         return ResponseEntity.ok(playerRankings);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody PlayerRankingDTO playerRankingDto) {
+    public ResponseEntity<?> update(@PathVariable String id, @RequestBody RankingDTO rankingDto) {
 
-        PlayerRanking playerRanking = playerRankingDtoMapper.toDomain(playerRankingDto);
+        Ranking playerRanking = rankingDtoMapper.toDomain(rankingDto);
         updatePlayerRankingCase.execute(id, playerRanking);
         return ResponseEntity.ok(playerRanking);
     }

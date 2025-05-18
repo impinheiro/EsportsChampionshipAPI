@@ -2,8 +2,8 @@ package fan.esports.championship.Esports.Championship.core.domain;
 
 import java.util.List;
 
-public record TeamRanking(
+public record Ranking(
         String id,
         String championshipId,
-        List<TeamScore> scores) {
+        List<Score> scores) {
 }

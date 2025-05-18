@@ -2,8 +2,6 @@ package fan.esports.championship.Esports.Championship.infrastructure.presentatio
 
 import fan.esports.championship.Esports.Championship.core.domain.Championship;
 import fan.esports.championship.Esports.Championship.core.domain.Registration;
-import fan.esports.championship.Esports.Championship.core.domain.TeamRegistration;
-import fan.esports.championship.Esports.Championship.core.enums.RegistrationStatus;
 import fan.esports.championship.Esports.Championship.core.usecases.promoters.*;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.RegistrationStatusQuery;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +16,14 @@ public class PromoterController {
 
     private final FindProprietaryChampionshipsCase findProprietaryChampionshipsCase;
     private final FindPendingRegistrationsCase findPendingRegistrationsCase;
-    private final FindPendingTeamRegistrationsCase findPendingTeamRegistrationsCase;
     private final ChangeRegistrationsStatusCase changeRegistrationsStatusCase;
 
-    public PromoterController(FindProprietaryChampionshipsCase findProprietaryChampionshipsCase, FindPendingRegistrationsCase findPendingRegistrationsCase, FindPendingTeamRegistrationsCase findPendingTeamRegistrationsCase, ChangeRegistrationsStatusCase changeRegistrationsStatusCase) {
+    public PromoterController(FindProprietaryChampionshipsCase findProprietaryChampionshipsCase, FindPendingRegistrationsCase findPendingRegistrationsCase, ChangeRegistrationsStatusCase changeRegistrationsStatusCase) {
         this.findProprietaryChampionshipsCase = findProprietaryChampionshipsCase;
         this.findPendingRegistrationsCase = findPendingRegistrationsCase;
-        this.findPendingTeamRegistrationsCase = findPendingTeamRegistrationsCase;
         this.changeRegistrationsStatusCase = changeRegistrationsStatusCase;
     }
+
 
     @GetMapping("findChampionships")
     public ResponseEntity<?> findProprietaryChampionshipsCase() {
@@ -37,12 +34,6 @@ public class PromoterController {
     @GetMapping("findPendingRegistrations")
     public ResponseEntity<?> findPendingRegistrationsCase() {
         List<Registration> registrations = findPendingRegistrationsCase.execute();
-        return ResponseEntity.ok(registrations);
-    }
-
-    @GetMapping("/team/findPendingRegistrations")
-    public ResponseEntity<?> findPendingTeamRegistrationsCase() {
-        List<TeamRegistration> registrations = findPendingTeamRegistrationsCase.execute();
         return ResponseEntity.ok(registrations);
     }
 

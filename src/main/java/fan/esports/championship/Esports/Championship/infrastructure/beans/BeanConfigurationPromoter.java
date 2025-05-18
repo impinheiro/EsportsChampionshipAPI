@@ -19,11 +19,6 @@ public class BeanConfigurationPromoter {
     }
 
     @Bean
-    public FindPendingTeamRegistrationsCase findPendingTeamRegistrationsCase(PromoterGateway gateway) {
-        return new FindPendingTeamRegistrationsCaseImpl(gateway);
-    }
-
-    @Bean
     public ChangeRegistrationsStatusCaseImpl changeRegistrationsStatusCase(PromoterGateway gateway) {
         return new ChangeRegistrationsStatusCaseImpl(gateway);
     }

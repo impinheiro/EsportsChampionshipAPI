@@ -16,22 +16,18 @@ public class RegistrationDtoMapper {
 
     public Registration toDomain(RegistrationDTO registrationDTO){
         return new Registration(registrationDTO.id(),
-                userMapper.toDomain(registrationDTO.user()),
+                registrationDTO.ownerId(),
+                registrationDTO.championshipId(),
                 registrationDTO.status()
         );
     }
 
     public RegistrationDTO toDTO(Registration registration){
         return new RegistrationDTO(registration.id(),
-                userMapper.toDto(registration.user()),
+                registration.ownerId(),
+                registration.championshipId(),
                 registration.status()
         );
     }
 
-    public RegistrationData toRegistrationData(Registration registration){
-        return new RegistrationData(registration.id(),
-                userMapper.toUserData(registration.user()),
-                registration.status()
-        );
-    }
 }

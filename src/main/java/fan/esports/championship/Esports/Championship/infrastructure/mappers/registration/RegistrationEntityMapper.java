@@ -8,16 +8,21 @@ import org.springframework.stereotype.Component;
 @Component
 public class RegistrationEntityMapper {
 
-    private final UserEntityMapper userEntityMapper;
-
-    public RegistrationEntityMapper(UserEntityMapper userEntityMapper) {
-        this.userEntityMapper = userEntityMapper;
-    }
-
     public RegistrationEntity toEntity(Registration registration) {
-        return new RegistrationEntity(registration.id(), userEntityMapper.toEntity(registration.user()), registration.status());
+
+        return new RegistrationEntity(
+                registration.id(),
+                registration.ownerId(),
+                registration.championshipId(),
+                registration.status()
+        );
     }
     public Registration toDomain(RegistrationEntity registrationEntity) {
-        return new Registration(registrationEntity.getId(), userEntityMapper.toDomain(registrationEntity.getUser()), registrationEntity.getStatus());
+        return new Registration(
+                registrationEntity.getId(),
+                registrationEntity.getOwnerdId(),
+                registrationEntity.getChampionshipId(),
+                registrationEntity.getStatus()
+        );
     }
 }

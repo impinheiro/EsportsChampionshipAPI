@@ -5,19 +5,21 @@ import fan.esports.championship.Esports.Championship.infrastructure.persistence.
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="userregistrations")
+@Document(collection="registrations")
 public class RegistrationEntity {
     @Id
     private String id;
-    private UserEntity user;
+    private String ownerdId;
+    private String championshipId;
     private RegistrationStatus status;
 
     public RegistrationEntity() {
     }
 
-    public RegistrationEntity(String id, UserEntity user, RegistrationStatus status) {
+    public RegistrationEntity(String id, String ownerdId, String championshipId, RegistrationStatus status) {
         this.id = id;
-        this.user = user;
+        this.ownerdId = ownerdId;
+        this.championshipId = championshipId;
         this.status = status;
     }
 
@@ -29,12 +31,20 @@ public class RegistrationEntity {
         this.id = id;
     }
 
-    public UserEntity getUser() {
-        return user;
+    public String getOwnerdId() {
+        return ownerdId;
     }
 
-    public void setUser(UserEntity user) {
-        this.user = user;
+    public void setOwnerdId(String ownerdId) {
+        this.ownerdId = ownerdId;
+    }
+
+    public String getChampionshipId() {
+        return championshipId;
+    }
+
+    public void setChampionshipId(String championshipId) {
+        this.championshipId = championshipId;
     }
 
     public RegistrationStatus getStatus() {
@@ -43,13 +53,5 @@ public class RegistrationEntity {
 
     public void setStatus(RegistrationStatus status) {
         this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "RegistrationEntity{" +
-                "id='" + id + '\'' +
-                ", user=" + user +
-                '}';
     }
 }

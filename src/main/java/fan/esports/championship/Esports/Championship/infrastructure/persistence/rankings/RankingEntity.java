@@ -1,31 +1,31 @@
 package fan.esports.championship.Esports.Championship.infrastructure.persistence.rankings;
 
-import fan.esports.championship.Esports.Championship.core.domain.TeamScore;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.championship.ChampionshipEntity;
+import fan.esports.championship.Esports.Championship.core.domain.Score;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.List;
 
-@Document(collection = "team-ranking")
-public class TeamRankingEntity {
+@Document(collection = "ranking")
+public class RankingEntity {
 
     @Id
     private String id;
     @Indexed(unique = true)
     private String championshipId;
-    private List<TeamScore> scores;
+    private List<Score> scores;
 
-    public TeamRankingEntity() {
+    public RankingEntity() {
     }
 
-    public TeamRankingEntity(String id, String championshipId) {
+
+    public RankingEntity(String id, String championshipId) {
         this.id = id;
         this.championshipId = championshipId;
     }
 
-    public TeamRankingEntity(String id, String championshipId, List<TeamScore> scores) {
+    public RankingEntity(String id, String championshipId, List<Score> scores) {
         this.id = id;
         this.championshipId = championshipId;
         this.scores = scores;
@@ -47,11 +47,12 @@ public class TeamRankingEntity {
         this.championshipId = championshipId;
     }
 
-    public List<TeamScore> getScores() {
+    public List<Score> getScores() {
         return scores;
     }
 
-    public void setScores(List<TeamScore> scores) {
+    public void setScores(List<Score> scores) {
         this.scores = scores;
     }
+
 }

@@ -21,7 +21,7 @@ public class SubscribeRegistrationCaseImpl implements SubscribeRegistrationCase 
     @Override
     public Championship execute(String championshipId, String registrationId) {
 
-        if(!registrationGateway.findById(registrationId).isPresent() && !registrationGateway.findTeamRegistrationById(registrationId).isPresent()) {
+        if(!registrationGateway.findById(registrationId).isPresent()) {
             throw new RegistrationNotFoundException("Invalid registration");
         }
 

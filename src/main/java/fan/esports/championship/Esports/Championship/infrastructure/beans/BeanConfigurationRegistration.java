@@ -30,26 +30,6 @@ public class BeanConfigurationRegistration {
     }
 
     @Bean
-    public CreateTeamRegistrationCase createTeamRegistrationCase(RegistrationGateway registrationGateway){
-        return new CreateTeamRegistrationCaseImpl(registrationGateway);
-    }
-
-    @Bean
-    public UpdateTeamRegistrationCase updateTeamRegistrationCase(RegistrationGateway registrationGateway){
-        return new UpdateTeamRegistrationCaseImpl(registrationGateway);
-    }
-
-    @Bean
-    public DeleteTeamRegistrationCase deleteTeamRegistrationCase(RegistrationGateway registrationGateway){
-        return new DeleteTeamRegistrationCaseImpl(registrationGateway);
-    }
-
-    @Bean
-    public FindTeamRegistrationByIdCase findTeamRegistrationByIdCase(RegistrationGateway registrationGateway){
-        return new FindTeamRegistrationByIdCaseImpl(registrationGateway);
-    }
-
-    @Bean
     public FindAllRegistrationsCase findAllRegistrationsCase(RegistrationGateway registrationGateway){
         return new FindAllRegistrationsCaseImpl(registrationGateway);
     }

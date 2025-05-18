@@ -3,17 +3,17 @@ package fan.esports.championship.Esports.Championship.infrastructure.presentatio
 import fan.esports.championship.Esports.Championship.core.domain.*;
 import fan.esports.championship.Esports.Championship.core.enums.ChampionshipType;
 import fan.esports.championship.Esports.Championship.core.usecases.championship.*;
-import fan.esports.championship.Esports.Championship.core.usecases.rankings.player.CreatePlayerRankingCase;
-import fan.esports.championship.Esports.Championship.core.usecases.rankings.team.CreateTeamRankingCase;
+import fan.esports.championship.Esports.Championship.core.usecases.rankings.CreateRankingCase;
+import fan.esports.championship.Esports.Championship.core.usecases.registrations.CreateRegistrationCase;
 import fan.esports.championship.Esports.Championship.core.usecases.registrations.FindRegistrationByIdCase;
-import fan.esports.championship.Esports.Championship.core.usecases.registrations.FindTeamRegistrationByIdCase;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.ChampionshipDTO;
+import fan.esports.championship.Esports.Championship.infrastructure.dtos.RegistrationDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.ChampionshipCreationDto;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.NewRanking;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.responses.RegistrationProof;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.championships.ChampionshipDtoMapper;
-import fan.esports.championship.Esports.Championship.infrastructure.mappers.ranking.player.PlayerRankingDtoMapper;
-import fan.esports.championship.Esports.Championship.infrastructure.mappers.ranking.team.TeamRankingDtoMapper;
+import fan.esports.championship.Esports.Championship.infrastructure.mappers.ranking.RankingDtoMapper;
+import fan.esports.championship.Esports.Championship.infrastructure.mappers.registration.RegistrationDtoMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -27,66 +27,62 @@ import java.util.stream.Collectors;
 @RequestMapping("api/v1/championship")
 public class ChampionshipController {
 
-    private final FindTeamRegistrationByIdCase findTeamRegistrationByIdCase;
     private final ChampionshipDtoMapper mapper;
     private final CreateChampionshipCase createChampionshipCase;
-    private final CreatePlayerRankingCase createPlayerRankingCase;
+    private final CreateRankingCase createRankingCase;
     private final SetChampionshipRankingCase setChampionshipRankingCase;
-    private final CreateTeamRankingCase createTeamRankingCase;
-    private final PlayerRankingDtoMapper playerRankingDtoMapper;
-    private final TeamRankingDtoMapper teamRankingDtoMapper;
+    private final RankingDtoMapper rankingDtoMapper;
     private final UpdateChampionshipCase updateChampionshipCase;
     private final DeleteChampionshipCase deleteChampionshipCase;
     private final FindAllChampionshipsCase findAllChampionshipsCase;
     private final FindChampionshipByIdCase  findChampionshipByIdCase;
     private final SubscribeRegistrationCase  subscribeRegistrationCase;
     private final SubscribeMatchCase  subscribeMatchCase;
-    private final FindRegistrationByIdCase findRegistrationByIdCase;
+    private final CreateRegistrationCase registrationCase;
+    private final RegistrationDtoMapper registrationDtoMapper;
     private final FindAvailableChampionshipsCase findAvailableChampionshipsCase;
     private final FindExpiredChampionshipsCase findExpiredChampionshipsCase;
     private final FindByGameNameCase findByGameNameCase;
     private final FindByChampionshipTypeCase findByChampionshipTypeCase;
     private final FindByChampionshipFormatCase findByChampionshipFormatCase;
+    private final CreateRegistrationCase createRegistrationCase;
 
-    public ChampionshipController(ChampionshipDtoMapper mapper, CreateChampionshipCase createChampionshipCase, CreatePlayerRankingCase createPlayerRankingCase, SetChampionshipRankingCase setChampionshipRankingCase, CreateTeamRankingCase createTeamRankingCase, PlayerRankingDtoMapper playerRankingDtoMapper, TeamRankingDtoMapper teamRankingDtoMapper, UpdateChampionshipCase updateChampionshipCase, DeleteChampionshipCase deleteChampionshipCase, FindAllChampionshipsCase findAllChampionshipsCase, FindChampionshipByIdCase findChampionshipByIdCase, SubscribeRegistrationCase subscribeRegistrationCase, SubscribeMatchCase subscribeMatchCase, FindRegistrationByIdCase findRegistrationByIdCase, FindTeamRegistrationByIdCase findTeamRegistrationByIdCase, FindAvailableChampionshipsCase findAvailableChampionshipsCase, FindExpiredChampionshipsCase findExpiredChampionshipsCase, FindByGameNameCase findByGameNameCase, FindByChampionshipTypeCase findByChampionshipTypeCase, FindByChampionshipFormatCase findByChampionshipFormatCase) {
+    public ChampionshipController(ChampionshipDtoMapper mapper, CreateChampionshipCase createChampionshipCase, CreateRankingCase createRankingCase, SetChampionshipRankingCase setChampionshipRankingCase, RankingDtoMapper rankingDtoMapper, UpdateChampionshipCase updateChampionshipCase, DeleteChampionshipCase deleteChampionshipCase, FindAllChampionshipsCase findAllChampionshipsCase, FindChampionshipByIdCase findChampionshipByIdCase, SubscribeRegistrationCase subscribeRegistrationCase, SubscribeMatchCase subscribeMatchCase, CreateRegistrationCase registrationCase, RegistrationDtoMapper registrationDtoMapper, FindAvailableChampionshipsCase findAvailableChampionshipsCase, FindExpiredChampionshipsCase findExpiredChampionshipsCase, FindByGameNameCase findByGameNameCase, FindByChampionshipTypeCase findByChampionshipTypeCase, FindByChampionshipFormatCase findByChampionshipFormatCase, CreateRegistrationCase createRegistrationCase) {
         this.mapper = mapper;
         this.createChampionshipCase = createChampionshipCase;
-        this.createPlayerRankingCase = createPlayerRankingCase;
+        this.createRankingCase = createRankingCase;
         this.setChampionshipRankingCase = setChampionshipRankingCase;
-        this.createTeamRankingCase = createTeamRankingCase;
-        this.playerRankingDtoMapper = playerRankingDtoMapper;
-        this.teamRankingDtoMapper = teamRankingDtoMapper;
+        this.rankingDtoMapper = rankingDtoMapper;
         this.updateChampionshipCase = updateChampionshipCase;
         this.deleteChampionshipCase = deleteChampionshipCase;
         this.findAllChampionshipsCase = findAllChampionshipsCase;
         this.findChampionshipByIdCase = findChampionshipByIdCase;
         this.subscribeRegistrationCase = subscribeRegistrationCase;
         this.subscribeMatchCase = subscribeMatchCase;
-        this.findRegistrationByIdCase = findRegistrationByIdCase;
-        this.findTeamRegistrationByIdCase = findTeamRegistrationByIdCase;
+        this.registrationCase = registrationCase;
+        this.registrationDtoMapper = registrationDtoMapper;
         this.findAvailableChampionshipsCase = findAvailableChampionshipsCase;
         this.findExpiredChampionshipsCase = findExpiredChampionshipsCase;
         this.findByGameNameCase = findByGameNameCase;
         this.findByChampionshipTypeCase = findByChampionshipTypeCase;
         this.findByChampionshipFormatCase = findByChampionshipFormatCase;
+        this.createRegistrationCase = createRegistrationCase;
     }
 
     @PostMapping("create")
     public ResponseEntity<?> create(@RequestBody ChampionshipCreationDto championshipDTO){
         Map<String, Object> response = new HashMap<>();
+
         Championship championship = mapper.toDomain(championshipDTO);
+
         Championship createdChampionship = createChampionshipCase.execute(championship);
+
         NewRanking ranking = new NewRanking(null, createdChampionship.id());
-        if(createdChampionship.type().equals(ChampionshipType.INDIVIDUAL)){
-            PlayerRanking newRanking = playerRankingDtoMapper.toDomain(ranking);
-            PlayerRanking createdRanking = createPlayerRankingCase.execute(newRanking);
-            setChampionshipRankingCase.execute(createdChampionship.id(), createdRanking.id());
-        }else {
-            TeamRanking newRanking = teamRankingDtoMapper.toDomain(ranking);
-            TeamRanking createdRanking = createTeamRankingCase.execute(newRanking);
-            System.out.println(createdRanking.id());
-            setChampionshipRankingCase.execute(createdChampionship.id(), createdRanking.id());
-        }
+        Ranking newRanking = rankingDtoMapper.toDomain(ranking);
+        Ranking createdRanking = createRankingCase.execute(newRanking);
+
+        setChampionshipRankingCase.execute(createdChampionship.id(), createdRanking.id());
+
         response.put("Championship created: ", mapper.toDto(championship));
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
@@ -163,28 +159,17 @@ public class ChampionshipController {
         return ResponseEntity.status(HttpStatus.NO_CONTENT).body(response);
     }
 
-    @PatchMapping("subscriberegistration/{championshipId}/{registrationdId}")
-    public ResponseEntity<?> subscribeRegistration(@PathVariable String championshipId, @PathVariable String registrationdId){
-        Championship subscribedChampionship = subscribeRegistrationCase.execute(championshipId, registrationdId);
-        RegistrationProof proof;
-        if(subscribedChampionship.type().toString() == "INDIVIDUAL"){
-            Registration registration = findRegistrationByIdCase.execute(registrationdId);
-            proof = new RegistrationProof(
-                    registration.user().name(),
-                    subscribedChampionship.startDate(),
-                    subscribedChampionship.rules(),
-                    subscribedChampionship.awardDescription()
-            );
-        }else{
-            TeamRegistration registration = findTeamRegistrationByIdCase.execute(registrationdId);
-            proof = new RegistrationProof(
-                    registration.team().name(),
-                    subscribedChampionship.startDate(),
-                    subscribedChampionship.rules(),
-                    subscribedChampionship.awardDescription()
-            );
-        }
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(proof);
+    @PatchMapping("subscriberegistration/{championshipId}")
+    public ResponseEntity<?> subscribeRegistration(@PathVariable String championshipId){
+
+        RegistrationDTO registrationDto = new RegistrationDTO(null, null, championshipId, null);
+
+        Registration registration = registrationDtoMapper.toDomain(registrationDto);
+        Registration createdRegistration = createRegistrationCase.execute(registration);
+
+        Championship subscribedChampionship = subscribeRegistrationCase.execute(championshipId, createdRegistration.id());
+
+        return ResponseEntity.status(HttpStatus.ACCEPTED).build();
     }
 
     @PatchMapping("subscribematch/{championshipId}/{matchId}")
