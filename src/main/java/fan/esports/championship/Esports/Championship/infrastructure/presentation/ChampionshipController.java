@@ -2,6 +2,7 @@ package fan.esports.championship.Esports.Championship.infrastructure.presentatio
 
 import fan.esports.championship.Esports.Championship.core.domain.*;
 import fan.esports.championship.Esports.Championship.core.enums.ChampionshipType;
+import fan.esports.championship.Esports.Championship.core.enums.Games;
 import fan.esports.championship.Esports.Championship.core.usecases.championship.*;
 import fan.esports.championship.Esports.Championship.core.usecases.rankings.CreateRankingCase;
 import fan.esports.championship.Esports.Championship.core.usecases.registrations.CreateRegistrationCase;
@@ -186,6 +187,7 @@ public class ChampionshipController {
     @PatchMapping("subscribematch/{championshipId}/{matchId}")
     public ResponseEntity<?> subscribeMatch(@PathVariable String championshipId, @PathVariable String matchId){
         Map<String, Object> response = new HashMap<>();
+        Championship championship = findChampionshipByIdCase.execute(championshipId);
         Championship subscribedChampionship = subscribeMatchCase.execute(championshipId, matchId);
         response.put("Match submitted: ", mapper.toDto(subscribedChampionship));
         return ResponseEntity.ok(response);

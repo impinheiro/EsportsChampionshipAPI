@@ -12,10 +12,5 @@ public interface MatchGateway {
     void delete(String id);
     Optional<Match> findById(String id);
     List<Match> findAll();
-    TeamMatch createTeamMatch(TeamMatch teamMatch);
-    TeamMatch updateTeamMatch(String id,TeamMatch teamMatch);
-    void deleteTeamMatch(String id);
-    Optional<TeamMatch> findTeamMatchById(String id);
-    List<TeamMatch> findAllTeamMatches();
 
 }

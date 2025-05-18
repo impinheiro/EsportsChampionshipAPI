@@ -20,26 +20,24 @@ public class MatchEntityMapper {
         return new Match(
                 matchEntity.getId(),
                 matchEntity.getName(),
-                matchEntity.getParticipants()
-                        .stream()
-                        .map(userMapper::toDomain)
-                        .collect(Collectors.toList()),
+                matchEntity.getParticipantsId(),
+                matchEntity.getMatchDate(),
+                matchEntity.getStatus(),
+                matchEntity.getMatchResults(),
                 matchEntity.getCreatedAt(),
-                matchEntity.getUpdatedAt(),
-                matchEntity.getMatchResults()
+                matchEntity.getUpdatedAt()
         );
     }
     public MatchEntity toEntity(Match match){
         return new MatchEntity(
                 match.id(),
                 match.name(),
-                match.participants()
-                        .stream()
-                        .map(userMapper::toEntity)
-                        .collect(Collectors.toList()),
+                match.participantsId(),
+                match.date(),
+                match.status(),
+                match.results(),
                 match.createdAt(),
-                match.updatedAt(),
-                match.matchResults()
+                match.updatedAt()
         );
     }
 }

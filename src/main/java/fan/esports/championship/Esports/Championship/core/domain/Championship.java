@@ -2,6 +2,7 @@ package fan.esports.championship.Esports.Championship.core.domain;
 
 import fan.esports.championship.Esports.Championship.core.enums.ChampionshipFormat;
 import fan.esports.championship.Esports.Championship.core.enums.ChampionshipType;
+import fan.esports.championship.Esports.Championship.core.enums.Games;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -9,7 +10,7 @@ import java.util.List;
 public record Championship(String id,
                            String createdBy,
                            String name,
-                           String gameName,
+                           Games gameName,
                            ChampionshipType type,
                            Integer capacity,
                            double subscriptionValue,

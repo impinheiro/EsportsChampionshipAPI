@@ -16,7 +16,7 @@ public class SubscribeMatchCaseImpl implements SubscribeMatchCase {
 
     @Override
     public Championship execute(String championshipId, String matchId) {
-        if(!matchGateway.findById(matchId).isPresent() && !matchGateway.findTeamMatchById(championshipId).isPresent()) {
+        if(!matchGateway.findById(matchId).isPresent()) {
             throw new MatchNotFoundException("There is no such match in our database");
         }
         return championshipGateway.subscribeMatch(championshipId, matchId);

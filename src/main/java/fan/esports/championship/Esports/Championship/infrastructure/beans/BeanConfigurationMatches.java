@@ -33,29 +33,4 @@ public class BeanConfigurationMatches {
         return new FindMatchByIdCaseImpl(matchGateway);
     }
 
-    @Bean
-    public FindTeamMatchByIdCase findTeamMatchByIdCase(MatchGateway matchGateway) {
-        return new FindTeamMatchByIdCaseImpl(matchGateway);
-    }
-
-    @Bean
-    public FindAllTeamMatchesCase findAllTeamMatchesCase(MatchGateway matchGateway) {
-        return new FindAllTeamMatchesCaseImpl(matchGateway);
-    }
-
-    @Bean
-    public CreateTeamMatchCase createTeamMatchCase(MatchGateway matchGateway) {
-        return new CreateTeamMatchCaseImpl(matchGateway);
-    }
-
-    @Bean
-    public  UpdateTeamMatchCase updateTeamMatchCase(MatchGateway matchGateway) {
-        return new UpdateTeamMatchCaseImpl(matchGateway);
-    }
-
-    @Bean
-    public  DeleteTeamMatchCase deleteTeamMatchCase(MatchGateway matchGateway) {
-        return new DeleteTeamMatchCaseImpl(matchGateway);
-    }
-
 }

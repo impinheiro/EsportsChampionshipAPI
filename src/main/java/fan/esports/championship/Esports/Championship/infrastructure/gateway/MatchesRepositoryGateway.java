@@ -2,20 +2,18 @@ package fan.esports.championship.Esports.Championship.infrastructure.gateway;
 
 import fan.esports.championship.Esports.Championship.core.domain.Match;
 import fan.esports.championship.Esports.Championship.core.domain.TeamMatch;
+import fan.esports.championship.Esports.Championship.core.enums.MatchStatus;
 import fan.esports.championship.Esports.Championship.core.gateway.MatchGateway;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.matches.MatchEntityMapper;
-import fan.esports.championship.Esports.Championship.infrastructure.mappers.matches.TeamMatchEntityMapper;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.team.TeamEntityMapper;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.user.UserEntityMapper;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.match.MatchEntity;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.match.MatchRepository;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.match.TeamMatchEntity;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.match.TeamMatchRepository;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.team.TeamEntity;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.user.UserEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,40 +22,40 @@ import java.util.stream.Collectors;
 public class MatchesRepositoryGateway implements MatchGateway {
 
     private final MatchRepository matchRepository;
-    private final TeamMatchRepository teamMatchRepository;
     private final MatchEntityMapper matchEntityMapper;
-    private final UserEntityMapper userEntityMapper;
-    private final TeamEntityMapper teamEntityMapper;
-    private final TeamMatchEntityMapper teamMatchEntityMapper;
 
-    public MatchesRepositoryGateway(MatchRepository matchRepository, TeamMatchRepository teamMatchRepository, MatchEntityMapper matchEntityMapper, UserEntityMapper userEntityMapper, TeamEntityMapper teamEntityMapper, TeamMatchEntityMapper teamMatchEntityMapper) {
+    public MatchesRepositoryGateway(MatchRepository matchRepository, MatchEntityMapper matchEntityMapper) {
         this.matchRepository = matchRepository;
-        this.teamMatchRepository = teamMatchRepository;
         this.matchEntityMapper = matchEntityMapper;
-        this.userEntityMapper = userEntityMapper;
-        this.teamEntityMapper = teamEntityMapper;
-        this.teamMatchEntityMapper = teamMatchEntityMapper;
     }
+
 
     @Override
     public Match create(Match match) {
         MatchEntity matchEntity = matchEntityMapper.toEntity(match);
+
         matchEntity.setCreatedAt(LocalDateTime.now());
         matchEntity.setUpdatedAt(LocalDateTime.now());
-        matchEntity.setMatchResults(null);
+        matchEntity.setMatchResults(new ArrayList<>());
+
         matchRepository.save(matchEntity);
+
         return matchEntityMapper.toDomain(matchEntity);
     }
 
     @Override
     public Match update(String id, Match match) {
+
         MatchEntity databaseMatch = matchRepository.findById(id).orElse(null);
-        MatchEntity upodatedData = matchEntityMapper.toEntity(match);
-        databaseMatch.setName(upodatedData.getName());
-        databaseMatch.setMatchResults(upodatedData.getMatchResults());
+
+        MatchEntity updatedData = matchEntityMapper.toEntity(match);
+
+        databaseMatch.setMatchResults(updatedData.getMatchResults());
+        databaseMatch.setStatus(MatchStatus.FINISHED);
         databaseMatch.setUpdatedAt(LocalDateTime.now());
-        databaseMatch.setParticipants(upodatedData.getParticipants());
+
         matchRepository.save(databaseMatch);
+
         return matchEntityMapper.toDomain(databaseMatch);
     }
 
@@ -85,52 +83,4 @@ public class MatchesRepositoryGateway implements MatchGateway {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public TeamMatch createTeamMatch(TeamMatch teamMatch) {
-        TeamMatchEntity teamMatchEntity = teamMatchEntityMapper.toEntity(teamMatch);
-        teamMatchEntity.setMatchResults(null);
-        teamMatchEntity.setCreatedAt(LocalDateTime.now());
-        teamMatchEntity.setUpdatedAt(LocalDateTime.now());
-        teamMatchRepository.save(teamMatchEntity);
-        return teamMatchEntityMapper.toDomain(teamMatchEntity);
-    }
-
-    @Override
-    public TeamMatch updateTeamMatch(String id, TeamMatch teamMatch) {
-        TeamMatchEntity teamMatchEntity = teamMatchRepository.findById(id).orElse(null);
-        List<TeamEntity> participants = teamMatch.participants().stream().map(teamEntityMapper::toEntity).collect(Collectors.toList());
-        teamMatchEntity.setParticipants(participants);
-        teamMatchEntity.setName(teamMatch.name());
-        teamMatchEntity.setMatchResults(teamMatch.matchResults());
-        teamMatchEntity.setUpdatedAt(LocalDateTime.now());
-        teamMatchRepository.save(teamMatchEntity);
-        return teamMatchEntityMapper.toDomain(teamMatchEntity);
-    }
-
-    @Override
-    public void deleteTeamMatch(String id) {
-        TeamMatchEntity teamMatchEntity = teamMatchRepository.findById(id).orElse(null);
-        teamMatchRepository.delete(teamMatchEntity);
-    }
-
-    @Override
-    public Optional<TeamMatch> findTeamMatchById(String id) {
-        TeamMatchEntity  teamMatchEntity = teamMatchRepository.findById(id).orElse(null);
-        if (teamMatchEntity != null) {
-            return Optional.of(
-                    teamMatchEntityMapper.toDomain(teamMatchEntity)
-            );
-        }
-        return Optional.empty();
-    }
-
-    @Override
-    public List<TeamMatch> findAllTeamMatches() {
-        List<TeamMatchEntity>  teamMatchEntities = teamMatchRepository.findAll();
-        return teamMatchEntities
-                .stream()
-                .map(teamMatchEntityMapper::toDomain)
-                .collect(Collectors.toList()
-                );
-    }
 }

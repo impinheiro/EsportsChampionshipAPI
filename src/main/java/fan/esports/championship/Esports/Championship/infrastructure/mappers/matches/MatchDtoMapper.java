@@ -21,39 +21,29 @@ public class MatchDtoMapper {
 
     public Match toDomain(MatchDTO matchesDTO){
         return new Match(
-                matchesDTO.id(), matchesDTO.name(),
-                matchesDTO.participants()
-                        .stream()
-                        .map(userMapper::toDomain)
-                        .collect(Collectors.toList())
-                , matchesDTO.createdAt(), matchesDTO.updatedAt(),
-                matchesDTO.matchResults()
+                matchesDTO.id(),
+                matchesDTO.name(),
+                matchesDTO.participantsId(),
+                matchesDTO.date(),
+                matchesDTO.status(),
+                matchesDTO.results(),
+                matchesDTO.createdAt(),
+                matchesDTO.updatedAt()
         );
     }
 
     public MatchDTO toDTO(Match match){
         return new MatchDTO(
-                match.id(), match.name(),
-                match.participants()
-                        .stream()
-                        .map(userMapper::toDto)
-                        .collect(Collectors.toList()),
-                match.createdAt(),
-                match.updatedAt(),
-                match.matchResults()
-        );
-    }
-
-    public MatchData toMatchData(Match match){
-        return new MatchData(
                 match.id(),
                 match.name(),
-                match.participants()
-                        .stream()
-                        .map(userMapper::toUserData)
-                        .collect(Collectors.toList()),
-                match.matchResults()
-                );
+                match.participantsId(),
+                match.date(),
+                match.status(),
+                match.results(),
+                match.createdAt(),
+                match.updatedAt()
+
+        );
     }
 
 }

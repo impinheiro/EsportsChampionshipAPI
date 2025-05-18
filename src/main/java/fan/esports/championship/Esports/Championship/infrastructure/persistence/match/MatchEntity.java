@@ -2,6 +2,7 @@ package fan.esports.championship.Esports.Championship.infrastructure.persistence
 
 
 import fan.esports.championship.Esports.Championship.core.domain.MatchResults;
+import fan.esports.championship.Esports.Championship.core.enums.MatchStatus;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.user.UserEntity;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -17,21 +18,25 @@ public class MatchEntity{
     private String id;
     @Indexed(unique = true)
     private String name;
-    private List<UserEntity> participants;
+    private List<String> participantsId;
+    private LocalDateTime matchDate;
+    private MatchStatus status;
+    private List<MatchResults> matchResults;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private MatchResults matchResults;
 
     public MatchEntity() {
     }
 
-    public MatchEntity(String id, String name, List<UserEntity> participants, LocalDateTime createdAt, LocalDateTime updatedAt, MatchResults matchResults) {
+    public MatchEntity(String id, String name, List<String> participantsId, LocalDateTime matchDate, MatchStatus status, List<MatchResults> matchResults, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
-        this.participants = participants;
+        this.participantsId = participantsId;
+        this.matchDate = matchDate;
+        this.status = status;
+        this.matchResults = matchResults;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
-        this.matchResults = matchResults;
     }
 
     public String getId() {
@@ -50,12 +55,36 @@ public class MatchEntity{
         this.name = name;
     }
 
-    public List<UserEntity> getParticipants() {
-        return participants;
+    public List<String> getParticipantsId() {
+        return participantsId;
     }
 
-    public void setParticipants(List<UserEntity> participants) {
-        this.participants = participants;
+    public void setParticipantsId(List<String> participantsId) {
+        this.participantsId = participantsId;
+    }
+
+    public LocalDateTime getMatchDate() {
+        return matchDate;
+    }
+
+    public void setMatchDate(LocalDateTime matchDate) {
+        this.matchDate = matchDate;
+    }
+
+    public MatchStatus getStatus() {
+        return status;
+    }
+
+    public void setStatus(MatchStatus status) {
+        this.status = status;
+    }
+
+    public List<MatchResults> getMatchResults() {
+        return matchResults;
+    }
+
+    public void setMatchResults(List<MatchResults> matchResults) {
+        this.matchResults = matchResults;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -73,13 +102,4 @@ public class MatchEntity{
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
     }
-
-    public MatchResults getMatchResults() {
-        return matchResults;
-    }
-
-    public void setMatchResults(MatchResults matchResults) {
-        this.matchResults = matchResults;
-    }
-
 }
