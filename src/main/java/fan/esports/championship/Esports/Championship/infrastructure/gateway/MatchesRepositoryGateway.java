@@ -1,15 +1,13 @@
 package fan.esports.championship.Esports.Championship.infrastructure.gateway;
 
-import fan.esports.championship.Esports.Championship.core.domain.Match;
-import fan.esports.championship.Esports.Championship.core.domain.TeamMatch;
+import fan.esports.championship.Esports.Championship.core.domain.*;
 import fan.esports.championship.Esports.Championship.core.enums.MatchStatus;
 import fan.esports.championship.Esports.Championship.core.gateway.MatchGateway;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.matches.MatchEntityMapper;
-import fan.esports.championship.Esports.Championship.infrastructure.mappers.team.TeamEntityMapper;
-import fan.esports.championship.Esports.Championship.infrastructure.mappers.user.UserEntityMapper;
+import fan.esports.championship.Esports.Championship.infrastructure.mappers.ranking.RankingEntityMapper;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.match.MatchEntity;
 import fan.esports.championship.Esports.Championship.infrastructure.persistence.match.MatchRepository;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.team.TeamEntity;
+import fan.esports.championship.Esports.Championship.infrastructure.persistence.rankings.RankingEntity;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -34,6 +32,7 @@ public class MatchesRepositoryGateway implements MatchGateway {
     public Match create(Match match) {
         MatchEntity matchEntity = matchEntityMapper.toEntity(match);
 
+        matchEntity.setStatus(MatchStatus.PENDING);
         matchEntity.setCreatedAt(LocalDateTime.now());
         matchEntity.setUpdatedAt(LocalDateTime.now());
         matchEntity.setMatchResults(new ArrayList<>());
@@ -77,10 +76,14 @@ public class MatchesRepositoryGateway implements MatchGateway {
     @Override
     public List<Match> findAll() {
         List<MatchEntity> matches = matchRepository.findAll();
-        return matches
-                .stream()
-                .map(matchEntityMapper::toDomain)
-                .collect(Collectors.toList());
+        return matches.stream().map(matchEntityMapper::toDomain).collect(Collectors.toList());
     }
 
+    @Override
+    public void setChampionshipId(String matchId, String championshipId) {
+        System.out.println(matchId);
+        MatchEntity matchEntity = matchRepository.findById(matchId).orElse(null);
+        matchEntity.setChampionshipId(championshipId);
+        matchRepository.save(matchEntity);
+    }
 }

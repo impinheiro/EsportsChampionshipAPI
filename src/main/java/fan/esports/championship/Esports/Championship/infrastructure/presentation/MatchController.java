@@ -1,7 +1,10 @@
 package fan.esports.championship.Esports.Championship.infrastructure.presentation;
 
+import fan.esports.championship.Esports.Championship.core.domain.Championship;
 import fan.esports.championship.Esports.Championship.core.domain.Match;
+import fan.esports.championship.Esports.Championship.core.domain.Ranking;
 import fan.esports.championship.Esports.Championship.core.domain.TeamMatch;
+import fan.esports.championship.Esports.Championship.core.usecases.championship.FindChampionshipByIdCase;
 import fan.esports.championship.Esports.Championship.core.usecases.matches.*;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.MatchDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.TeamMatchDTO;
@@ -24,14 +27,16 @@ public class MatchController {
     private final CreateMatchCase createMatchCase;
     private final DeleteMatchCase deleteMatchCase;
     private final MatchDtoMapper matchDtoMapper;
+    private final FindChampionshipByIdCase findChampionshipByIdCase;
 
-    public MatchController(FindMatchByIdCase findMatchByIdCase, FindAllMatchesCase findAllMatchesCase, UpdateMatchCase updateMatchCase, CreateMatchCase createMatchCase, DeleteMatchCase deleteMatchCase, MatchDtoMapper matchDtoMapper) {
+    public MatchController(FindMatchByIdCase findMatchByIdCase, FindAllMatchesCase findAllMatchesCase, UpdateMatchCase updateMatchCase, CreateMatchCase createMatchCase, DeleteMatchCase deleteMatchCase, MatchDtoMapper matchDtoMapper, FindChampionshipByIdCase findChampionshipByIdCase) {
         this.findMatchByIdCase = findMatchByIdCase;
         this.findAllMatchesCase = findAllMatchesCase;
         this.updateMatchCase = updateMatchCase;
         this.createMatchCase = createMatchCase;
         this.deleteMatchCase = deleteMatchCase;
         this.matchDtoMapper = matchDtoMapper;
+        this.findChampionshipByIdCase = findChampionshipByIdCase;
     }
 
 
@@ -63,8 +68,11 @@ public class MatchController {
     @PutMapping("/update/{id}")
     public ResponseEntity <?> update (@RequestBody MatchDTO matchDTO, @PathVariable String id) {
         Map<String, Object> response = new HashMap<>();
+
         Match match = matchDtoMapper.toDomain(matchDTO);
-        updateMatchCase.execute(id, match);
+
+        Match updatedData = updateMatchCase.execute(id, match);
+
         response.put("Success: ", "Match was updated");
         response.put("Info: ", matchDtoMapper.toDTO(match));
         return ResponseEntity.ok(response);

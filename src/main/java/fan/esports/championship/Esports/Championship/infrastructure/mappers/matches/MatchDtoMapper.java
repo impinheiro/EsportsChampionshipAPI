@@ -11,19 +11,12 @@ import java.util.stream.Collectors;
 @Component
 public class MatchDtoMapper {
 
-
-    private final UserDtoMapper userMapper;
-
-    public MatchDtoMapper(UserDtoMapper userMapper) {
-        this.userMapper = userMapper;
-    }
-
-
     public Match toDomain(MatchDTO matchesDTO){
         return new Match(
                 matchesDTO.id(),
                 matchesDTO.name(),
-                matchesDTO.participantsId(),
+                matchesDTO.registrationsId(),
+                matchesDTO.championshipId(),
                 matchesDTO.date(),
                 matchesDTO.status(),
                 matchesDTO.results(),
@@ -36,7 +29,8 @@ public class MatchDtoMapper {
         return new MatchDTO(
                 match.id(),
                 match.name(),
-                match.participantsId(),
+                match.registrationsId(),
+                match.championshipId(),
                 match.date(),
                 match.status(),
                 match.results(),

@@ -7,7 +7,8 @@ import java.util.List;
 
 public record Match(String id,
                     String name,
-                    List<String>participantsId,
+                    List<String>registrationsId,
+                    String championshipId,
                     LocalDateTime date,
                     MatchStatus status,
                     List<MatchResults> results,

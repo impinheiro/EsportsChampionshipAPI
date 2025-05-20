@@ -4,6 +4,7 @@ import fan.esports.championship.Esports.Championship.core.domain.*;
 import fan.esports.championship.Esports.Championship.core.enums.ChampionshipType;
 import fan.esports.championship.Esports.Championship.core.enums.Games;
 import fan.esports.championship.Esports.Championship.core.usecases.championship.*;
+import fan.esports.championship.Esports.Championship.core.usecases.matches.SetMatchChampionshipIdCase;
 import fan.esports.championship.Esports.Championship.core.usecases.rankings.CreateRankingCase;
 import fan.esports.championship.Esports.Championship.core.usecases.registrations.CreateRegistrationCase;
 import fan.esports.championship.Esports.Championship.core.usecases.registrations.FindRegistrationByIdCase;
@@ -46,8 +47,9 @@ public class ChampionshipController {
     private final FindByChampionshipTypeCase findByChampionshipTypeCase;
     private final FindByChampionshipFormatCase findByChampionshipFormatCase;
     private final CreateRegistrationCase createRegistrationCase;
+    private final SetMatchChampionshipIdCase setMatchChampionshipIdCase;
 
-    public ChampionshipController(ChampionshipDtoMapper mapper, CreateChampionshipCase createChampionshipCase, CreateRankingCase createRankingCase, SetChampionshipRankingCase setChampionshipRankingCase, RankingDtoMapper rankingDtoMapper, UpdateChampionshipCase updateChampionshipCase, DeleteChampionshipCase deleteChampionshipCase, FindAllChampionshipsCase findAllChampionshipsCase, FindChampionshipByIdCase findChampionshipByIdCase, SubscribeRegistrationCase subscribeRegistrationCase, SubscribeMatchCase subscribeMatchCase, RegistrationDtoMapper registrationDtoMapper, FindAvailableChampionshipsCase findAvailableChampionshipsCase, FindExpiredChampionshipsCase findExpiredChampionshipsCase, FindByGameNameCase findByGameNameCase, FindByChampionshipTypeCase findByChampionshipTypeCase, FindByChampionshipFormatCase findByChampionshipFormatCase, CreateRegistrationCase createRegistrationCase) {
+    public ChampionshipController(ChampionshipDtoMapper mapper, CreateChampionshipCase createChampionshipCase, CreateRankingCase createRankingCase, SetChampionshipRankingCase setChampionshipRankingCase, RankingDtoMapper rankingDtoMapper, UpdateChampionshipCase updateChampionshipCase, DeleteChampionshipCase deleteChampionshipCase, FindAllChampionshipsCase findAllChampionshipsCase, FindChampionshipByIdCase findChampionshipByIdCase, SubscribeRegistrationCase subscribeRegistrationCase, SubscribeMatchCase subscribeMatchCase, RegistrationDtoMapper registrationDtoMapper, FindAvailableChampionshipsCase findAvailableChampionshipsCase, FindExpiredChampionshipsCase findExpiredChampionshipsCase, FindByGameNameCase findByGameNameCase, FindByChampionshipTypeCase findByChampionshipTypeCase, FindByChampionshipFormatCase findByChampionshipFormatCase, CreateRegistrationCase createRegistrationCase, SetMatchChampionshipIdCase setMatchChampionshipIdCase) {
         this.mapper = mapper;
         this.createChampionshipCase = createChampionshipCase;
         this.createRankingCase = createRankingCase;
@@ -66,6 +68,7 @@ public class ChampionshipController {
         this.findByChampionshipTypeCase = findByChampionshipTypeCase;
         this.findByChampionshipFormatCase = findByChampionshipFormatCase;
         this.createRegistrationCase = createRegistrationCase;
+        this.setMatchChampionshipIdCase = setMatchChampionshipIdCase;
     }
 
     @PostMapping("create")
@@ -189,6 +192,7 @@ public class ChampionshipController {
         Map<String, Object> response = new HashMap<>();
         Championship championship = findChampionshipByIdCase.execute(championshipId);
         Championship subscribedChampionship = subscribeMatchCase.execute(championshipId, matchId);
+        setMatchChampionshipIdCase.execute(matchId, championshipId);
         response.put("Match submitted: ", mapper.toDto(subscribedChampionship));
         return ResponseEntity.ok(response);
     }

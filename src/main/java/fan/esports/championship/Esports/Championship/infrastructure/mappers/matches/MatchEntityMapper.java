@@ -20,7 +20,8 @@ public class MatchEntityMapper {
         return new Match(
                 matchEntity.getId(),
                 matchEntity.getName(),
-                matchEntity.getParticipantsId(),
+                matchEntity.getRegistrationsId(),
+                matchEntity.getChampionshipId(),
                 matchEntity.getMatchDate(),
                 matchEntity.getStatus(),
                 matchEntity.getMatchResults(),
@@ -32,7 +33,8 @@ public class MatchEntityMapper {
         return new MatchEntity(
                 match.id(),
                 match.name(),
-                match.participantsId(),
+                match.registrationsId(),
+                match.championshipId(),
                 match.date(),
                 match.status(),
                 match.results(),

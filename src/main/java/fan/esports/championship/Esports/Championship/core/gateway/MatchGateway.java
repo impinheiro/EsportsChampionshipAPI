@@ -12,5 +12,6 @@ public interface MatchGateway {
     void delete(String id);
     Optional<Match> findById(String id);
     List<Match> findAll();
+    void setChampionshipId(String matchId, String championshipId);
 
 }

@@ -3,9 +3,7 @@ package fan.esports.championship.Esports.Championship.infrastructure.persistence
 
 import fan.esports.championship.Esports.Championship.core.domain.MatchResults;
 import fan.esports.championship.Esports.Championship.core.enums.MatchStatus;
-import fan.esports.championship.Esports.Championship.infrastructure.persistence.user.UserEntity;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
@@ -16,9 +14,9 @@ public class MatchEntity{
 
     @Id
     private String id;
-    @Indexed(unique = true)
     private String name;
-    private List<String> participantsId;
+    private List<String> registrationsId;
+    private String championshipId;
     private LocalDateTime matchDate;
     private MatchStatus status;
     private List<MatchResults> matchResults;
@@ -28,10 +26,11 @@ public class MatchEntity{
     public MatchEntity() {
     }
 
-    public MatchEntity(String id, String name, List<String> participantsId, LocalDateTime matchDate, MatchStatus status, List<MatchResults> matchResults, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public MatchEntity(String id, String name, List<String> registrationsId, String championshipId, LocalDateTime matchDate, MatchStatus status, List<MatchResults> matchResults, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
-        this.participantsId = participantsId;
+        this.registrationsId = registrationsId;
+        this.championshipId = championshipId;
         this.matchDate = matchDate;
         this.status = status;
         this.matchResults = matchResults;
@@ -55,12 +54,20 @@ public class MatchEntity{
         this.name = name;
     }
 
-    public List<String> getParticipantsId() {
-        return participantsId;
+    public List<String> getRegistrationsId() {
+        return registrationsId;
     }
 
-    public void setParticipantsId(List<String> participantsId) {
-        this.participantsId = participantsId;
+    public void setRegistrationsId(List<String> registrationsId) {
+        this.registrationsId = registrationsId;
+    }
+
+    public String getChampionshipId() {
+        return championshipId;
+    }
+
+    public void setChampionshipId(String championshipId) {
+        this.championshipId = championshipId;
     }
 
     public LocalDateTime getMatchDate() {

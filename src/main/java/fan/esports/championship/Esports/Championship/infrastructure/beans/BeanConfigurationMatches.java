@@ -1,7 +1,10 @@
 package fan.esports.championship.Esports.Championship.infrastructure.beans;
 
+import fan.esports.championship.Esports.Championship.core.gateway.ChampionshipGateway;
 import fan.esports.championship.Esports.Championship.core.gateway.MatchGateway;
+import fan.esports.championship.Esports.Championship.core.gateway.RankingGateway;
 import fan.esports.championship.Esports.Championship.core.usecases.matches.*;
+import fan.esports.championship.Esports.Championship.core.usecases.rankings.RankingUpdateService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -14,8 +17,8 @@ public class BeanConfigurationMatches {
     }
 
     @Bean
-    public UpdateMatchCase updateMatchCase(MatchGateway matchGateway) {
-        return new UpdateMatchCaseImpl(matchGateway);
+    public UpdateMatchCase updateMatchCase(MatchGateway matchGateway, ChampionshipGateway championshipGateway, RankingGateway rankingGateway) {
+        return new UpdateMatchCaseImpl(matchGateway, championshipGateway, rankingGateway);
     }
 
     @Bean
@@ -31,6 +34,11 @@ public class BeanConfigurationMatches {
     @Bean
     public FindMatchByIdCase findMatchByIdCase(MatchGateway matchGateway) {
         return new FindMatchByIdCaseImpl(matchGateway);
+    }
+
+    @Bean
+    public SetMatchChampionshipIdCase setMatchChampionshipIdCase(MatchGateway matchGateway) {
+        return new SetMatchChampionshipIdCaseImpl(matchGateway);
     }
 
 }
