@@ -15,9 +15,9 @@ public class UpdateChampionshipCaseImpl implements UpdateChampionshipCase {
 
     @Override
     public Championship execute(String id, Championship championship) {
-        System.out.println(championship);
         Championship cha = championshipGateway.findById(id).orElse(null);
-        String authenticatedId = userGateway.getAuthenticatedUser().id().replaceAll("^\"|\"$", "");
+        String authenticatedId = userGateway.getAuthenticatedUser().id();
+//                .replaceAll("^\"|\"$", "");
         if(userGateway.getAuthenticatedUser().role().name().equals("PLAYER")){
             throw new MissingPermissionException("You are not an ADMIN or PROMOTER");
         }

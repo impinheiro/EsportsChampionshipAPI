@@ -38,9 +38,9 @@ public class TokenService {
             DecodedJWT jwt = JWT.require(algorithm)
                     .build()
                     .verify(token);
-            String id = jwt.getClaim("id").toString();
-            String name = jwt.getClaim("name").toString();
-            String email = jwt.getClaim("email").toString();
+            String id = jwt.getClaim("id").asString();
+            String name = jwt.getClaim("name").asString();
+            String email = jwt.getClaim("email").asString();
             UserRole role = UserRole.valueOf(jwt.getClaim("role").toString().replaceAll(("^\"|\"$"), ""));
             return Optional.of( JWTUserData.builder()
                     .id(id)

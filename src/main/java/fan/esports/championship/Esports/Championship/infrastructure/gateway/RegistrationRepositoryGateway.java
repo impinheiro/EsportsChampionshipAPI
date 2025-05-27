@@ -32,7 +32,8 @@ public class RegistrationRepositoryGateway implements RegistrationGateway {
     public Registration create(Registration registration) {
         RegistrationEntity newRegistration = registrationEntityMapper.toEntity(registration);
         JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String userId = userData.id().replaceAll("^\"|\"$", "");
+        String userId = userData.id();
+//                .replaceAll("^\"|\"$", "");
         if(registration.ownerId() == null){
             newRegistration.setOwnerdId(userId);
         }

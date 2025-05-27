@@ -25,7 +25,8 @@ public class PromoterRepositoryGateway implements PromoterGateway {
     @Override
     public List<Registration> findPendingRegistrations() {
 
-        String authenticatedUserId = userGateway.getAuthenticatedUser().id().replaceAll("^\"|\"$", "");
+        String authenticatedUserId = userGateway.getAuthenticatedUser().id();
+//                .replaceAll("^\"|\"$", "");
 
         List<Championship> championships = findProprietaryChampionships();
 
@@ -43,7 +44,8 @@ public class PromoterRepositoryGateway implements PromoterGateway {
     @Override
     public List<Championship> findProprietaryChampionships() {
 
-        String authenticatedId = userGateway.getAuthenticatedUser().id().replaceAll("^\"|\"$","");
+        String authenticatedId = userGateway.getAuthenticatedUser().id();
+//                .replaceAll("^\"|\"$","");
 
         List<Championship> allChampionships = championshipGateway.findAll();
 

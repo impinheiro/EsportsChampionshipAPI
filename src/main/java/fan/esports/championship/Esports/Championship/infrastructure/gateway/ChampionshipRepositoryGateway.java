@@ -30,7 +30,8 @@ public class ChampionshipRepositoryGateway implements ChampionshipGateway {
     public Championship create(Championship championship) {
         ChampionshipEntity newChampionship = mapper.toEntity(championship);
         JWTUserData userData = (JWTUserData) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String userId = userData.id().replaceAll("^\"|\"$", "");
+        String userId = userData.id();
+//                .replaceAll("^\"|\"$", "");
         newChampionship.setCreatedBy(userId);
         newChampionship.setCreatedAt(LocalDateTime.now());
         newChampionship.setUpdatedAt(LocalDateTime.now());
