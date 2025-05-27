@@ -55,10 +55,7 @@ public class TeamRepositoryGateway implements TeamGateway {
 
         TeamEntity teamEntity = teamRepository.findById(id).orElse(null);
         teamEntity.setName(team.name());
-        teamEntity.setMembers(team.members()
-                .stream()
-                .map(userMapper::toEntity)
-                .collect(Collectors.toList()));
+        teamEntity.setMembersId(team.membersId());
         teamEntity.setUpdatedAt(LocalDateTime.now());
         teamRepository.save(teamEntity);
         return mapper.toDomain(teamEntity);

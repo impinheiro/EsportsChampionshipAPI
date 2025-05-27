@@ -16,8 +16,7 @@ public class TeamEntity {
     private String id;
     @Indexed(unique = true)
     private String name;
-    @Indexed(unique = true)
-    private List<UserEntity> members;
+    private List<String> membersId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
@@ -25,10 +24,10 @@ public class TeamEntity {
 
     }
 
-    public TeamEntity(String id, String name, List<UserEntity> members, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public TeamEntity(String id, String name, List<String> membersId, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.name = name;
-        this.members = members;
+        this.membersId = membersId;
         this.createdAt = createdAt;
         this.updatedAt = updatedAt;
     }
@@ -49,13 +48,12 @@ public class TeamEntity {
         this.name = name;
     }
 
-
-    public List<UserEntity> getMembers() {
-        return members;
+    public List<String> getMembersId() {
+        return membersId;
     }
 
-    public void setMembers(List<UserEntity> members) {
-        this.members = members;
+    public void setMembersId(List<String> membersId) {
+        this.membersId = membersId;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -72,14 +70,5 @@ public class TeamEntity {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    @Override
-    public String toString() {
-        return "TeamEntity{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", members=" + members +
-                '}';
     }
 }

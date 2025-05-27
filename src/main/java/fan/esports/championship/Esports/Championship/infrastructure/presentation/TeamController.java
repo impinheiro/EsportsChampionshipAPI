@@ -47,10 +47,7 @@ public class TeamController {
         Map<String, Object> response = new HashMap<>();
         Team team = mapper.toDomain(teamDto);
         response.put("Team", team.name());
-        response.put("Team members: ",  team.members()
-                .stream()
-                .map(userDtoMapper::toUserData)
-                .toList());
+        response.put("Team members: ", team.membersId());
         Team newTeam = createTeamCase.execute(team);
         if(team != null){
             return ResponseEntity.ok(response);
@@ -62,7 +59,7 @@ public class TeamController {
     @GetMapping("findAll")
     public ResponseEntity<?> findAllTeams(){
         List<Team> teams = getAllTeamsCase.execute();
-        List<TeamData>  teamDTOs = teams.stream().map(mapper::toTeamData).collect(Collectors.toList());
+        List<TeamDTO>  teamDTOs = teams.stream().map(mapper::toDTO).collect(Collectors.toList());
         if(teams != null){
             return ResponseEntity.ok(teamDTOs);
         }else {
@@ -75,7 +72,7 @@ public class TeamController {
         if(teamFound == null){
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Team not found");
         } else{
-            return ResponseEntity.ok(teamDtoMapper.toTeamData(teamFound));
+            return ResponseEntity.ok(teamDtoMapper.toDTO(teamFound));
         }
     }
     @PutMapping("update/{id}")
@@ -84,7 +81,7 @@ public class TeamController {
         Team team = mapper.toDomain(teamDTO);
         Team updatedTeam = updateTeamCase.execute(team, id);
         response.put("Message", "Team updated successfully");
-        response.put("Team", teamDtoMapper.toTeamData(updatedTeam));
+        response.put("Team", teamDtoMapper.toDTO(updatedTeam));
         return ResponseEntity.ok(response);
     }
 }

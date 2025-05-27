@@ -2,29 +2,16 @@ package fan.esports.championship.Esports.Championship.infrastructure.mappers.tea
 
 import fan.esports.championship.Esports.Championship.core.domain.Team;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.TeamDTO;
-import fan.esports.championship.Esports.Championship.infrastructure.dtos.responses.TeamData;
-import fan.esports.championship.Esports.Championship.infrastructure.mappers.user.UserDtoMapper;
 import org.springframework.stereotype.Component;
-
-import java.util.stream.Collectors;
 
 @Component
 public class TeamDtoMapper {
-
-    private UserDtoMapper userMapper;
-
-    public TeamDtoMapper(UserDtoMapper userMapper) {
-        this.userMapper = userMapper;
-    }
 
     public Team toDomain (TeamDTO teamDTO){
 
         return new Team(teamDTO.id(),
                 teamDTO.name(),
-                teamDTO.members()
-                        .stream()
-                        .map(userMapper::toDomain)
-                        .collect(Collectors.toList()),
+                teamDTO.membersId(),
                 teamDTO.createdAt(),
                 teamDTO.updatedAt()
         );
@@ -33,23 +20,11 @@ public class TeamDtoMapper {
 
         return new TeamDTO(team.id(),
                 team.name(),
-                team.members()
-                        .stream()
-                        .map(userMapper::toDto)
-                        .collect(Collectors.toList()),
+                team.membersId(),
                 team.createdAt(),
                 team.updatedAt()
         );
 
     }
 
-    public TeamData toTeamData(Team team){
-        return new TeamData(team.id(),
-                team.name(),
-                team.members()
-                        .stream()
-                        .map(userMapper::toUserData)
-                        .collect(Collectors.toList())
-        );
-    }
 }

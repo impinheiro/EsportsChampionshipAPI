@@ -18,9 +18,9 @@ public class CreateTeamCaseImpl implements CreateTeamCase {
 
     @Override
     public Team execute(Team team) {
-        for(User user : team.members()){
-            if(!userGateway.exists(user.id()) || !userGateway.existsByNickname(user.nickname()) || !userGateway.existsByEmail(user.email())){
-                throw new UserNotFoundException("User " + user.nickname() + " not found on database. Please register first");
+        for(String userId : team.membersId()){
+            if(!userGateway.exists(userId)){
+                throw new UserNotFoundException("User not found on database. Please register first");
             }
         }
          return teamGateway.createTeam(team);
