@@ -4,6 +4,8 @@ import fan.esports.championship.Esports.Championship.core.domain.Championship;
 import fan.esports.championship.Esports.Championship.core.domain.Registration;
 import fan.esports.championship.Esports.Championship.core.enums.RegistrationStatus;
 import fan.esports.championship.Esports.Championship.core.gateway.PromoterGateway;
+import fan.esports.championship.Esports.Championship.infrastructure.mappers.championships.ChampionShipEntityMapper;
+import fan.esports.championship.Esports.Championship.infrastructure.persistence.championship.ChampionshipEntity;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -15,11 +17,13 @@ public class PromoterRepositoryGateway implements PromoterGateway {
     private final UserRepositoryGateway userGateway;
     private final ChampionshipRepositoryGateway championshipGateway;
     private final RegistrationRepositoryGateway registrationGateway;
+    private final ChampionShipEntityMapper championShipEntityMapper;
 
-    public PromoterRepositoryGateway(UserRepositoryGateway userGateway, ChampionshipRepositoryGateway championshipGateway, RegistrationRepositoryGateway registrationGateway) {
+    public PromoterRepositoryGateway(UserRepositoryGateway userGateway, ChampionshipRepositoryGateway championshipGateway, RegistrationRepositoryGateway registrationGateway, ChampionShipEntityMapper championShipEntityMapper) {
         this.userGateway = userGateway;
         this.championshipGateway = championshipGateway;
         this.registrationGateway = registrationGateway;
+        this.championShipEntityMapper = championShipEntityMapper;
     }
 
     @Override
@@ -76,6 +80,15 @@ public class PromoterRepositoryGateway implements PromoterGateway {
 
         if(registration != null){
             Registration updatedRegistration= new Registration(registration.id(), registration.ownerId(), registration.championshipId(), registrationStatus);
+            if(registrationStatus.equals(RegistrationStatus.REJECTED)){
+                Championship championship = championshipGateway.findById(registration.championshipId()).orElse(null);
+                ChampionshipEntity toUpdateChampionship = championShipEntityMapper.toEntity(championship);
+                List<String> updatedRegistrations = championship.registrationsId().stream()
+                        .filter(id -> !id.equals(updatedRegistration.id()))
+                        .collect(Collectors.toList());
+                toUpdateChampionship.setRegistrationsId(updatedRegistrations);
+                championshipGateway.update(registration.championshipId(), championShipEntityMapper.toDomain(toUpdateChampionship));
+            }
             registrationGateway.update(registrationId, updatedRegistration);
         }
 
