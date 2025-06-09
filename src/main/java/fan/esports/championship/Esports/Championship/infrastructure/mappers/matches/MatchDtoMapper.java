@@ -2,11 +2,8 @@ package fan.esports.championship.Esports.Championship.infrastructure.mappers.mat
 
 import fan.esports.championship.Esports.Championship.core.domain.Match;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.MatchDTO;
-import fan.esports.championship.Esports.Championship.infrastructure.dtos.responses.MatchData;
-import fan.esports.championship.Esports.Championship.infrastructure.mappers.user.UserDtoMapper;
 import org.springframework.stereotype.Component;
 
-import java.util.stream.Collectors;
 
 @Component
 public class MatchDtoMapper {

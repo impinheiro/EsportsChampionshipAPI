@@ -2,7 +2,6 @@ package fan.esports.championship.Esports.Championship.infrastructure.mappers.reg
 
 import fan.esports.championship.Esports.Championship.core.domain.Registration;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.RegistrationDTO;
-import fan.esports.championship.Esports.Championship.infrastructure.dtos.responses.RegistrationData;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.user.UserDtoMapper;
 import org.springframework.stereotype.Component;
 

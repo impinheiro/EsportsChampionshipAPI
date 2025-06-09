@@ -8,7 +8,6 @@ import fan.esports.championship.Esports.Championship.core.usecases.team.GetAllTe
 import fan.esports.championship.Esports.Championship.core.usecases.team.GetTeamById;
 import fan.esports.championship.Esports.Championship.core.usecases.team.UpdateTeamCase;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.TeamDTO;
-import fan.esports.championship.Esports.Championship.infrastructure.dtos.responses.TeamData;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.team.TeamDtoMapper;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.user.UserDtoMapper;
 import org.springframework.http.HttpStatus;
