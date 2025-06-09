@@ -12,6 +12,7 @@ import fan.esports.championship.Esports.Championship.infrastructure.dtos.Champio
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.RegistrationDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.ChampionshipCreationDto;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.NewRanking;
+import fan.esports.championship.Esports.Championship.infrastructure.dtos.responses.ChampionshipResponse;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.responses.RegistrationProof;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.championships.ChampionshipDtoMapper;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.ranking.RankingDtoMapper;
@@ -85,7 +86,7 @@ public class ChampionshipController {
 
         setChampionshipRankingCase.execute(createdChampionship.id(), createdRanking.id());
 
-        response.put("Championship created: ", mapper.toDto(championship));
+        response.put("Championship created: ", mapper.toResponse(championship));
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 
@@ -93,7 +94,7 @@ public class ChampionshipController {
     public ResponseEntity<?> findById(@PathVariable String id){
         Map<String, Object> response = new HashMap<>();
         Championship championship = findChampionshipByIdCase.execute(id);
-        response.put("Championship", mapper.toDto(championship));
+        response.put("Championship", mapper.toResponse(championship));
         return ResponseEntity.ok(response);
     }
 
@@ -103,7 +104,7 @@ public class ChampionshipController {
         List<Championship> foundChampionships = findAllChampionshipsCase.execute();
         response.put("Championships: ", foundChampionships
                 .stream()
-                .map(mapper::toDto)
+                .map(mapper::toResponse)
                 .collect(Collectors.toList()));
         return ResponseEntity.ok(response);
     }
@@ -128,7 +129,7 @@ public class ChampionshipController {
 
     @GetMapping("findByGameName")
     public ResponseEntity<?> findByGameName(@RequestParam String gameName){
-        List<ChampionshipDTO> championships = findByGameNameCase.execute(gameName).stream().map(mapper::toDto).collect(Collectors.toList());
+        List<ChampionshipResponse> championships = findByGameNameCase.execute(gameName).stream().map(mapper::toResponse).collect(Collectors.toList());
         return ResponseEntity.ok(championships);
     }
 

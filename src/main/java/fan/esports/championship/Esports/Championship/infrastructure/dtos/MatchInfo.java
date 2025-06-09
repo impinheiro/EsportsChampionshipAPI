@@ -1,4 +1,4 @@
-package fan.esports.championship.Esports.Championship.infrastructure.dtos.responses;
+package fan.esports.championship.Esports.Championship.infrastructure.dtos;
 
-public record MatchInfo() {
+public record MatchInfo(String matchId, String name) {
 }
