@@ -135,13 +135,13 @@ public class ChampionshipController {
 
     @GetMapping("findByType")
     public ResponseEntity<?> findByType(@RequestParam String type){
-        List<ChampionshipDTO> championships = findByChampionshipTypeCase.execute(type).stream().map(mapper::toDto).collect(Collectors.toList());
+        List<ChampionshipResponse> championships = findByChampionshipTypeCase.execute(type).stream().map(mapper::toResponse).collect(Collectors.toList());
         return ResponseEntity.ok(championships);
     }
 
     @GetMapping("findByFormat")
     public ResponseEntity<?> findByFormat(@RequestParam String format){
-        List<ChampionshipDTO> championships = findByChampionshipFormatCase.execute(format).stream().map(mapper::toDto).collect(Collectors.toList());
+        List<ChampionshipResponse> championships = findByChampionshipFormatCase.execute(format).stream().map(mapper::toResponse).collect(Collectors.toList());
         return ResponseEntity.ok(championships);
     }
 

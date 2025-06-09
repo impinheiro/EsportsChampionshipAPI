@@ -130,7 +130,7 @@ public class ChampionshipRepositoryGateway implements ChampionshipGateway {
     @Override
     public List<Championship> findAvailableChampionships() {
         List<ChampionshipEntity> championships = championshipRepository.findAll()
-                .stream()
+                .stream().map(mapper::toAvailable)
                 .filter(championshipEntity -> championshipEntity.getEndDate().isAfter(LocalDateTime.now()) ||
                         championshipEntity.getRegistrationsId().size()<championshipEntity.getCapacity())
                 .collect(Collectors.toList());
