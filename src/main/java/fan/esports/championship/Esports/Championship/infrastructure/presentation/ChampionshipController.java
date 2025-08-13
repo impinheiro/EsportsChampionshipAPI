@@ -86,8 +86,7 @@ public class ChampionshipController {
 
         setChampionshipRankingCase.execute(createdChampionship.id(), createdRanking.id());
 
-        response.put("Championship created: ", mapper.toResponse(championship));
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @GetMapping("findById/{id}")

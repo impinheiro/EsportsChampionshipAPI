@@ -131,7 +131,7 @@ public class ChampionshipRepositoryGateway implements ChampionshipGateway {
     public List<Championship> findAvailableChampionships() {
         List<ChampionshipEntity> championships = championshipRepository.findAll()
                 .stream().map(mapper::toAvailable)
-                .filter(championshipEntity -> championshipEntity.getEndDate().isAfter(LocalDateTime.now()) ||
+                .filter(championshipEntity -> championshipEntity.getEndDate().isAfter(LocalDateTime.now()) &&
                         championshipEntity.getRegistrationsId().size()<championshipEntity.getCapacity())
                 .collect(Collectors.toList());
         return championships.stream().map(mapper::toDomain).collect(Collectors.toList());

@@ -1,13 +1,13 @@
 package fan.esports.championship.Esports.Championship.infrastructure.presentation;
 
+import fan.esports.championship.Esports.Championship.core.domain.Match;
 import fan.esports.championship.Esports.Championship.core.domain.Team;
 
 
-import fan.esports.championship.Esports.Championship.core.usecases.team.CreateTeamCase;
-import fan.esports.championship.Esports.Championship.core.usecases.team.GetAllTeamsCase;
-import fan.esports.championship.Esports.Championship.core.usecases.team.GetTeamById;
-import fan.esports.championship.Esports.Championship.core.usecases.team.UpdateTeamCase;
+import fan.esports.championship.Esports.Championship.core.usecases.team.*;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.TeamDTO;
+import fan.esports.championship.Esports.Championship.infrastructure.dtos.TeamMember;
+import fan.esports.championship.Esports.Championship.infrastructure.dtos.responses.TeamResponse;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.team.TeamDtoMapper;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.user.UserDtoMapper;
 import org.springframework.http.HttpStatus;
@@ -30,8 +30,9 @@ public class TeamController {
     private final GetTeamById getTeamById;
     private final UserDtoMapper userDtoMapper;
     private final TeamDtoMapper teamDtoMapper;
+    private final FindTeamScheduledMatches  findTeamScheduledMatches;
 
-    public TeamController(TeamDtoMapper mapper, CreateTeamCase createTeamCase, GetAllTeamsCase getAllTeamsCase, UpdateTeamCase updateTeamCase, GetTeamById getTeamById, UserDtoMapper userDtoMapper, TeamDtoMapper teamDtoMapper) {
+    public TeamController(TeamDtoMapper mapper, CreateTeamCase createTeamCase, GetAllTeamsCase getAllTeamsCase, UpdateTeamCase updateTeamCase, GetTeamById getTeamById, UserDtoMapper userDtoMapper, TeamDtoMapper teamDtoMapper, FindTeamScheduledMatches findTeamScheduledMatches) {
         this.mapper = mapper;
         this.createTeamCase = createTeamCase;
         this.getAllTeamsCase = getAllTeamsCase;
@@ -39,6 +40,7 @@ public class TeamController {
         this.getTeamById = getTeamById;
         this.userDtoMapper = userDtoMapper;
         this.teamDtoMapper = teamDtoMapper;
+        this.findTeamScheduledMatches = findTeamScheduledMatches;
     }
 
     @PostMapping("create")
@@ -58,13 +60,14 @@ public class TeamController {
     @GetMapping("findAll")
     public ResponseEntity<?> findAllTeams(){
         List<Team> teams = getAllTeamsCase.execute();
-        List<TeamDTO>  teamDTOs = teams.stream().map(mapper::toDTO).collect(Collectors.toList());
+        List<TeamResponse>  teamResponse = teams.stream().map(mapper::toResponse).collect(Collectors.toList());
         if(teams != null){
-            return ResponseEntity.ok(teamDTOs);
+            return ResponseEntity.ok(teamResponse);
         }else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("There are no teams registered yet");
         }
     }
+
     @GetMapping("findById/{id}")
     public ResponseEntity<?> findTeamById(@PathVariable String id){
         Team teamFound = getTeamById.execute(id);
@@ -74,6 +77,7 @@ public class TeamController {
             return ResponseEntity.ok(teamDtoMapper.toDTO(teamFound));
         }
     }
+
     @PutMapping("update/{id}")
     public ResponseEntity<?> updateTeam(@PathVariable String id, @RequestBody TeamDTO teamDTO){
         Map<String, Object> response = new HashMap<>();
@@ -82,5 +86,11 @@ public class TeamController {
         response.put("Message", "Team updated successfully");
         response.put("Team", teamDtoMapper.toDTO(updatedTeam));
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/getScheduledMatches/{teamId}")
+    public ResponseEntity<?> getScheduledMatches(@PathVariable String teamId){
+        List<Match> scheduledMatches = findTeamScheduledMatches.execute(teamId);
+        return ResponseEntity.ok(scheduledMatches);
     }
 }
