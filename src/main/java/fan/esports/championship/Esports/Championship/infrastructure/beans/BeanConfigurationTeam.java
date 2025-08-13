@@ -1,5 +1,7 @@
 package fan.esports.championship.Esports.Championship.infrastructure.beans;
 
+import fan.esports.championship.Esports.Championship.core.gateway.MatchGateway;
+import fan.esports.championship.Esports.Championship.core.gateway.RegistrationGateway;
 import fan.esports.championship.Esports.Championship.core.gateway.TeamGateway;
 import fan.esports.championship.Esports.Championship.core.gateway.UserGateway;
 import fan.esports.championship.Esports.Championship.core.usecases.team.*;
@@ -29,5 +31,9 @@ public class BeanConfigurationTeam {
     @Bean
     public GetTeamById getTeamById(TeamGateway teamGateway) {
         return new GetTeamByIdImpl(teamGateway);
+    }
+    @Bean
+    public FindTeamScheduledMatches findTeamScheduledMatches(RegistrationGateway registrationGateway, MatchGateway matchGateway) {
+        return new FindTeamScheduledMatchesImpl(registrationGateway,matchGateway);
     }
 }
