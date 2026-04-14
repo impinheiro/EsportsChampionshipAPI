@@ -2,36 +2,36 @@
 
 [PT-BR](README.md) | [EN](README.en.md)
 
-API REST para gerenciamento de campeonatos de e-sports, incluindo usuarios, times, partidas, inscricoes e rankings.
+REST API for managing e-sports championships, including users, teams, matches, registrations, and rankings.
 
-## Visao Geral
+## Overview
 
-O projeto segue uma organizacao inspirada em Clean Architecture:
+The project follows a Clean Architecture-inspired organization:
 
 - `core/`
-  - `domain/`: entidades de negocio (`User`, `Team`, `Championship`, etc.)
-  - `gateway/`: contratos (ports) para acesso a dados/infra
-  - `usecases/`: regras de negocio e casos de uso
+  - `domain/`: business entities (`User`, `Team`, `Championship`, etc.)
+  - `gateway/`: contracts (ports) for data/infra access
+  - `usecases/`: business rules and use cases
 - `infrastructure/`
-  - `presentation/`: controllers REST
-  - `gateway/`: implementacoes dos contratos do `core`
-  - `persistence/`: entidades e repositorios MongoDB
-  - `mappers/`: conversao Domain <-> DTO <-> Entity
-  - `config/`: seguranca JWT e OpenAPI
-  - `exceptions/`: tratamento centralizado de erros
+  - `presentation/`: REST controllers
+  - `gateway/`: implementations of `core` contracts
+  - `persistence/`: MongoDB entities and repositories
+  - `mappers/`: Domain <-> DTO <-> Entity conversion
+  - `config/`: JWT security and OpenAPI
+  - `exceptions/`: centralized error handling
 
-## Stack Atual
+## Current Stack
 
 - Java 17
 - Spring Boot 3.4.x
 - Spring Web
-- Spring Security (JWT customizado com `java-jwt`)
+- Spring Security (custom JWT with `java-jwt`)
 - Spring Data MongoDB
 - OpenAPI/Swagger (`springdoc`)
 - Lombok
 - Maven
 
-## Estrutura de Pastas
+## Folder Structure
 
 ```text
 src/main/java/fan/esports/championship/Esports/Championship
@@ -52,64 +52,64 @@ src/main/java/fan/esports/championship/Esports/Championship
     └── token
 ```
 
-## Pre-requisitos
+## Prerequisites
 
 - JDK 17
-- Maven 3.9+ (ou usar `./mvnw`)
-- MongoDB disponivel
+- Maven 3.9+ (or use `./mvnw`)
+- MongoDB available
 
-## Configuracao
+## Configuration
 
-As variaveis abaixo sao usadas em `src/main/resources/application.yml`:
+The following variables are used in `src/main/resources/application.yml`:
 
 - `URI_MONGO`
 - `MY_SECRET_KEY`
 
-Exemplo no Linux/zsh:
+Example for Linux/zsh:
 
 ```zsh
 export URI_MONGO="mongodb://localhost:27017/esports"
-export MY_SECRET_KEY="troque-por-uma-chave-segura"
+export MY_SECRET_KEY="replace-with-a-secure-key"
 ```
 
-## Executando o Projeto
+## Running the Project
 
 ```zsh
 ./mvnw clean spring-boot:run
 ```
 
-Para gerar o artefato:
+To generate the artifact:
 
 ```zsh
 ./mvnw clean package
 java -jar target/Esports-Championship-0.0.1-SNAPSHOT.jar
 ```
 
-## Documentacao da API
+## API Documentation
 
-Com a aplicacao em execucao:
+With the application running:
 
 - Swagger UI: `http://localhost:8080/swagger-ui/index.html`
 - OpenAPI JSON: `http://localhost:8080/v3/api-docs`
 
-## Autenticacao
+## Authentication
 
-A API utiliza JWT no header:
+The API uses JWT in the header:
 
 ```http
 Authorization: Bearer <token>
 ```
 
-Rotas publicas configuradas atualmente:
+Currently configured public routes:
 
 - `POST /api/v1/users/create`
 - `POST /api/v1/users/login`
 - `GET /v3/api-docs/**`
 - `GET /swagger-ui/**`
 
-## Endpoints Principais (estado atual)
+## Main Endpoints (current state)
 
-### Usuarios
+### Users
 
 - `POST /api/v1/users/create`
 - `POST /api/v1/users/login`
@@ -120,7 +120,7 @@ Rotas publicas configuradas atualmente:
 - `PATCH /api/v1/users/promote/{id}`
 - `DELETE /api/v1/users/delete/{id}`
 
-### Campeonatos
+### Championships
 
 - `POST /api/v1/championship/create`
 - `GET /api/v1/championship/findAll`
@@ -133,7 +133,7 @@ Rotas publicas configuradas atualmente:
 - `PUT /api/v1/championship/update/{id}`
 - `DELETE /api/v1/championship/delete/{id}`
 
-### Times
+### Teams
 
 - `POST /api/v1/teams/create`
 - `GET /api/v1/teams/findAll`
@@ -141,7 +141,7 @@ Rotas publicas configuradas atualmente:
 - `PUT /api/v1/teams/update/{id}`
 - `GET /api/v1/teams/getScheduledMatches/{teamId}`
 
-### Partidas
+### Matches
 
 - `POST /api/v1/matches/create`
 - `GET /api/v1/matches/findAll`
@@ -149,28 +149,28 @@ Rotas publicas configuradas atualmente:
 - `PUT /api/v1/matches/update/{id}`
 - `DELETE /api/v1/matches/delete/{id}`
 
-## Testes
+## Tests
 
-Atualmente existe teste de contexto Spring em `src/test/java`.
+There is currently a Spring context test under `src/test/java`.
 
 ```zsh
 ./mvnw test
 ```
 
-## Tecnologias Recomendadas para Evolucao
+## Recommended Technologies for Evolution
 
-- **Redis (recomendado para cache):** util para consultas frequentes como listagens de campeonatos, rankings e busca por id.
-- **Bean Validation:** adicionar `spring-boot-starter-validation` para validar payloads com `@Valid`.
-- **Testcontainers:** melhora confiabilidade de testes de integracao com MongoDB/Redis.
-- **Spring Actuator + Micrometer:** observabilidade (health checks, metricas, monitoracao).
+- **Redis (recommended for cache):** useful for frequent read operations such as championship listings, rankings, and id-based queries.
+- **Bean Validation:** add `spring-boot-starter-validation` to validate payloads with `@Valid`.
+- **Testcontainers:** improves reliability of integration tests with MongoDB/Redis.
+- **Spring Actuator + Micrometer:** observability (health checks, metrics, monitoring).
 
-## Status do Java
+## Java Status
 
-O projeto ja esta configurado para **Java 17** no `pom.xml` (`<java.version>17</java.version>`).
+The project is already configured for **Java 17** in `pom.xml` (`<java.version>17</java.version>`).
 
-## Roadmap Sugerido
+## Suggested Roadmap
 
-1. Padronizar endpoints para REST sem verbos no path.
-2. Unificar formato de erro da API.
-3. Eliminar retornos `null` em gateways e casos de uso.
-4. Aumentar cobertura de testes unitarios e de integracao.
+1. Standardize endpoints to REST style without verbs in paths.
+2. Unify API error response format.
+3. Remove `null` returns in gateways and use cases.
+4. Increase unit and integration test coverage.
