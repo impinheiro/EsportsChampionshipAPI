@@ -6,6 +6,7 @@ import fan.esports.championship.Esports.Championship.infrastructure.dtos.UserDTO
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.PromotionDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.dtos.requests.UserRequestDTO;
 import fan.esports.championship.Esports.Championship.infrastructure.mappers.user.UserDtoMapper;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,7 +31,7 @@ public class UserController {
     private final PromoteUserCase promoteUserCase;
 
     @PostMapping("create")
-    public ResponseEntity<?> createUser(@RequestBody UserDTO userDto){
+    public ResponseEntity<?> createUser(@Valid @RequestBody UserDTO userDto){
         User user  = userDtoMapper.toDomain(userDto);
         Map<String, Object> response = new HashMap<>();
         createUserCase.execute(user);
@@ -39,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Map<String, Object>> login(@RequestBody UserRequestDTO userData){
+    public ResponseEntity<Map<String, Object>> login(@Valid @RequestBody UserRequestDTO userData){
         Map<String, Object> response = new HashMap<>();
         String token = loginUserCase.execute(userData.email(), userData.password());
         response.put("Login", "User logged in successfully");
@@ -86,7 +87,7 @@ public class UserController {
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<?> updateUser(@PathVariable String id, @RequestBody UserDTO userDto){
+    public ResponseEntity<?> updateUser(@Valid @PathVariable String id, @RequestBody UserDTO userDto){
         Map<String,Object> response = new HashMap<>();
         User user = userDtoMapper.toDomain(userDto);
         updateUserCase.execute(user, id);
